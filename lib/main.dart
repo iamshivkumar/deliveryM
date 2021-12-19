@@ -20,22 +20,24 @@ class MyApp extends StatelessWidget {
         buttonTheme: ButtonThemeData(
           textTheme: ButtonTextTheme.primary,
         ),
+        cardTheme: CardTheme(
+          clipBehavior: Clip.antiAlias,
+        ),
         appBarTheme: AppBarTheme(
           color: Colors.white,
           elevation: 0,
+          foregroundColor: Colors.black,
         ),
         inputDecorationTheme: InputDecorationTheme(
-           filled: true,
+          filled: true,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
-           style: ButtonStyle(
-             foregroundColor: MaterialStateProperty.all(Colors.white)
-           )
-        ),
+            style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all(Colors.white))),
         colorScheme: base.colorScheme.copyWith(
           primary: Colors.indigo,
-          primaryVariant: Colors.white,
-          onPrimary: Colors.black,
+          primaryVariant: Colors.indigo,
+          onPrimary: Colors.white,
           secondary: Colors.indigo,
           secondaryVariant: Colors.indigo,
           onSecondary: Colors.white,

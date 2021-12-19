@@ -1,4 +1,4 @@
-
+import 'package:delivery_m/ui/customers/pick_address_page.dart';
 import 'package:delivery_m/utils/labels.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +27,16 @@ class WriteCustomerPage extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(24),
         children: [
+          Row(
+            children: [
+              Container(
+                height: 100,
+                width: 100,
+                color: theme.primaryColorLight,
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
           TextFormField(
             textCapitalization: TextCapitalization.words,
             decoration: InputDecoration(labelText: 'Name'),
@@ -39,24 +49,20 @@ class WriteCustomerPage extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16),
-          TextFormField(
-            textCapitalization: TextCapitalization.characters,
-            decoration: InputDecoration(
-              labelText: Labels.houseFlatBlockNo,
-            ),
-          ),
-          SizedBox(height: 16),
-          TextFormField(
-            textCapitalization: TextCapitalization.words,
-            decoration: InputDecoration(
-              labelText: 'Area',
-            ),
-          ),
-          SizedBox(height: 16),
-          TextFormField(
-            textCapitalization: TextCapitalization.words,
-            decoration: InputDecoration(
-              labelText: Labels.cityVillage,
+          Card(
+            margin: EdgeInsets.zero,
+            child: ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PickAddressPage(),
+                  ),
+                );
+              },
+              leading: Icon(Icons.location_pin),
+              title: Text('Pick Location'),
+              trailing: Icon(Icons.keyboard_arrow_right),
             ),
           ),
           SizedBox(height: 16),
