@@ -1,3 +1,6 @@
+
+import 'package:delivery_m/ui/customers/widgets/customer_card.dart';
+import 'package:delivery_m/ui/customers/write_customer_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomersPage extends StatelessWidget {
@@ -10,10 +13,22 @@ class CustomersPage extends StatelessWidget {
         title: Text('Customers'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WriteCustomerPage(),
+            ),
+          );
+        },
         child: Icon(Icons.add),
       ),
-      body: ListView(),
+      body: ListView(
+        children: [
+          CustomerCard(),
+        ],
+      ),
     );
   }
 }
