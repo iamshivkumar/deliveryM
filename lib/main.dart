@@ -1,4 +1,5 @@
 import 'package:delivery_m/ui/auth/login_page.dart';
+import 'package:delivery_m/ui/home/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
           onSecondary: Colors.white,
         ),
       ),
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
