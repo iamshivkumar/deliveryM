@@ -25,12 +25,18 @@ class AddDeliveryBoysPage extends StatelessWidget {
                       decoration: InputDecoration(prefixText: '+91 '),
                     ),
                   ),
-                  MaterialButton(
-                    minWidth: 0,
-                    shape: CircleBorder(),
-                    color: scheme.secondary,
-                    onPressed: () {},
-                    child: Icon(Icons.add),
+                  SizedBox(width: 16),
+                  SizedBox(
+                    height: 48,
+                    width: 48,
+                    child: MaterialButton(
+                      padding: EdgeInsets.zero,
+                      minWidth: 0,
+                      shape: CircleBorder(),
+                      color: scheme.secondary,
+                      onPressed: () {},
+                      child: Icon(Icons.add),
+                    ),
                   )
                 ],
               ),
