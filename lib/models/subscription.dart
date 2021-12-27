@@ -5,7 +5,6 @@ class Subscription {
   final String id;
   final String eId;
   final String customerId;
-  final Address address;
   final String status;
   final String productId;
   final String price;
@@ -18,7 +17,6 @@ class Subscription {
     required this.id,
     required this.eId,
     required this.customerId,
-    required this.address,
     required this.status,
     required this.productId,
     required this.price,
