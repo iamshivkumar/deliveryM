@@ -1,4 +1,5 @@
 import 'package:delivery_m/ui/pick_address/providers/pick_address_view_model_provider.dart';
+import 'package:delivery_m/ui/pick_address/search_address_page.dart';
 import 'package:delivery_m/utils/labels.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -80,16 +81,21 @@ class PickAddressPage extends ConsumerWidget {
                   Expanded(
                     child: Card(
                       shape: StadiumBorder(),
-                      child: SizedBox(
-                        height: 40,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: InkWell(
+                        onTap: () {
+                          showSearch(context: context, delegate: SearchPage());
+                        },
+                        child: SizedBox(
+                          height: 40,
                           child: Center(
-                            child: TextField(
-                              textAlignVertical: TextAlignVertical.center,
-                              decoration: InputDecoration.collapsed(
-                                hintText: 'Search Your Location',
-                              ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  child: Text('Search Your Location'),
+                                ),
+                              ],
                             ),
                           ),
                         ),
