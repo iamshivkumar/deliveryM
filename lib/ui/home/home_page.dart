@@ -1,21 +1,28 @@
+import 'package:delivery_m/ui/auth/providers/auth_provider.dart';
 import 'package:delivery_m/ui/home/delivery_boy_home_page.dart';
 import 'package:delivery_m/ui/home/widgets/drawer.dart';
 import 'package:delivery_m/ui/home/widgets/my_calendar.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'widgets/ana_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final style = theme.textTheme;
     return Scaffold(
       drawer: MyDrawer(),
       appBar: AppBar(
         title: Text('Home'),
+        actions: [
+          IconButton(onPressed: (){
+            ref.read(authProvider).signOut();
+          }, icon: Icon(Icons.logout))
+        ],
       ),
       body: Column(
         children: [

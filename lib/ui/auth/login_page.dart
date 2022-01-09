@@ -17,7 +17,6 @@ class LoginPage extends ConsumerWidget {
 
     final model = ref.watch(authProvider);
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
       body: ProgressLoader(
         isLoading: model.loading,
         child: Padding(
@@ -46,14 +45,7 @@ class LoginPage extends ConsumerWidget {
                         keyboardType: TextInputType.number,
                         onChanged: (v) => model.phone = v,
                         textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          enabledBorder:
-                              theme.inputDecorationTheme.border!.copyWith(
-                            borderSide: BorderSide(
-                              color: theme.accentColor,
-                            ),
-                          ),
-                        ),
+                       
                       ),
                     ],
                   ),

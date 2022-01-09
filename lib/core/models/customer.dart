@@ -1,4 +1,4 @@
-import 'package:delivery_m/models/address.dart';
+import 'package:delivery_m/core/models/address.dart';
 import 'package:flutter/material.dart';
 
 class Customer {

@@ -1,3 +1,4 @@
+import 'package:delivery_m/ui/start/register_page.dart';
 import 'package:flutter/material.dart';
 
 class StartPage extends StatelessWidget {
@@ -14,10 +15,13 @@ class StartPage extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
-        children: [
-          
-        ],
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterPage()));
+          },
+          child: Text('Continue'),
+        ),
       ),
     );
   }

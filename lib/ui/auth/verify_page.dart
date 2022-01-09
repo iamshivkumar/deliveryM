@@ -32,13 +32,12 @@ class VerifyPage extends HookConsumerWidget {
     return ProgressLoader(
       isLoading: model.loading,
       child: Scaffold(
-        backgroundColor: theme.backgroundColor,
         body: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
               Expanded(
-                child: SizedBox(
+                child: SizedBox(  
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,

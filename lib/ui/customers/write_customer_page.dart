@@ -1,4 +1,4 @@
-import 'package:delivery_m/ui/customers/pick_address_page.dart';
+import 'package:delivery_m/ui/pick_address/pick_address_page.dart';
 import 'package:delivery_m/utils/labels.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,5 @@
-import 'package:delivery_m/models/address.dart';
-import 'package:delivery_m/models/delivery.dart';
+import 'package:delivery_m/core/models/address.dart';
+import 'package:delivery_m/core/models/delivery.dart';
 
 class Subscription {
   final String id;
