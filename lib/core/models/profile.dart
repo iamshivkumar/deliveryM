@@ -10,8 +10,9 @@ class Profile {
 
   final DateTime createdAt;
   final DateTime? end;
-
   final String? businessName;
+  final List<String>? deboys;
+
   final Address? address;
   final String? businessId;
 
@@ -21,8 +22,9 @@ class Profile {
     required this.lastname,
     required this.mobile,
     required this.createdAt,
-    required this.end,
     required this.isAdmin,
+    this.deboys,
+    this.end,
     this.businessName,
     this.address,
     this.businessId,
@@ -39,6 +41,7 @@ class Profile {
     DateTime? createdAt,
     DateTime? end,
     bool? isAdmin,
+    List<String>? deboys,
   }) {
     return Profile(
       id: id ?? this.id,
@@ -51,6 +54,7 @@ class Profile {
       businessId: businessId ?? this.businessId,
       end: end ?? this.end,
       createdAt: createdAt ?? this.createdAt,
+      deboys: deboys??this.deboys,
     );
   }
 
@@ -64,22 +68,25 @@ class Profile {
       'address': address?.toMap(),
       'businessId': businessId,
       'createdAt': Timestamp.fromDate(createdAt),
-      'end': end != null ? Timestamp.fromDate(end!) : null
+      'end': end != null ? Timestamp.fromDate(end!) : null,
+      'deboys': deboys
     };
   }
 
-  factory Profile.fromMap(Map<String, dynamic> map) {
+  factory Profile.fromFirestore(DocumentSnapshot doc) {
+    final Map<String, dynamic> map = doc.data() as Map<String, dynamic>;
     return Profile(
-      id: map['id'],
+      id: doc.id,
       firstname: map['firstname'],
       lastname: map['lastname'],
       mobile: map['mobile'],
       businessName: map['businessName'],
       address: map['address'] != null ? Address.fromMap(map['address']) : null,
       businessId: map['businessId'],
-      end: map['end'].toDate(),
+      end: map['end']?.toDate(),
       createdAt: map['createdAt'].toDate(),
       isAdmin: map['isAdmin'],
+      deboys: map['deboys']!=null? List<String>.from(map['deboys']):null,
     );
   }
 
@@ -89,10 +96,6 @@ class Profile {
       firstname: '',
       lastname: '',
       mobile: '',
-      businessName: null,
-      address: null,
-      businessId: null,
-      end: null,
       createdAt: DateTime.now(),
       isAdmin: true,
     );

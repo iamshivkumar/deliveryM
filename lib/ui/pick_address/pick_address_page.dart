@@ -1,5 +1,6 @@
 import 'package:delivery_m/ui/pick_address/providers/pick_address_view_model_provider.dart';
 import 'package:delivery_m/ui/pick_address/search_address_page.dart';
+import 'package:delivery_m/ui/pick_address/widgets/update_address_sheet.dart';
 import 'package:delivery_m/utils/labels.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,7 +15,7 @@ class PickAddressPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final style = theme.textTheme;
-    final model = ref.watch(writeAddressViewModelProvider);
+    final model = ref.watch(pickAddressViewModelProvider);
 
     return Scaffold(
       body: Stack(
@@ -52,7 +53,13 @@ class PickAddressPage extends ConsumerWidget {
                             ),
                             SizedBox(height: 16),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) => UpdateAddressSheet(),
+                                );
+                              },
                               child: Text('CONTINUE'),
                             )
                           ],

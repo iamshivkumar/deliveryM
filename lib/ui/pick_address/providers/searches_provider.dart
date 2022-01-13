@@ -1,5 +1,3 @@
-
-
 import 'package:delivery_m/core/models/debouncer.dart';
 import 'package:delivery_m/core/models/search_result.dart';
 import 'package:delivery_m/core/repositories/geo_repository_provider.dart';

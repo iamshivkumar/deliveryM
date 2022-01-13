@@ -56,7 +56,7 @@ class SearchView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searches = ref.watch(searchViewModelProvider);
-    final addressModel = ref.read(writeAddressViewModelProvider);
+    final addressModel = ref.read(pickAddressViewModelProvider);
     final repo = ref.read(geoReposioryProvider);
     return ListView(
       padding: EdgeInsets.all(8),

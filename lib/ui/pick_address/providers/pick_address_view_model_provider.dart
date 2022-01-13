@@ -8,7 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../utils/labels.dart';
 
-final writeAddressViewModelProvider =
+final pickAddressViewModelProvider =
     ChangeNotifierProvider((ref) => WriteAddressModel(ref));
 
 class WriteAddressModel extends ChangeNotifier {
@@ -66,12 +66,7 @@ class WriteAddressModel extends ChangeNotifier {
       )
  }:{};
 
-  String _number = '';
-  String get number =>_number.isNotEmpty?_number: address?.number??'';
-  set number(String number) {
-    _number = number;
-    notifyListeners();
-  }
+
 
 
 
@@ -89,8 +84,33 @@ class WriteAddressModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addAddress({required bool edit}) async {
-   
+  
+  String? _number;
+  String get number => _number??address!.number;
+  set number(String number) {
+    _number = number;
+  }
+
+  String? _area;
+  String get area => _area??address!.area;
+  set area(String area) {
+    _area = area;
+  }
+
+  String? _city;
+  String get city => _city??address!.city;
+  set city(String city) {
+    _city = city;
+  }
+
+
+  Future<void> pickAddress(Function(Address) onPick) async {
+     final updated = address!.copyWith(
+       number: number,
+       area: area,
+       city: city,
+     );
+     onPick(updated);
   }
 
   void handleLocateMe(bool enabled) async {
