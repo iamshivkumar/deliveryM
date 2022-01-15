@@ -4,21 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-
-final authProvider = ChangeNotifierProvider((ref)=>Auth());
+final authProvider = ChangeNotifierProvider((ref) => Auth());
 
 class Auth extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-
   Stream<User?> get userStream => _auth.authStateChanges();
 
-
-
   String? verificationId;
-
-
 
   String _phone = '';
   String get phone => _phone;
@@ -69,10 +63,10 @@ class Auth extends ChangeNotifier {
         verificationCompleted: (PhoneAuthCredential credential) async {
           loading = true;
           // user = (
-            await _auth.signInWithCredential(credential)
-            // )
-            // .user
-            ;
+          await _auth.signInWithCredential(credential)
+              // )
+              // .user
+              ;
           loading = false;
           onComplete();
         },
@@ -86,10 +80,11 @@ class Auth extends ChangeNotifier {
         codeAutoRetrievalTimeout: (_) {},
         codeSent: (String id, int? forceResendingToken) {
           verificationId = id;
-          _resendToken = forceResendingToken;
           if (_resendToken != null) {
             authMessage = AuthMessage.otpResent();
           }
+          _resendToken = forceResendingToken;
+
           stream = _stream;
           loading = false;
           onSend();
@@ -110,9 +105,9 @@ class Auth extends ChangeNotifier {
         smsCode: code,
       );
       // user = (
-        await _auth.signInWithCredential(credential)
-        // ).user
-        ;
+      await _auth.signInWithCredential(credential)
+          // ).user
+          ;
       phone = '';
       onVerify();
     } on FirebaseAuthException catch (e) {
