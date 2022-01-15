@@ -7,4 +7,5 @@ class Constants {
 
   static const String products = 'products';
   static const String eId = 'eId';
+  static const String customers = 'customers';
 }

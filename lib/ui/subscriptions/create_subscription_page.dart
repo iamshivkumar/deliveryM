@@ -24,10 +24,10 @@ class CreateSubscriptionPage extends StatelessWidget {
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
-            Card(
-              margin: EdgeInsets.zero,
-              child: CustomerCard(),
-            ),
+            // Card(
+            //   margin: EdgeInsets.zero,
+            //   child: CustomerCard(),
+            // ),
             SizedBox(height: 16),
             DropdownButtonFormField<String>(
               isExpanded: true,

@@ -50,6 +50,8 @@ class Address {
     );
   }
 
+  bool get isEmpty => area.isEmpty&&city.isEmpty&&number.isEmpty;
+
   static Address empty() => Address(
         area: '',
         city: '',

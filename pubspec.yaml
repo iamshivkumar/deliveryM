@@ -49,6 +49,8 @@ dependencies:
   google_maps_webservice: ^0.0.20-nullsafety.0
   android_intent: ^2.0.2
   geolocator: ^8.0.1
+  firebase_storage: ^10.2.5
+  image_picker: ^0.8.4+4
 
 dev_dependencies:
   flutter_test:
