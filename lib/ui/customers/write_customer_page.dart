@@ -25,7 +25,7 @@ class WriteCustomerPage extends ConsumerWidget {
         appBar: AppBar(
           title: Text('Add Customer'),
         ),
-        bottomSheet: Padding(
+        bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
           ),

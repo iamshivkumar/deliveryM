@@ -15,12 +15,7 @@ class SubscriptionsPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CreateSubscriptionPage(),
-            ),
-          );
+          
         },
       ),
       body: ListView(

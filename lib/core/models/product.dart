@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Product {
@@ -7,8 +9,7 @@ class Product {
   final String image;
   final String name;
   final double price;
-
-  Product({
+    Product({
     required this.id,
     required this.eId,
     required this.image,
@@ -61,5 +62,25 @@ class Product {
       price: 0,
     );
   }
+  
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is Product &&
+      other.id == id &&
+      other.eId == eId &&
+      other.image == image &&
+      other.name == name &&
+      other.price == price;
+  }
 
+  @override
+  int get hashCode {
+    return id.hashCode ^
+      eId.hashCode ^
+      image.hashCode ^
+      name.hashCode ^
+      price.hashCode;
+  }
 }

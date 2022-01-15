@@ -1,49 +1,70 @@
-import 'package:delivery_m/ui/customers/widgets/customer_card.dart';
+import 'package:delivery_m/core/models/customer.dart';
+import 'package:delivery_m/core/models/delivery.dart';
+import 'package:delivery_m/core/models/product.dart';
+import 'package:delivery_m/ui/products/providers/products_provider.dart';
+import 'package:delivery_m/ui/subscriptions/providers/create_subscription_view_model_provider.dart';
 import 'package:delivery_m/ui/subscriptions/widgets/schedule_preview.dart';
 import 'package:delivery_m/utils/dates.dart';
+import 'package:delivery_m/utils/formats.dart';
+import 'package:delivery_m/utils/labels.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CreateSubscriptionPage extends StatelessWidget {
-  const CreateSubscriptionPage({Key? key}) : super(key: key);
-
+class CreateSubscriptionPage extends HookConsumerWidget {
+  const CreateSubscriptionPage({Key? key, required this.customer})
+      : super(key: key);
+  final Customer customer;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final products = ref.watch(productsProvider).asData?.value??[];
+    final model = ref.watch(createSubscriptionViewModelProvider(customer.id));
+    final startController = useTextEditingController();
+    final endController = useTextEditingController();
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Subscription'),
+        title: const Text('Create Subscription'),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ElevatedButton(
           onPressed: () {},
-          child: Text('CREATE'),
+          child: const Text('CREATE'),
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Card(
-            //   margin: EdgeInsets.zero,
-            //   child: CustomerCard(),
-            // ),
-            SizedBox(height: 16),
-            DropdownButtonFormField<String>(
+            Card(
+              margin: EdgeInsets.zero,
+              child: ListTile(
+                title: Text(customer.name),
+                subtitle: Text(customer.address.formated),
+              ),
+            ),
+            const SizedBox(height: 16),
+            DropdownButtonFormField<Product>(
               isExpanded: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Product',
               ),
-              items: ['Milk']
+              value: model.product,
+              items: products
                   .map(
-                    (e) => DropdownMenuItem(
+                    (e) => DropdownMenuItem<Product>(
                       child: Row(
                         children: [
-                          CircleAvatar(),
-                          SizedBox(width: 16),
-                          Text(e),
-                          Spacer(),
-                          Text('\$100')
+                          SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: Image.asset(e.image),
+                          ),
+                          const SizedBox(width: 16),
+                          Text(e.name),
+                          const Spacer(),
+                          Text('${Labels.rupee}${e.price}')
                         ],
                       ),
                       value: e,
@@ -52,54 +73,68 @@ class CreateSubscriptionPage extends StatelessWidget {
                   .toList(),
               onChanged: (v) {},
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
+              controller: startController,
               readOnly: true,
-              onTap: () {
-                showDatePicker(
+              onTap: () async {
+              final picked =  await  showDatePicker(
                   context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime.now().add(
-                    Duration(days: 30),
+                  initialDate: Dates.today,
+                  firstDate: Dates.today,
+                  lastDate: Dates.today.add(
+                    const Duration(days: 30),
                   ),
                 );
+                if(picked!=null){
+                   model.startDate = picked;
+                   startController.text = Formats.date(picked);
+                   if(model.endDate!=null&&model.endDate!.isBefore(picked)){
+                     endController.text = '';
+                     model.endDate = null;
+                   }
+                }
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Start Date',
               ),
             ),
-            SizedBox(height: 16),
-            DropdownButtonFormField(
-              decoration: InputDecoration(
+            const SizedBox(height: 16),
+            DropdownButtonFormField<DeliveryType>(
+              decoration: const InputDecoration(
                 labelText: "Type",
               ),
-              items: ['Daily']
+              value: model.deliveryType,
+              items: DeliveryType.values
                   .map(
-                    (e) => DropdownMenuItem(
-                      child: Text(e),
+                    (e) => DropdownMenuItem<DeliveryType>(
+                      child: Text(e.name),
                       value: e,
                     ),
                   )
                   .toList(),
               onChanged: (v) {
+                
+              },
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: endController,
+              enabled: model.startDate!=null,
+              readOnly:  true,
+              decoration: const InputDecoration(
+                labelText: 'End Date',
+              ),
+              onTap: (){
                 showDatePicker(
                   context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime.now().add(
-                    Duration(days: 30),
-                  ),
+                  initialDate: model.startDate!.add(const Duration(days: 30)),
+                  firstDate: model.startDate!,
+                  lastDate: model.startDate!.add(const Duration(days: 30)),
                 );
               },
             ),
-            SizedBox(height: 16),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'End Date',
-              ),
-            ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             SchedulePreview(
               dates: List.generate(
                 10,
