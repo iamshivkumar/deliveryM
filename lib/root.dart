@@ -1,6 +1,7 @@
 import 'package:delivery_m/ui/auth/providers/auth_provider.dart';
 import 'package:delivery_m/ui/auth/providers/user_provider.dart';
 import 'package:delivery_m/ui/components/loading.dart';
+import 'package:delivery_m/ui/home/delivery_boy_home_page.dart';
 import 'package:delivery_m/ui/home/home_page.dart';
 import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
 import 'package:delivery_m/ui/start/start_page.dart';
@@ -24,7 +25,7 @@ class Root extends ConsumerWidget {
         data: (user) => user == null
             ? const LoginPage()
             : ref.watch(profileProvider).when(
-                  data: (profile) => profile != null ? const HomePage() : const StartPage(),
+                  data: (profile) => profile != null ?  profile.isAdmin?const HomePage(): DeliveryBoyHomePage(profile: profile,) : const StartPage(),
                   error: (e, s) => DataError(e: e),
                   loading: () => const Loading(),
                 ),

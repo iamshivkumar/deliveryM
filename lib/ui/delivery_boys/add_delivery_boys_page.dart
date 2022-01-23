@@ -20,7 +20,7 @@ class AddDeliveryBoysPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add delivery boy mobile number'),
+        title: const Text('Add delivery boy mobile number'),
       ),
       body: Column(
         children: [
@@ -59,7 +59,7 @@ class AddDeliveryBoysPage extends HookConsumerWidget {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             ref.read(profileRepositoryProvider)
-                                .addDeliveryBoy(controller.text);
+                                .addDeliveryBoy('+91${controller.text}');
                             controller.clear();
                           }
                         },
@@ -85,7 +85,7 @@ class AddDeliveryBoysPage extends HookConsumerWidget {
                       .map(
                         (e) => Card(
                           child: ListTile(
-                            title: Text('+91 $e'),
+                            title: Text(e),
                           ),
                         ),
                       )

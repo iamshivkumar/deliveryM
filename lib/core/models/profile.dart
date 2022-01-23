@@ -7,14 +7,14 @@ class Profile {
   final String lastname;
   final String mobile;
   final bool isAdmin;
+  final Address address;
+     final String eId;
 
   final DateTime createdAt;
   final DateTime? end;
   final String? businessName;
   final List<String>? deboys;
 
-  final Address? address;
-  final String? businessId;
 
   Profile({
     required this.id,
@@ -23,12 +23,15 @@ class Profile {
     required this.mobile,
     required this.createdAt,
     required this.isAdmin,
+        required this.address,
+    required this.eId,
+
     this.deboys,
     this.end,
     this.businessName,
-    this.address,
-    this.businessId,
   });
+
+  String get name => "$firstname $lastname";
 
   Profile copyWith({
     String? id,
@@ -37,7 +40,7 @@ class Profile {
     String? mobile,
     String? businessName,
     Address? address,
-    String? businessId,
+    String? eId,
     DateTime? createdAt,
     DateTime? end,
     bool? isAdmin,
@@ -51,7 +54,7 @@ class Profile {
       isAdmin: isAdmin ?? this.isAdmin,
       businessName: businessName ?? this.businessName,
       address: address ?? this.address,
-      businessId: businessId ?? this.businessId,
+      eId: eId ?? this.eId,
       end: end ?? this.end,
       createdAt: createdAt ?? this.createdAt,
       deboys: deboys??this.deboys,
@@ -65,8 +68,8 @@ class Profile {
       'mobile': mobile,
       'isAdmin': isAdmin,
       'businessName': businessName,
-      'address': address?.toMap(),
-      'businessId': businessId,
+      'address': address.toMap(),
+      'eId': isAdmin? id: eId,
       'createdAt': Timestamp.fromDate(createdAt),
       'end': end != null ? Timestamp.fromDate(end!) : null,
       'deboys': deboys
@@ -81,8 +84,8 @@ class Profile {
       lastname: map['lastname'],
       mobile: map['mobile'],
       businessName: map['businessName'],
-      address: map['address'] != null ? Address.fromMap(map['address']) : null,
-      businessId: map['businessId'],
+      address: Address.fromMap(map['address']),
+      eId: map['eId'],
       end: map['end']?.toDate(),
       createdAt: map['createdAt'].toDate(),
       isAdmin: map['isAdmin'],
@@ -96,8 +99,10 @@ class Profile {
       firstname: '',
       lastname: '',
       mobile: '',
+      address: Address.empty(),
       createdAt: DateTime.now(),
-      isAdmin: true,
+      isAdmin: false,
+      eId: ''
     );
   }
 }

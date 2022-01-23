@@ -9,19 +9,21 @@ class SchedulePreview extends StatelessWidget {
   const SchedulePreview({Key? key, required this.dates}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final calenderStyle = CalendarStyle();
+    const calenderStyle =  CalendarStyle();
 
     final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
     return TableCalendar(
+      availableGestures: AvailableGestures.horizontalSwipe,
       calendarStyle: CalendarStyle(
         selectedDecoration: BoxDecoration(
-          color: theme.accentColor,
+          color: scheme.secondary,
           shape: BoxShape.circle,
         ),
         todayTextStyle: calenderStyle.defaultTextStyle,
         todayDecoration: BoxDecoration(
           color: Colors.transparent,
-          border: Border.all(color: theme.accentColor, width: 1),
+          border: Border.all(color: scheme.secondary, width: 1),
           shape: BoxShape.circle,
         ),
       ),
@@ -29,11 +31,11 @@ class SchedulePreview extends StatelessWidget {
       daysOfWeekStyle: DaysOfWeekStyle(
         dowTextFormatter: (d, e) => Utils.weekD(d),
       ),
-      headerStyle: HeaderStyle(
+      headerStyle: const HeaderStyle(
         formatButtonVisible: false,
         titleCentered: true,
       ),
-      availableCalendarFormats: {
+      availableCalendarFormats: const {
         CalendarFormat.month: "Month",
       },
       calendarFormat: CalendarFormat.month,

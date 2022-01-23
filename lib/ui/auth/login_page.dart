@@ -45,7 +45,6 @@ class LoginPage extends ConsumerWidget {
                         keyboardType: TextInputType.number,
                         onChanged: (v) => model.phone = v,
                         textAlign: TextAlign.center,
-                       
                       ),
                     ],
                   ),
@@ -63,7 +62,6 @@ class LoginPage extends ConsumerWidget {
                               ),
                               (route) => false,
                             );
-                           
                           },
                           onSend: () => Navigator.pushReplacement(
                             context,

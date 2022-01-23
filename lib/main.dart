@@ -23,18 +23,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
         primaryColor: Colors.white,
-        buttonTheme: ButtonThemeData(
+        buttonTheme: const ButtonThemeData(
           textTheme: ButtonTextTheme.primary,
         ),
-        cardTheme: CardTheme(
+        cardTheme: const CardTheme(
           clipBehavior: Clip.antiAlias,
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           color: Colors.white,
           elevation: 0,
           foregroundColor: Colors.black,
         ),
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           filled: true,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(

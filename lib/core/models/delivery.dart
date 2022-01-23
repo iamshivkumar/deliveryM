@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Delivery {
-  final DateTime date;
+  final String date;
   int quantity;
   String status;
   
@@ -12,7 +12,7 @@ class Delivery {
   });
 
   Delivery copyWith({
-    DateTime? date,
+    String? date,
     int? quantity,
     String? status,
   }) {
@@ -25,7 +25,7 @@ class Delivery {
 
   Map<String, dynamic> toMap() {
     return {
-      'date': Timestamp.fromDate(date),
+      'date': date,
       'quantity': quantity,
       'status': status,
     };
@@ -33,7 +33,7 @@ class Delivery {
 
   factory Delivery.fromMap(Map<String, dynamic> map) {
     return Delivery(
-      date: map['date'].toDate(),
+      date: map['date'],
       quantity: map['quantity'],
       status: map['status'],
     );

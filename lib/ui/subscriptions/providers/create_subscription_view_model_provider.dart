@@ -1,17 +1,27 @@
+import 'package:delivery_m/core/enums/delivery_status.dart';
 import 'package:delivery_m/core/models/delivery.dart';
 import 'package:delivery_m/core/models/product.dart';
+import 'package:delivery_m/core/models/profile.dart';
+import 'package:delivery_m/core/models/subscription.dart';
+import 'package:delivery_m/core/repositories/subscription_repository_provider.dart';
+import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
+import 'package:delivery_m/utils/formats.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final createSubscriptionViewModelProvider = ChangeNotifierProvider.family<CreateSubscriptionViewModel,String>(
-  (ref, cId) => CreateSubscriptionViewModel(ref,cId),
+final createSubscriptionViewModelProvider =
+    ChangeNotifierProvider.family<CreateSubscriptionViewModel, String>(
+  (ref, cId) => CreateSubscriptionViewModel(ref, cId),
 );
 
 class CreateSubscriptionViewModel extends ChangeNotifier {
-  final Ref ref;
+  final Ref _ref;
   final String cId;
-  CreateSubscriptionViewModel(this.ref, this.cId);
+  CreateSubscriptionViewModel(this._ref, this.cId);
 
+  SubscriptionRepository get _repository => _ref.read(subscriptionRepositoryProvider);
+
+  Profile get _profile => _ref.read(profileProvider).value!;
 
   Product? _product;
   Product? get product => _product;
@@ -41,8 +51,9 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? dId;
+
   int quantity = 1;
- 
 
   List<DateTime> get dates {
     if (startDate == null || endDate == null) {
@@ -62,8 +73,34 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
     }
   }
 
+  void create() {
+    final subscription = Subscription(
+      id: '',
+      dId: dId!,
+      eId: _profile.id,
+      customerId: cId,
+      recure: true,
+      active: true,
+      productId: _product!.id,
+      price: _product!.price,
+      startDate: startDate!,
+      endDate: endDate!,
+      dates: dates.map((e) => Formats.date(e)).toList(),
+      deliveries: dates
+          .map(
+            (e) => Delivery(
+              date: Formats.date(e),
+              quantity: quantity,
+              status: DeliveryStatus.pending,
+            ),
+          )
+          .toList(),
+    );
 
-
-  
-
+    try {
+      _repository.create(subscription);
+    } catch (e) {
+      print('$e');
+    }
+  }
 }

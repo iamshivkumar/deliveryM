@@ -1,4 +1,9 @@
+import 'package:delivery_m/core/enums/delivery_status.dart';
+import 'package:delivery_m/core/models/subscription.dart';
+import 'package:delivery_m/ui/products/providers/products_provider.dart';
+import 'package:delivery_m/utils/formats.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SubscriptionCard extends StatelessWidget {
   const SubscriptionCard({
@@ -86,15 +91,25 @@ class SubscriptionCard extends StatelessWidget {
   }
 }
 
-class CustSubscriptionCard extends StatelessWidget {
+class CustSubscriptionCard extends ConsumerWidget {
   const CustSubscriptionCard({
     Key? key,
+    required this.subscription,
   }) : super(key: key);
 
+  final Subscription subscription;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final style = theme.textTheme;
+
+    final products = ref
+            .watch(productsProvider)
+            .asData
+            ?.value
+            .where((element) => element.id == subscription.productId) ??
+        [];
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -107,7 +122,7 @@ class CustSubscriptionCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '9 Dec',
+                    Formats.monthDay(subscription.startDate),
                     style: style.caption,
                   ),
                   Text(
@@ -115,7 +130,7 @@ class CustSubscriptionCard extends StatelessWidget {
                     style: style.overline,
                   ),
                   Text(
-                    '1 Jan',
+                    Formats.monthDay(subscription.endDate),
                     style: style.caption,
                   ),
                 ],
@@ -126,10 +141,10 @@ class CustSubscriptionCard extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text('Product Name'),
+                    child: Text(products.isNotEmpty ? products.first.name : ""),
                   ),
                   Text(
-                    '\$100',
+                    '\$${subscription.price}',
                     style: style.subtitle2,
                   )
                 ],
@@ -137,16 +152,27 @@ class CustSubscriptionCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8),
-              child: Stack(
+              child: Row(
                 children: [
-                  Container(
-                    height: 4,
-                    color: theme.dividerColor,
+                  Expanded(
+                    flex: subscription.deliveries
+                        .where((element) =>
+                            element.status == DeliveryStatus.delivered)
+                        .length,
+                    child: Container(
+                      height: 4,
+                      color: Colors.green,
+                    ),
                   ),
-                  Container(
-                    width: 100,
-                    height: 4,
-                    color: Colors.green,
+                  Expanded(
+                    flex: subscription.deliveries
+                        .where((element) =>
+                            element.status == DeliveryStatus.pending)
+                        .length,
+                    child: Container(
+                      height: 4,
+                      color: theme.dividerColor,
+                    ),
                   ),
                 ],
               ),

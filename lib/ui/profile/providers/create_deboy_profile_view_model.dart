@@ -1,12 +1,11 @@
 import 'package:delivery_m/core/models/address.dart';
 import 'package:delivery_m/core/models/profile.dart';
 import 'package:delivery_m/core/repositories/profile_repository_provider.dart';
-import 'package:delivery_m/ui/auth/providers/user_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final registerViewModelProvider =
+final createDboyProfileViewModelProvider =
     ChangeNotifierProvider((ref) => RegisterViewModel(ref));
 
 class RegisterViewModel extends ChangeNotifier {
@@ -30,11 +29,7 @@ class RegisterViewModel extends ChangeNotifier {
     _lastname = lastname;
   }
 
-  String? _businessName;
-  String? get businessName => _businessName ?? initial.businessName;
-  set businessName(String? businessName) {
-    _businessName = businessName;
-  }
+
 
   Address? _address;
   Address? get address => _address??(initial.address.isEmpty?null:initial.address);
@@ -43,14 +38,13 @@ class RegisterViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void register() async {
+  void register(String eId) async {
     final updated = initial.copyWith(
       firstname: firstname,
       lastname: lastname,
-      businessName: businessName,
-      isAdmin: true,
       address: address,
-      deboys: [],
+      eId: eId,
+      
     );
     try {
       await _repository.writeProfile(updated);

@@ -4,7 +4,7 @@ import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final productsProvider = StreamProvider<List<Product>>(
-  (ref) => ref
-      .read(productsRepositoryProvider)
-      .productsStream(ref.watch(profileProvider).value?.id??''),
+  (ref) => ref.read(productsRepositoryProvider).productsStream(
+        ref.watch(profileProvider).value!.id,
+      ),
 );

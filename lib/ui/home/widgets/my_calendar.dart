@@ -1,56 +1,58 @@
+import 'package:delivery_m/ui/home/providers/calendar_view_model_provider.dart';
+import 'package:delivery_m/utils/dates.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../../../utils/dates.dart';
 import '../../../../utils/utils.dart';
 
-class MyCalendar extends StatelessWidget {
-  const MyCalendar({
+class MyCalendar extends ConsumerWidget {
+    // ignore: prefer_const_constructors_in_immutables
+    MyCalendar({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context , WidgetRef ref) {
     final theme = Theme.of(context);
-    final calenderStyle = CalendarStyle();
-    // final model = context.read(scheduleViewModelProvider);/
+    final scheme = theme.colorScheme;
+    const calenderStyle = CalendarStyle();
+    final model = ref.read(calendarViewModelProvider);
     return Card(
-      margin: EdgeInsets.all(0),
+      margin: EdgeInsets.zero,
       child: TableCalendar(
         calendarStyle: CalendarStyle(
           selectedDecoration: BoxDecoration(
-            color: theme.accentColor,
+            color: scheme.secondary,
             shape: BoxShape.circle,
           ),
           todayTextStyle: calenderStyle.defaultTextStyle,
           todayDecoration: BoxDecoration(
             color: Colors.transparent,
-            border: Border.all(color: theme.primaryColor, width: 1),
+            border: Border.all(color: scheme.secondary, width: 1),
             shape: BoxShape.circle,
           ),
         ),
-        selectedDayPredicate: (d) => isSameDay(DateTime.now(), d),
+        selectedDayPredicate: (d) => isSameDay(model.selectedDate, d),
         onDaySelected: (d1, d2) {
           // print(d1);
-          // model.selectedDate = DateTime(d1.year, d1.month, d1.day);
+          model.selectedDate = DateTime(d1.year, d1.month, d1.day);
         },
-        // onPageChanged: (d2) => model.focusDate = d2,
+        onPageChanged: (d2) => model.focusDate = d2,
         daysOfWeekStyle: DaysOfWeekStyle(
           dowTextFormatter: (d, e) => Utils.weekD(d),
         ),
-        headerStyle: HeaderStyle(
+        headerStyle: const HeaderStyle(
           formatButtonVisible: false,
           titleCentered: true,
         ),
-        availableCalendarFormats: {
+        availableCalendarFormats: const {
           CalendarFormat.week: "Week",
         },
         calendarFormat: CalendarFormat.week,
-        focusedDay: DateTime.now(),
-        firstDay: Dates.today.subtract(
-          Duration(days: 30),
-        ),
-        lastDay: DateTime(2025),
+        focusedDay: model.focusDate,
+        firstDay: DateTime(2022),
+        lastDay: Dates.today.add(const Duration(days: 30)),
       ),
     );
   }
