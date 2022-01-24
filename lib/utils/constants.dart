@@ -18,4 +18,5 @@ class Constants {
 
   static const String gaves = "gaves";
   static const String createdAt = "createdAt";
+  static const String deliveries = "deliveries";
 }

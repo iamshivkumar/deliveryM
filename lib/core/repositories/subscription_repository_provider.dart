@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_m/core/models/delivery.dart';
 import 'package:delivery_m/core/models/subscription.dart';
 import 'package:delivery_m/utils/constants.dart';
 import 'package:delivery_m/utils/formats.dart';
@@ -32,15 +33,13 @@ class SubscriptionRepository {
         );
   }
 
-  Stream<List<Subscription>> daySubscriptionsStream({required String eId, required DateTime date}) {
+  Stream<List<Subscription>> daySubscriptionsStream(
+      {required String eId, required DateTime date}) {
     return _firestore
         .collection(Constants.subscriptions)
         .where(Constants.eId, isEqualTo: eId)
-        .where(Constants.active,isEqualTo: true)
-        .where(
-          Constants.dates,
-          arrayContains: Formats.date(date)
-        )
+        .where(Constants.active, isEqualTo: true)
+        .where(Constants.dates, arrayContains: Formats.date(date))
         .snapshots()
         .map(
           (event) => event.docs
@@ -51,15 +50,13 @@ class SubscriptionRepository {
         );
   }
 
-    Stream<List<Subscription>> dboyDaySubscriptionsStream({required String dId, required DateTime date}) {
+  Stream<List<Subscription>> dboyDaySubscriptionsStream(
+      {required String dId, required DateTime date}) {
     return _firestore
         .collection(Constants.subscriptions)
         .where(Constants.dId, isEqualTo: dId)
-        .where(Constants.active,isEqualTo: true)
-        .where(
-          Constants.dates,
-          arrayContains: Formats.date(date)
-        )
+        .where(Constants.active, isEqualTo: true)
+        .where(Constants.dates, arrayContains: Formats.date(date))
         .snapshots()
         .map(
           (event) => event.docs
@@ -68,5 +65,15 @@ class SubscriptionRepository {
               )
               .toList(),
         );
+  }
+
+  void update({required Subscription subscription, required Delivery updated}) {
+    final initial =
+        subscription.deliveries.where((element) => element == updated).first;
+    subscription.deliveries[subscription.deliveries.indexOf(updated)] = updated;
+    _firestore.collection(Constants.subscriptions).doc(subscription.id).update({
+      Constants.deliveries:
+          subscription.deliveries.map((e) => e.toMap()).toList()
+    });
   }
 }

@@ -1,6 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Delivery {
+import 'package:equatable/equatable.dart';
+
+class Delivery extends Equatable{
   final String date;
   int quantity;
   String status;
@@ -38,6 +39,9 @@ class Delivery {
       status: map['status'],
     );
   }
+
+  @override
+  List<Object?> get props => [date];
 }
 
 

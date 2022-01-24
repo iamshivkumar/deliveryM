@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:delivery_m/core/models/delivery.dart';
+import 'package:delivery_m/utils/formats.dart';
 
 class Subscription {
   final String id;
@@ -102,4 +103,6 @@ class Subscription {
       dId: map['dId'],
     );
   }
+
+  Delivery getDelivery(DateTime date) => deliveries.where((element) => element.date==Formats.date(date)).first;
 }

@@ -1,20 +1,27 @@
-import 'package:delivery_m/ui/customers/widgets/customer_card.dart';
-import 'package:delivery_m/ui/deliveries/widgets/delivery_card.dart';
+import 'package:delivery_m/ui/components/error.dart';
+import 'package:delivery_m/ui/components/loading.dart';
+import 'package:delivery_m/ui/deliveries/widgets/deliveries_list_view.dart';
+import 'package:delivery_m/ui/home/providers/dboy_day_subscriptions_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'widgets/deliveries_list_view.dart';
+class DeliveriesPage extends ConsumerWidget {
+  const DeliveriesPage({
+    Key? key,
+    required this.dboyDay,
+  }) : super(key: key);
 
-class DeliveriesPage extends StatelessWidget {
-  const DeliveriesPage({Key? key}) : super(key: key);
-
+  final DboyDay dboyDay;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final subscriptionsStream =
+        ref.watch(dboyDaySubscriptionsProvider(dboyDay));
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Deliveries'),
-          bottom: TabBar(
+          title: const Text('Deliveries'),
+          bottom: const TabBar(
             tabs: [
               Tab(
                 text: 'Pending',
@@ -28,22 +35,13 @@ class DeliveriesPage extends StatelessWidget {
             ],
           ),
         ),
-        body: Container(
-          color: Colors.lightGreen.shade100,
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DeliveryCard(),
-                  )
-                ],
-              )
-            ],
+        body: subscriptionsStream.when(
+          data: (subscriptions) => DeliveriesListView(
+            date: dboyDay.date,
+            subscriptions: subscriptions,
           ),
+          error: (e, s) => DataError(e: e),
+          loading: () => const Loading(),
         ),
       ),
     );

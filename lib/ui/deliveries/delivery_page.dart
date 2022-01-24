@@ -1,60 +1,89 @@
+import 'package:delivery_m/core/models/customer.dart';
+import 'package:delivery_m/core/models/subscription.dart';
+import 'package:delivery_m/ui/customers/providers/customer_provider.dart';
+import 'package:delivery_m/ui/deliveries/utils/generate.dart';
+import 'package:delivery_m/utils/labels.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'widgets/delivery_product_widget.dart';
 
-class DeliveryPage extends StatelessWidget {
-  const DeliveryPage({Key? key}) : super(key: key);
+class DeliveryPage extends ConsumerWidget {
+  const DeliveryPage({Key? key, required this.c, required this.stat})
+      : super(key: key);
 
+  final Customer c;
+  final DeliveryStat stat;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final style = theme.textTheme;
+    final customer = ref.watch(customerProvider(c.id)).value ?? c;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Customer Name'),
+        title: Text(customer.name),
       ),
       body: ListView(
-        children: [
-          Card(
-            child: Column(
-              children: [
-                DeliveryProductWidget(),
-              ],
-            ),
-          ),
-          Card(
-            child: Column(
-              children: [
-                ListTile(
-                  title: Text('+919284103047'),
-                  leading: Icon(Icons.call),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                ),
-                Divider(height: 0.5),
-                ListTile(
-                  title: Text('shivkonade123@gmail.com'),
-                  leading: Icon(Icons.email),
-                  trailing: Icon(Icons.keyboard_arrow_right),
-                ),
-              ],
-            ),
-          ),
-          Card(
-            child: Column(
-              children: [
-                AspectRatio(
-                  aspectRatio: 3/2,
-                  child: Container(
-                    color: Colors.lightGreen.shade100,
+        children: <Widget>[] +
+            stat.subscriptions
+                .map(
+                  (e) => DeliveryProductWidget(
+                    subscription: e,
+                    date: stat.date,
                   ),
-                ),
-                ListTile(
-                  title: Text('50, Rajendra Nagar, Solapur'),
                 )
-              ],
-            ),
-          ),
-        ],
+                .toList() +
+            [
+              Card(
+                child: ListTile(
+                  onTap: () {},
+                  title: Text(customer.mobile),
+                  leading: const Icon(Icons.call),
+                  trailing: const Icon(Icons.keyboard_arrow_right),
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  // onTap: () {},
+                  title: Text("\$${customer.balance}"),
+                  leading: const Icon(Icons.account_balance_wallet),
+                  // trailing: const Icon(Icons.keyboard_arrow_right),
+                ),
+              ),
+              Card(
+                child: Column(
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 2,
+                      child: GoogleMap(
+                        liteModeEnabled: true,
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(
+                            customer.address.point.latitude,
+                            customer.address.point.longitude,
+                          ),
+                          zoom: 14,
+                        ),
+                        markers: {
+                          Marker(
+                            markerId: const MarkerId('0'),
+                            position: LatLng(
+                              customer.address.point.latitude,
+                              customer.address.point.longitude,
+                            ),
+                          ),
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      title: Text(customer.address.formated),
+                      trailing: const Icon(Icons.open_in_new),
+                    ),
+                  ],
+                ),
+              ),
+            ],
       ),
     );
   }

@@ -18,29 +18,38 @@ class CustomersRepository {
       customer.documents.add(await _uploadImage(file));
     }
     if (customer.id.isEmpty) {
-     await _firestore.collection(Constants.customers).add(customer.toMap());
+      await _firestore.collection(Constants.customers).add(customer.toMap());
     } else {
-     await _firestore
+      await _firestore
           .collection(Constants.customers)
           .doc(customer.id)
           .update(customer.toMap());
     }
   }
 
-  Stream<List<Customer>> customersStream(String eid) =>
-      _firestore.collection(Constants.customers).where(Constants.eId,isEqualTo: eid).snapshots().map(
-            (event) => event.docs.map((e) => Customer.fromFirestore(e)).toList(),
-          );
+  Stream<List<Customer>> customersStream(String eid) => _firestore
+      .collection(Constants.customers)
+      .where(Constants.eId, isEqualTo: eid)
+      .snapshots()
+      .map(
+        (event) => event.docs.map((e) => Customer.fromFirestore(e)).toList(),
+      );
 
   void delete(String id) {
     _firestore.collection(Constants.customers).doc(id).delete();
   }
 
-  Future<String> _uploadImage( File file) async {
+  Future<String> _uploadImage(File file) async {
     final task = await _storage
         .ref('documents')
         .child('${DateTime.now().millisecondsSinceEpoch}')
         .putFile(file);
     return await task.ref.getDownloadURL();
+  }
+
+  Stream<Customer> customerFuture(String id)  {
+    return  _firestore.collection(Constants.customers).doc(id).snapshots().map(
+          (value) => Customer.fromFirestore(value),
+        );
   }
 }

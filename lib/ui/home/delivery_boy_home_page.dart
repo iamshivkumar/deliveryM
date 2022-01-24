@@ -26,11 +26,12 @@ class DeliveryBoyHomePage extends ConsumerWidget {
     final theme = Theme.of(context);
     final style = theme.textTheme;
     final model = ref.watch(calendarViewModelProvider);
+    final dboyDay = 
+        DboyDay(dId: profile.id, date: model.selectedDate);
     final gaveStream = ref.watch(gaveProvider(model.selectedDate));
 
     final productsStream = ref.watch(productsProvider);
-    final subscriptionStream = ref.watch(dboyDaySubscriptionsProvider(
-        DboyDay(dId: profile.id, date: model.selectedDate)));
+    final subscriptionStream = ref.watch(dboyDaySubscriptionsProvider(dboyDay));
     final _repository = ref.read(gaveRepositoryProvider);
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +51,7 @@ class DeliveryBoyHomePage extends ConsumerWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DeliveriesPage(),
+              builder: (context) => DeliveriesPage(dboyDay: dboyDay),
             ),
           );
         },
