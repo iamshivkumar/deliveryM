@@ -173,7 +173,7 @@ class CreateSubscriptionPage extends HookConsumerWidget {
                   labelText: "Delivery Boy",
                 ),
                 value: model.dId,
-                validator: (v)=>v!.isEmpty?"Select delivery boy":null,
+                validator: (v) => v!.isEmpty ? "Select delivery boy" : null,
                 items: dboys
                     .map(
                       (e) => DropdownMenuItem<String>(
@@ -186,6 +186,16 @@ class CreateSubscriptionPage extends HookConsumerWidget {
                   model.dId = v!;
                 },
               ),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: Checkbox(
+                  value: model.manage,
+                  onChanged: (v) {
+                    model.manage = v!;
+                  },
+                ),
+                title: const Text('Manage return kits.'),
+              )
             ],
           ),
         ),

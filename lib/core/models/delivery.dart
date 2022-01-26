@@ -1,11 +1,10 @@
-
 import 'package:equatable/equatable.dart';
 
-class Delivery extends Equatable{
+class Delivery extends Equatable {
   final String date;
   final int quantity;
- final String status;
-  
+  final String status;
+
   const Delivery({
     required this.date,
     required this.quantity,
@@ -44,17 +43,15 @@ class Delivery extends Equatable{
   List<Object?> get props => [date];
 }
 
-
 class DeliveryType {
   final String name;
   final int diff;
 
   DeliveryType(this.name, this.diff);
 
-
   static List<DeliveryType> values = [
-    DeliveryType('Daily',1),
-    DeliveryType('Alternate Date',2),
-    DeliveryType('Weekly',7),
+    DeliveryType('Daily', 1),
+    DeliveryType('Alternate Date', 2),
+    DeliveryType('Weekly', 7),
   ];
 }

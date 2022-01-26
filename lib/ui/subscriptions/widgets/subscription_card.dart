@@ -1,6 +1,7 @@
 import 'package:delivery_m/core/enums/delivery_status.dart';
 import 'package:delivery_m/core/models/subscription.dart';
 import 'package:delivery_m/ui/products/providers/products_provider.dart';
+import 'package:delivery_m/ui/subscriptions/subscription_page.dart';
 import 'package:delivery_m/utils/formats.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -110,74 +111,79 @@ class CustSubscriptionCard extends ConsumerWidget {
             .where((element) => element.id == subscription.productId) ??
         [];
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    Formats.monthDay(subscription.startDate),
-                    style: style.caption,
-                  ),
-                  Text(
-                    'TO',
-                    style: style.overline,
-                  ),
-                  Text(
-                    Formats.monthDay(subscription.endDate),
-                    style: style.caption,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(products.isNotEmpty ? products.first.name : ""),
-                  ),
-                  Text(
-                    '\$${subscription.price}',
-                    style: style.subtitle2,
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: subscription.deliveries
-                        .where((element) =>
-                            element.status == DeliveryStatus.delivered)
-                        .length,
-                    child: Container(
-                      height: 4,
-                      color: Colors.green,
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>SubscriptionPage(cId: subscription.customerId,sId: subscription.id)));
+      },
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      Formats.monthDay(subscription.startDate),
+                      style: style.caption,
                     ),
-                  ),
-                  Expanded(
-                    flex: subscription.deliveries
-                        .where((element) =>
-                            element.status == DeliveryStatus.pending)
-                        .length,
-                    child: Container(
-                      height: 4,
-                      color: theme.dividerColor,
+                    Text(
+                      'TO',
+                      style: style.overline,
                     ),
-                  ),
-                ],
+                    Text(
+                      Formats.monthDay(subscription.endDate),
+                      style: style.caption,
+                    ),
+                  ],
+                ),
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(products.isNotEmpty ? products.first.name : ""),
+                    ),
+                    Text(
+                      '\$${subscription.price}',
+                      style: style.subtitle2,
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: subscription.deliveries
+                          .where((element) =>
+                              element.status == DeliveryStatus.delivered)
+                          .length,
+                      child: Container(
+                        height: 4,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Expanded(
+                      flex: subscription.deliveries
+                          .where((element) =>
+                              element.status == DeliveryStatus.pending)
+                          .length,
+                      child: Container(
+                        height: 4,
+                        color: theme.dividerColor,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

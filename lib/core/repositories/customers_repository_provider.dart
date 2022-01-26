@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_m/core/models/address.dart';
 import 'package:delivery_m/core/models/customer.dart';
 import 'package:delivery_m/utils/constants.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -47,9 +48,21 @@ class CustomersRepository {
     return await task.ref.getDownloadURL();
   }
 
-  Stream<Customer> customerFuture(String id)  {
-    return  _firestore.collection(Constants.customers).doc(id).snapshots().map(
+  Stream<Customer> customerFuture(String id) {
+    return _firestore.collection(Constants.customers).doc(id).snapshots().map(
           (value) => Customer.fromFirestore(value),
         );
+  }
+
+  void addBalance({required String cId, required double amount}) {
+    _firestore.collection(Constants.customers).doc(cId).update({
+      Constants.balance: FieldValue.increment(amount),
+    });
+  }
+
+  void updateAddress({required String cId, required Address address}) {
+    _firestore.collection(Constants.customers).doc(cId).update({
+      Constants.address: address.toMap(),
+    });
   }
 }

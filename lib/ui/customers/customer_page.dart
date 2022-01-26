@@ -1,7 +1,11 @@
-import 'package:delivery_m/core/models/customer.dart';
+import 'package:delivery_m/core/models/address.dart';
+import 'package:delivery_m/core/repositories/customers_repository_provider.dart';
 import 'package:delivery_m/ui/components/error.dart';
 import 'package:delivery_m/ui/components/loading.dart';
 import 'package:delivery_m/ui/customers/providers/customer_subscriptions_provider.dart';
+import 'package:delivery_m/ui/customers/providers/customers_provider.dart';
+import 'package:delivery_m/ui/customers/widgets/add_balance_sheet.dart';
+import 'package:delivery_m/ui/pick_address/pick_address_page.dart';
 import 'package:delivery_m/ui/subscriptions/create_subscription_page.dart';
 import 'package:delivery_m/ui/subscriptions/widgets/subscription_card.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +13,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CustomerPage extends ConsumerWidget {
-  const CustomerPage({Key? key, required this.customer}) : super(key: key);
+  const CustomerPage({Key? key, required this.cId}) : super(key: key);
 
-  final Customer customer;
+  final String cId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final subscriptionsStream =
-        ref.watch(customerSubscriptionsProvider(customer.id));
+    final subscriptionsStream = ref.watch(customerSubscriptionsProvider(cId));
+    final customer =
+        ref.watch(customersProvider).value!.where((e) => e.id == cId).first;
+    final repository = ref.read(customersRepositoryProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(customer.name),
@@ -55,7 +61,16 @@ class CustomerPage extends ConsumerWidget {
                       title: Text('${customer.balance}'),
                       leading: const Icon(Icons.account_balance_wallet),
                       trailing: IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final double? amount = await showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) => const AddBalanceSheet(),
+                          );
+                          if (amount != null) {
+                            repository.addBalance(cId: cId, amount: amount);
+                          }
+                        },
                         icon: const Icon(Icons.add),
                       ),
                     ),
@@ -97,7 +112,17 @@ class CustomerPage extends ConsumerWidget {
                     ListTile(
                       title: Text(customer.address.formated),
                       trailing: IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final Address? address = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PickAddressPage(),
+                            ),
+                          );
+                          if(address!=null){
+                            repository.updateAddress(cId: cId, address: address);
+                          }
+                        },
                         icon: const Icon(Icons.edit),
                       ),
                     ),

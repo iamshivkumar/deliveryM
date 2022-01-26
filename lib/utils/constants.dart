@@ -20,4 +20,7 @@ class Constants {
   static const String createdAt = "createdAt";
   static const String deliveries = "deliveries";
   static const String balance = "balance";
+  static const String address = "address";
+
+  static const String returnKitsQt = "returnKitsQt";
 }

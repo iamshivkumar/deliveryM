@@ -77,24 +77,60 @@ class SubscriptionRepository {
     _batch.update(
         _firestore.collection(Constants.subscriptions).doc(subscription.id), {
       Constants.deliveries:
-          subscription.deliveries.map((e) => e.toMap()).toList()
+          subscription.deliveries.map((e) => e.toMap()).toList(),
+      Constants.returnKitsQt: subscription.returnKitsQt != null
+          ? (initial.status != updated.status
+              ? (updated.status == DeliveryStatus.delivered
+                  ? FieldValue.increment(updated.quantity)
+                  : (initial.status == DeliveryStatus.delivered &&
+                          updated.status == DeliveryStatus.canceled
+                      ? FieldValue.increment(-updated.quantity)
+                      : FieldValue.increment(0)))
+              : (initial.status == DeliveryStatus.delivered &&
+                      updated.status == DeliveryStatus.delivered
+                  ? FieldValue.increment(updated.quantity - initial.quantity)
+                  : FieldValue.increment(0)))
+          : null
     });
-    if(initial.status!=updated.status){
-      if(updated.status==DeliveryStatus.delivered){
-        _batch.update(_firestore.collection(Constants.customers).doc(subscription.customerId), {
-          Constants.balance: FieldValue.increment(-updated.quantity* subscription.price)
-        });
-      } else if(initial.status==DeliveryStatus.delivered&&updated.status==DeliveryStatus.canceled){
-        _batch.update(_firestore.collection(Constants.customers).doc(subscription.customerId), {
-          Constants.balance: FieldValue.increment(updated.quantity* subscription.price)
-        });
+    if (initial.status != updated.status) {
+      if (updated.status == DeliveryStatus.delivered) {
+        _batch.update(
+            _firestore
+                .collection(Constants.customers)
+                .doc(subscription.customerId),
+            {
+              Constants.balance:
+                  FieldValue.increment(-updated.quantity * subscription.price)
+            });
+      } else if (initial.status == DeliveryStatus.delivered &&
+          updated.status == DeliveryStatus.canceled) {
+        _batch.update(
+            _firestore
+                .collection(Constants.customers)
+                .doc(subscription.customerId),
+            {
+              Constants.balance:
+                  FieldValue.increment(updated.quantity * subscription.price)
+            });
       }
-    } else if(initial.status==DeliveryStatus.delivered&&updated.status==DeliveryStatus.delivered){
-      final quantity = updated.quantity  - initial.quantity;
-      _batch.update(_firestore.collection(Constants.customers).doc(subscription.customerId), {
-          Constants.balance: FieldValue.increment(-quantity* subscription.price)
-        });
+    } else if (initial.status == DeliveryStatus.delivered &&
+        updated.status == DeliveryStatus.delivered) {
+      final quantity = updated.quantity - initial.quantity;
+      _batch.update(
+          _firestore
+              .collection(Constants.customers)
+              .doc(subscription.customerId),
+          {
+            Constants.balance:
+                FieldValue.increment(-quantity * subscription.price)
+          });
     }
     _batch.commit();
+  }
+
+  void returnKitsQuantity({required String sId, required int qt}){
+     _firestore.collection(Constants.subscriptions).doc(sId).update({
+       Constants.returnKitsQt: FieldValue.increment(-qt),
+     });
   }
 }

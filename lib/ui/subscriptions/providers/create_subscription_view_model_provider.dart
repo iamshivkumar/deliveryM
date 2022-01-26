@@ -51,6 +51,13 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _manage = false;
+  bool get manage => _manage;
+  set manage(bool manage) {
+    _manage = manage;
+    notifyListeners();
+  }
+
   String? dId;
 
   int quantity = 1;
@@ -85,6 +92,7 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
       price: _product!.price,
       startDate: startDate!,
       endDate: endDate!,
+      returnKitsQt: manage?0:null,
       dates: dates.map((e) => Formats.date(e)).toList(),
       deliveries: dates
           .map(

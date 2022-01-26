@@ -12,12 +12,13 @@ class Subscription {
 
   final String productId;
   final double price;
-
+  final int? returnKitsQt;
   final DateTime startDate;
   final DateTime endDate;
   final List<Delivery> deliveries;
   final List<String> dates;
   final String dId;
+  
 
 
   Subscription({
@@ -33,6 +34,7 @@ class Subscription {
     required this.deliveries,
     required this.dates,
     required this.dId,
+    this.returnKitsQt,
   });
 
   Subscription copyWith({
@@ -49,6 +51,7 @@ class Subscription {
     List<Delivery>? deliveries,
     List<String>? dates,
     String? dId,
+   int? returnKitsQt
   }) {
     return Subscription(
       id: id ?? this.id,
@@ -63,6 +66,7 @@ class Subscription {
       deliveries: deliveries ?? this.deliveries,
       dates: dates??this.dates,
       dId: dId??this.dId,
+      returnKitsQt: returnKitsQt
     );
   }
 
@@ -79,6 +83,7 @@ class Subscription {
       'deliveries': deliveries.map((x) => x.toMap()).toList(),
       'dates': dates,
       'dId':dId,
+      'returnKitsQt':returnKitsQt,
     };
   }
 
@@ -101,6 +106,7 @@ class Subscription {
       ),
       dates: List<String>.from(map['dates'].map((e)=>e as String)),
       dId: map['dId'],
+      returnKitsQt: map['returnKitsQt']
     );
   }
 

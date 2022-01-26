@@ -1,6 +1,7 @@
 import 'package:delivery_m/core/enums/delivery_status.dart';
 import 'package:delivery_m/core/models/subscription.dart';
 import 'package:delivery_m/core/repositories/subscription_repository_provider.dart';
+import 'package:delivery_m/ui/deliveries/widgets/add_returned_kits_quantity_sheet.dart';
 import 'package:delivery_m/ui/deliveries/widgets/deliver_sheet.dart';
 import 'package:delivery_m/ui/home/providers/dboy_day_subscriptions_provider.dart';
 import 'package:delivery_m/ui/products/providers/products_provider.dart';
@@ -83,7 +84,6 @@ class DeliveryProductWidget extends ConsumerWidget {
                         builder: (context) => DeliverSheet(
                             initial: delivery.quantity, product: product!));
                     if (quantity != null) {
-                      
                       repository.update(
                           subscription: updated,
                           updated: delivery.copyWith(
@@ -96,7 +96,7 @@ class DeliveryProductWidget extends ConsumerWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -115,6 +115,41 @@ class DeliveryProductWidget extends ConsumerWidget {
               ],
             ),
           ),
+          updated.returnKitsQt != null
+              ? Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 8, 8, 16),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Return Kits: ',
+                            style: style.caption,
+                          ),
+                          Text(
+                            "${updated.returnKitsQt}",
+                            style: style.subtitle2,
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () async {
+                        final int? quantity = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => AddReturnedKitsQuantitySheet(
+                              available: updated.returnKitsQt!),
+                        );
+                        if(quantity!=null){
+                          repository.returnKitsQuantity(sId: updated.id, qt: quantity);
+                        }
+                      },
+                      icon: const Icon(Icons.edit),
+                    )
+                  ],
+                )
+              : const SizedBox(),
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 0, 8, 16),
             child: Row(
