@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_m/core/enums/delivery_status.dart';
 import 'package:delivery_m/core/models/delivery.dart';
 import 'package:delivery_m/core/models/subscription.dart';
 import 'package:delivery_m/utils/constants.dart';
@@ -71,9 +72,29 @@ class SubscriptionRepository {
     final initial =
         subscription.deliveries.where((element) => element == updated).first;
     subscription.deliveries[subscription.deliveries.indexOf(updated)] = updated;
-    _firestore.collection(Constants.subscriptions).doc(subscription.id).update({
+
+    final _batch = _firestore.batch();
+    _batch.update(
+        _firestore.collection(Constants.subscriptions).doc(subscription.id), {
       Constants.deliveries:
           subscription.deliveries.map((e) => e.toMap()).toList()
     });
+    if(initial.status!=updated.status){
+      if(updated.status==DeliveryStatus.delivered){
+        _batch.update(_firestore.collection(Constants.customers).doc(subscription.customerId), {
+          Constants.balance: FieldValue.increment(-updated.quantity* subscription.price)
+        });
+      } else if(initial.status==DeliveryStatus.delivered&&updated.status==DeliveryStatus.canceled){
+        _batch.update(_firestore.collection(Constants.customers).doc(subscription.customerId), {
+          Constants.balance: FieldValue.increment(updated.quantity* subscription.price)
+        });
+      }
+    } else if(initial.status==DeliveryStatus.delivered&&updated.status==DeliveryStatus.delivered){
+      final quantity = updated.quantity  - initial.quantity;
+      _batch.update(_firestore.collection(Constants.customers).doc(subscription.customerId), {
+          Constants.balance: FieldValue.increment(-quantity* subscription.price)
+        });
+    }
+    _batch.commit();
   }
 }

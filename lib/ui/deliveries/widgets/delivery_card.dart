@@ -16,7 +16,7 @@ class DeliveryCard extends ConsumerWidget {
     final style = theme.textTheme;
     final products = ref.watch(productsProvider).value!;
 
-    return ref.read(customerProvider(deliveryStat.cId)).when(
+    return ref.watch(customerProvider(deliveryStat.cId)).when(
           data: (customer) => GestureDetector(
             onTap: () {
               Navigator.push(

@@ -3,10 +3,10 @@ import 'package:equatable/equatable.dart';
 
 class Delivery extends Equatable{
   final String date;
-  int quantity;
-  String status;
+  final int quantity;
+ final String status;
   
-  Delivery({
+  const Delivery({
     required this.date,
     required this.quantity,
     required this.status,
