@@ -5,4 +5,8 @@ class Formats {
       DateFormat(DateFormat.MONTH_DAY).format(date);
 
   static String date(DateTime date) => DateFormat("dd-MM-yyyy").format(date);
+
+  static String monthDayFromDate(String date) => monthDay(dateTime(date));
+
+  static DateTime dateTime(String date) => DateFormat("dd-MM-yyyy").parse(date);
 }

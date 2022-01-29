@@ -23,4 +23,6 @@ class Constants {
   static const String address = "address";
 
   static const String returnKitsQt = "returnKitsQt";
+
+  static const String walletTransactions = "walletTransactions";
 }

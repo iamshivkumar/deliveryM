@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_m/core/enums/delivery_status.dart';
 import 'package:delivery_m/core/models/delivery.dart';
 import 'package:delivery_m/core/models/subscription.dart';
+import 'package:delivery_m/core/models/wallet_transaction.dart';
 import 'package:delivery_m/utils/constants.dart';
 import 'package:delivery_m/utils/formats.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -68,7 +69,7 @@ class SubscriptionRepository {
         );
   }
 
-  void update({required Subscription subscription, required Delivery updated}) {
+  void update({required Subscription subscription, required Delivery updated}) async{
     final initial =
         subscription.deliveries.where((element) => element == updated).first;
     subscription.deliveries[subscription.deliveries.indexOf(updated)] = updated;
@@ -102,6 +103,20 @@ class SubscriptionRepository {
               Constants.balance:
                   FieldValue.increment(-updated.quantity * subscription.price)
             });
+        _batch.set(
+          _firestore.collection(Constants.walletTransactions).doc(),
+          WalletTransaction(
+            id: '',
+            cId: subscription.customerId,
+            sId: subscription.id,
+            dId: subscription.dId,
+            pId: subscription.productId,
+            date: updated.date,
+            quantity: updated.quantity,
+            amount: -subscription.price * updated.quantity,
+            createdAt: DateTime.now(),
+          ).toMap(),
+        );
       } else if (initial.status == DeliveryStatus.delivered &&
           updated.status == DeliveryStatus.canceled) {
         _batch.update(
@@ -112,6 +127,20 @@ class SubscriptionRepository {
               Constants.balance:
                   FieldValue.increment(updated.quantity * subscription.price)
             });
+        _batch.set(
+          _firestore.collection(Constants.walletTransactions).doc(),
+          WalletTransaction(
+            id: '',
+            cId: subscription.customerId,
+            sId: subscription.id,
+            dId: subscription.dId,
+            pId: subscription.productId,
+            date: updated.date,
+            quantity: -updated.quantity,
+            amount: subscription.price * updated.quantity,
+            createdAt: DateTime.now(),
+          ).toMap(),
+        );
       }
     } else if (initial.status == DeliveryStatus.delivered &&
         updated.status == DeliveryStatus.delivered) {
@@ -124,13 +153,85 @@ class SubscriptionRepository {
             Constants.balance:
                 FieldValue.increment(-quantity * subscription.price)
           });
+      _batch.set(
+        _firestore.collection(Constants.walletTransactions).doc(),
+        WalletTransaction(
+          id: '',
+          pId: subscription.productId,
+          cId: subscription.customerId,
+          sId: subscription.id,
+          dId: subscription.dId,
+          date: updated.date,
+          quantity: quantity,
+          amount: -subscription.price * quantity,
+          createdAt: DateTime.now(),
+        ).toMap(),
+      );
     }
     _batch.commit();
   }
 
-  void returnKitsQuantity({required String sId, required int qt}){
-     _firestore.collection(Constants.subscriptions).doc(sId).update({
-       Constants.returnKitsQt: FieldValue.increment(-qt),
-     });
+  void returnKitsQuantity({required String sId, required int qt}) {
+    _firestore.collection(Constants.subscriptions).doc(sId).update({
+      Constants.returnKitsQt: FieldValue.increment(-qt),
+    });
+  }
+
+  void deleteDelivery({required String sId, required Delivery delivery}) {
+    _firestore.collection(Constants.subscriptions).doc(sId).update({
+      Constants.deliveries: FieldValue.arrayRemove([delivery.toMap()]),
+      Constants.dates: FieldValue.arrayRemove([delivery.date])
+    });
+  }
+
+  void addDelivery(
+      {required Subscription subscription, required Delivery delivery}) async {
+    subscription.deliveries.add(delivery);
+
+    subscription.dates.add(delivery.date);
+
+    subscription.deliveries.sort(
+        (a, b) => Formats.dateTime(a.date).compareTo(Formats.dateTime(b.date)));
+
+    subscription.dates
+        .sort((a, b) => Formats.dateTime(a).compareTo(Formats.dateTime(b)));
+
+    final _batch = _firestore.batch();
+    _batch.update(
+        _firestore.collection(Constants.subscriptions).doc(subscription.id), {
+      Constants.deliveries: subscription.deliveries.map((e) => e.toMap()).toList(),
+      Constants.dates: subscription.dates,
+      Constants.returnKitsQt: subscription.returnKitsQt != null
+          ? FieldValue.increment(delivery.status == DeliveryStatus.delivered
+              ? delivery.quantity
+              : 0)
+          : null,
+    });
+
+    if (delivery.status == DeliveryStatus.delivered) {
+      _batch.update(
+          _firestore
+              .collection(Constants.customers)
+              .doc(subscription.customerId),
+          {
+            Constants.balance:
+                FieldValue.increment(-delivery.quantity * subscription.price)
+          });
+      _batch.set(
+        _firestore.collection(Constants.walletTransactions).doc(),
+        WalletTransaction(
+          id: '',
+          cId: subscription.customerId,
+          sId: subscription.id,
+          dId: subscription.dId,
+          pId: subscription.productId,
+          date: delivery.date,
+          quantity: delivery.quantity,
+          amount: -subscription.price * delivery.quantity,
+          createdAt: DateTime.now(),
+        ).toMap(),
+      );
+    }
+    _batch.commit();
   }
 }

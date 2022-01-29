@@ -1,3 +1,4 @@
+import 'package:delivery_m/utils/formats.dart';
 import 'package:equatable/equatable.dart';
 
 class Delivery extends Equatable {
@@ -10,6 +11,10 @@ class Delivery extends Equatable {
     required this.quantity,
     required this.status,
   });
+
+  String get monthDay => Formats.monthDayFromDate(date);
+
+  DateTime get dateTime => Formats.dateTime(date);
 
   Delivery copyWith({
     String? date,
