@@ -1,7 +1,6 @@
-import 'package:delivery_m/ui/customers/customers_page.dart';
-import 'package:delivery_m/ui/delivery_boys/add_delivery_boys_page.dart';
-import 'package:delivery_m/ui/products/products_page.dart';
-import 'package:delivery_m/ui/subscriptions/subscriptions_page.dart';
+import '../../customers/customers_page.dart';
+import '../../delivery_boys/add_delivery_boys_page.dart';
+import '../../products/products_page.dart';
 import 'package:flutter/material.dart';
 
 
@@ -14,11 +13,11 @@ class Menu {
 
 class MyDrawer extends StatelessWidget {
    MyDrawer({ Key? key }) : super(key: key);
-   List<Menu> menus = [
+  final List<Menu> menus = [
      Menu(name: 'Add Delivery Boys', child: AddDeliveryBoysPage()),
-     Menu(name: 'Customers', child: CustomersPage()),
-     Menu(name: 'Products', child: ProductsPage()),
-     Menu(name: 'Subscriptions', child: SubscriptionsPage()),
+     Menu(name: 'Customers', child: const CustomersPage()),
+     Menu(name: 'Products', child: const ProductsPage()),
+    //  Menu(name: 'Subscriptions', child: const SubscriptionsPage()),
    ];
   @override
   Widget build(BuildContext context) {

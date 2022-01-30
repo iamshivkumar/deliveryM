@@ -1,5 +1,5 @@
-import 'package:delivery_m/core/models/customer.dart';
-import 'package:delivery_m/ui/customers/customer_page.dart';
+import '../../../core/models/customer.dart';
+import '../customer_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomerCard extends StatelessWidget {

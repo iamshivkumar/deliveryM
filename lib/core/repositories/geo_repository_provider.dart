@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:delivery_m/core/models/address.dart';
-import 'package:delivery_m/core/models/search_result.dart';
+import 'package:flutter/foundation.dart';
+import '../models/address.dart';
+import '../models/search_result.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/geocoding.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -16,10 +17,14 @@ class GeoRepository {
   Future<Address> getAddress(LatLng point) async {
     final GeocodingResponse response = await geocoding
         .searchByLocation(Location(lat: point.latitude, lng: point.longitude));
-    print(response.results.length);
+    if (kDebugMode) {
+      print(response.results.length);
+    }
 
     if (response.errorMessage != null) {
-      print(response.errorMessage);
+      if (kDebugMode) {
+        print(response.errorMessage);
+      }
       return Address.empty();
     } else {
       final GeocodingResult result = response.results.first;
@@ -40,7 +45,9 @@ class GeoRepository {
     final places = GoogleMapsPlaces(apiKey: _key);
     final PlacesDetailsResponse response = await places.getDetailsByPlaceId(id);
     if (response.errorMessage != null) {
-      print(response.errorMessage);
+      if (kDebugMode) {
+        print(response.errorMessage);
+      }
       return Address.empty();
     } else {
       final PlaceDetails result = response.result;

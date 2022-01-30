@@ -1,5 +1,5 @@
-import 'package:delivery_m/ui/auth/providers/auth_provider.dart';
-import 'package:delivery_m/ui/components/progress_loader.dart';
+import 'providers/auth_provider.dart';
+import '../components/progress_loader.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 import 'login_page.dart';
@@ -12,6 +12,8 @@ import '../../root.dart';
 import 'utils/auth_message.dart';
 
 class VerifyPage extends HookConsumerWidget {
+  const VerifyPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     final theme = Theme.of(context);
@@ -46,7 +48,7 @@ class VerifyPage extends HookConsumerWidget {
                         Labels.verifyOTP,
                         style: style.headline6,
                       ),
-                      SizedBox(height: 48),
+                      const SizedBox(height: 48),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -59,15 +61,15 @@ class VerifyPage extends HookConsumerWidget {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => LoginPage(),
+                                  builder: (context) => const LoginPage(),
                                 ),
                               );
                             },
-                            child: Text(Labels.changeNumber),
+                            child: const Text(Labels.changeNumber),
                           )
                         ],
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Row(
                         children: [
                           Expanded(
@@ -101,7 +103,7 @@ class VerifyPage extends HookConsumerWidget {
                                 builder: (context, snapshot) {
                                   return IconButton(
                                     disabledColor: style.overline!.color,
-                                    color: theme.accentColor,
+                                    color: theme.primaryColor,
                                     onPressed: snapshot.data! <= 00
                                         ? () => model.sendOTP(
                                             onSend: () {},
@@ -109,7 +111,7 @@ class VerifyPage extends HookConsumerWidget {
                                               Navigator.pushAndRemoveUntil(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => Root(),
+                                                  builder: (context) => const Root(),
                                                 ),
                                                 (route) => false,
                                               );
@@ -118,7 +120,7 @@ class VerifyPage extends HookConsumerWidget {
                                         : null,
                                     icon: Column(
                                       children: [
-                                        Icon(Icons.restart_alt),
+                                        const Icon(Icons.restart_alt),
                                         Text(
                                           snapshot.data! <= 0
                                               ? "0:00"
@@ -134,7 +136,7 @@ class VerifyPage extends HookConsumerWidget {
                           )
                         ],
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Text(
                         model.authMessage.text,
                         style: TextStyle(
@@ -146,7 +148,7 @@ class VerifyPage extends HookConsumerWidget {
                 ),
               ),
               ElevatedButton(
-                child: Text(Labels.verify),
+                child: const Text(Labels.verify),
                 onPressed: model.code.length == 6
                     ? () {
                         model.verifyOTP(
@@ -155,7 +157,7 @@ class VerifyPage extends HookConsumerWidget {
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Root(),
+                                  builder: (context) => const Root(),
                                 ),
                                 (route) => false,
                               );
@@ -163,7 +165,7 @@ class VerifyPage extends HookConsumerWidget {
                       }
                     : null,
               ),
-              SizedBox(height: 24)
+              const SizedBox(height: 24)
             ],
           ),
         ),

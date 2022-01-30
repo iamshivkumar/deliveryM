@@ -1,6 +1,5 @@
-import 'package:delivery_m/core/models/product.dart';
-import 'package:delivery_m/core/providers/form_key_provider.dart';
-import 'package:delivery_m/utils/labels.dart';
+import '../../../core/providers/form_key_provider.dart';
+import '../../../utils/labels.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -9,8 +8,8 @@ class AddBalanceSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final style = theme.textTheme;
+    // final theme = Theme.of(context);
+    // final style = theme.textTheme;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final _formKey = ref.watch(formKeyProvider);
     return Padding(
@@ -25,7 +24,7 @@ class AddBalanceSheet extends ConsumerWidget {
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixText: Labels.rupee
                 ),
                 keyboardType: TextInputType.number,

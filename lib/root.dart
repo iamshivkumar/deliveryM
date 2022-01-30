@@ -1,10 +1,9 @@
-import 'package:delivery_m/ui/auth/providers/auth_provider.dart';
-import 'package:delivery_m/ui/auth/providers/user_provider.dart';
-import 'package:delivery_m/ui/components/loading.dart';
-import 'package:delivery_m/ui/home/delivery_boy_home_page.dart';
-import 'package:delivery_m/ui/home/home_page.dart';
-import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
-import 'package:delivery_m/ui/start/start_page.dart';
+import 'ui/auth/providers/user_provider.dart';
+import 'ui/components/loading.dart';
+import 'ui/home/delivery_boy_home_page.dart';
+import 'ui/home/home_page.dart';
+import 'ui/profile/providers/profile_provider.dart';
+import 'ui/start/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -25,7 +24,13 @@ class Root extends ConsumerWidget {
         data: (user) => user == null
             ? const LoginPage()
             : ref.watch(profileProvider).when(
-                  data: (profile) => profile != null ?  profile.isAdmin?const HomePage(): DeliveryBoyHomePage(profile: profile,) : const StartPage(),
+                  data: (profile) => profile != null
+                      ? profile.isAdmin
+                          ? const HomePage()
+                          : DeliveryBoyHomePage(
+                              profile: profile,
+                            )
+                      : const StartPage(),
                   error: (e, s) => DataError(e: e),
                   loading: () => const Loading(),
                 ),

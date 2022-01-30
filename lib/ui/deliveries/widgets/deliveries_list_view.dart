@@ -1,6 +1,6 @@
-import 'package:delivery_m/core/enums/delivery_status.dart';
-import 'package:delivery_m/core/models/subscription.dart';
-import 'package:delivery_m/ui/deliveries/utils/generate.dart';
+import '../../../core/enums/delivery_status.dart';
+import '../../../core/models/subscription.dart';
+import '../utils/generate.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

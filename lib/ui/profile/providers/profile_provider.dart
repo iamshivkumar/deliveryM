@@ -1,6 +1,6 @@
-import 'package:delivery_m/core/models/profile.dart';
-import 'package:delivery_m/core/repositories/profile_repository_provider.dart';
-import 'package:delivery_m/ui/auth/providers/user_provider.dart';
+import '../../../core/models/profile.dart';
+import '../../../core/repositories/profile_repository_provider.dart';
+import '../../auth/providers/user_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final profileProvider = StreamProvider<Profile?>(

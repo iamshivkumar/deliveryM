@@ -1,9 +1,9 @@
-import 'package:delivery_m/core/repositories/subscription_repository_provider.dart';
-import 'package:delivery_m/ui/customers/providers/customer_subscriptions_provider.dart';
-import 'package:delivery_m/ui/subscriptions/providers/add_delivery_view_model_provider.dart';
-import 'package:delivery_m/ui/subscriptions/widgets/add_delivery_sheet.dart';
-import 'package:delivery_m/ui/subscriptions/widgets/subscription_card.dart';
-import 'package:delivery_m/utils/formats.dart';
+import '../../core/repositories/subscription_repository_provider.dart';
+import '../customers/providers/customer_subscriptions_provider.dart';
+import 'providers/add_delivery_view_model_provider.dart';
+import 'widgets/add_delivery_sheet.dart';
+import 'widgets/subscription_card.dart';
+import '../../utils/formats.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -15,7 +15,7 @@ class SubscriptionPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final style = theme.textTheme;
+    // final style = theme.textTheme;
 
     final repository = ref.read(subscriptionRepositoryProvider);
 
@@ -43,7 +43,12 @@ class SubscriptionPage extends ConsumerWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.only(bottom: 64),
-        children: <Widget>[CustSubscriptionCard(subscription: subscription)] +
+        children: <Widget>[
+              CustSubscriptionCard(
+                subscription: subscription,
+                enabled: false,
+              ),
+            ] +
             (subscription.deliveries
                 .map(
                   (e) => Dismissible(

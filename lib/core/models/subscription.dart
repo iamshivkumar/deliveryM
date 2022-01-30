@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:delivery_m/core/models/delivery.dart';
-import 'package:delivery_m/utils/formats.dart';
+import 'delivery.dart';
+import '../../utils/formats.dart';
 
 class Subscription {
   final String id;

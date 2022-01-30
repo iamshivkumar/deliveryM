@@ -1,7 +1,7 @@
-import 'package:delivery_m/core/models/address.dart';
-import 'package:delivery_m/ui/pick_address/pick_address_page.dart';
-import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
-import 'package:delivery_m/ui/profile/providers/create_deboy_profile_view_model.dart';
+import '../../core/models/address.dart';
+import '../pick_address/pick_address_page.dart';
+import '../pick_address/widgets/picked_address_card.dart';
+import 'providers/create_deboy_profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

@@ -1,4 +1,4 @@
-import 'package:delivery_m/core/models/product.dart';
+import '../../../core/models/product.dart';
 import 'package:flutter/material.dart';
 
 class BigAnaCard extends StatelessWidget {

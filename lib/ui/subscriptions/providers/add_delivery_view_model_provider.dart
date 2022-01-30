@@ -1,7 +1,7 @@
-import 'package:delivery_m/core/models/delivery.dart';
-import 'package:delivery_m/core/models/subscription.dart';
-import 'package:delivery_m/core/repositories/subscription_repository_provider.dart';
-import 'package:delivery_m/utils/formats.dart';
+import '../../../core/models/delivery.dart';
+import '../../../core/models/subscription.dart';
+import '../../../core/repositories/subscription_repository_provider.dart';
+import '../../../utils/formats.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final addDeliveryViewModelProvider = Provider((ref)=>AddDeliveryViewModelProvider(ref));

@@ -1,11 +1,11 @@
-import 'package:delivery_m/core/enums/delivery_status.dart';
-import 'package:delivery_m/core/models/delivery.dart';
-import 'package:delivery_m/core/models/product.dart';
-import 'package:delivery_m/core/models/profile.dart';
-import 'package:delivery_m/core/models/subscription.dart';
-import 'package:delivery_m/core/repositories/subscription_repository_provider.dart';
-import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
-import 'package:delivery_m/utils/formats.dart';
+import '../../../core/enums/delivery_status.dart';
+import '../../../core/models/delivery.dart';
+import '../../../core/models/product.dart';
+import '../../../core/models/profile.dart';
+import '../../../core/models/subscription.dart';
+import '../../../core/repositories/subscription_repository_provider.dart';
+import '../../profile/providers/profile_provider.dart';
+import '../../../utils/formats.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -108,7 +108,9 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
     try {
       _repository.create(subscription);
     } catch (e) {
-      print('$e');
+      if (kDebugMode) {
+        print('$e');
+      }
     }
   }
 }

@@ -1,8 +1,8 @@
-import 'package:delivery_m/ui/components/error.dart';
-import 'package:delivery_m/ui/components/loading.dart';
-import 'package:delivery_m/ui/profile/create_dboy_profile_page.dart';
-import 'package:delivery_m/ui/start/providers/businesses_provider.dart';
-import 'package:delivery_m/ui/start/register_page.dart';
+import '../components/error.dart';
+import '../components/loading.dart';
+import '../profile/create_dboy_profile_page.dart';
+import 'providers/businesses_provider.dart';
+import 'register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -15,14 +15,7 @@ class StartPage extends ConsumerWidget {
     final style = theme.textTheme;
     final businessesFuture = ref.watch(bussinessesProvider);
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: CircleAvatar(
-            child: Icon(Icons.person),
-          ),
-        ),
-      ),
+      appBar: AppBar(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(

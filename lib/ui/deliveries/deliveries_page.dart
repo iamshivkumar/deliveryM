@@ -1,7 +1,7 @@
-import 'package:delivery_m/ui/components/error.dart';
-import 'package:delivery_m/ui/components/loading.dart';
-import 'package:delivery_m/ui/deliveries/widgets/deliveries_list_view.dart';
-import 'package:delivery_m/ui/home/providers/dboy_day_subscriptions_provider.dart';
+import '../components/error.dart';
+import '../components/loading.dart';
+import 'widgets/deliveries_list_view.dart';
+import '../home/providers/dboy_day_subscriptions_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

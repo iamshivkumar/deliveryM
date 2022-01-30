@@ -1,4 +1,4 @@
-import 'package:delivery_m/ui/auth/utils/auth_message.dart';
+import '../utils/auth_message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -72,7 +72,9 @@ class Auth extends ChangeNotifier {
         },
         verificationFailed: (FirebaseAuthException e) {
           if (e.code == 'invalid-phone-number') {
-            print("The provided phone number is not valid.");
+            if (kDebugMode) {
+              print("The provided phone number is not valid.");
+            }
           }
           loading = false;
         },
@@ -91,7 +93,9 @@ class Auth extends ChangeNotifier {
         },
       );
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       loading = false;
     }
   }
@@ -116,7 +120,9 @@ class Auth extends ChangeNotifier {
       }
       clear();
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
     loading = false;
   }

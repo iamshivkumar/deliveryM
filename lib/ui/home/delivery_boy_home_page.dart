@@ -1,14 +1,16 @@
-import 'package:delivery_m/core/models/profile.dart';
-import 'package:delivery_m/core/repositories/gave_repository_provider.dart';
-import 'package:delivery_m/ui/auth/providers/auth_provider.dart';
-import 'package:delivery_m/ui/components/error.dart';
-import 'package:delivery_m/ui/components/loading.dart';
-import 'package:delivery_m/ui/deliveries/deliveries_page.dart';
-import 'package:delivery_m/ui/home/providers/calendar_view_model_provider.dart';
-import 'package:delivery_m/ui/home/providers/dboy_day_subscriptions_provider.dart';
-import 'package:delivery_m/ui/home/widgets/give_sheet.dart';
-import 'package:delivery_m/ui/home/widgets/my_calendar.dart';
-import 'package:delivery_m/ui/products/providers/products_provider.dart';
+import 'package:flutter/foundation.dart';
+
+import '../../core/models/profile.dart';
+import '../../core/repositories/gave_repository_provider.dart';
+import '../auth/providers/auth_provider.dart';
+import '../components/error.dart';
+import '../components/loading.dart';
+import '../deliveries/deliveries_page.dart';
+import 'providers/calendar_view_model_provider.dart';
+import 'providers/dboy_day_subscriptions_provider.dart';
+import 'widgets/give_sheet.dart';
+import 'widgets/my_calendar.dart';
+import '../products/providers/products_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -23,8 +25,8 @@ class DeliveryBoyHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final width = MediaQuery.of(context).size.width;
-    final theme = Theme.of(context);
-    final style = theme.textTheme;
+    // final theme = Theme.of(context);
+    // final style = theme.textTheme;
     final model = ref.watch(calendarViewModelProvider);
     final dboyDay = 
         DboyDay(dId: profile.id, date: model.selectedDate);
@@ -105,7 +107,9 @@ class DeliveryBoyHomePage extends ConsumerWidget {
                                     quantity: quantity,
                                   );
                                   } catch (e) {
-                                    print('$e');
+                                    if (kDebugMode) {
+                                      print('$e');
+                                    }
                                   }
                                 }
                               },

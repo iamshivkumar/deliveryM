@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:delivery_m/core/models/subscription.dart';
+import '../../../core/models/subscription.dart';
 
 class DeliveryStat extends Equatable {
   final String cId;

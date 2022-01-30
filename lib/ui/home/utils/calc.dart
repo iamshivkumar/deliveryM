@@ -1,6 +1,6 @@
-import 'package:delivery_m/core/enums/delivery_status.dart';
-import 'package:delivery_m/core/models/subscription.dart';
-import 'package:delivery_m/utils/formats.dart';
+import '../../../core/enums/delivery_status.dart';
+import '../../../core/models/subscription.dart';
+import '../../../utils/formats.dart';
 
 class Calc {
   final List<Subscription> list;

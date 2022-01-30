@@ -1,5 +1,5 @@
-import 'package:delivery_m/ui/auth/providers/auth_provider.dart';
-import 'package:delivery_m/ui/components/progress_loader.dart';
+import 'providers/auth_provider.dart';
+import '../components/progress_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -33,12 +33,12 @@ class LoginPage extends ConsumerWidget {
                         Labels.signupOrLogin,
                         style: style.headline6,
                       ),
-                      SizedBox(height: 48),
+                      const SizedBox(height: 48),
                       Text(
                         Labels.enterYourMobileNumber,
                         style: style.subtitle1,
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       TextFormField(
                         initialValue: model.phone,
                         maxLength: 10,
@@ -51,14 +51,14 @@ class LoginPage extends ConsumerWidget {
                 ),
               ),
               ElevatedButton(
-                child: Text('CONTINUE'),
+                child: const Text('CONTINUE'),
                 onPressed: model.phone.length == 10
                     ? () => model.sendOTP(
                           onComplete: () {
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Root(),
+                                builder: (context) => const Root(),
                               ),
                               (route) => false,
                             );
@@ -66,13 +66,13 @@ class LoginPage extends ConsumerWidget {
                           onSend: () => Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => VerifyPage(),
+                              builder: (context) => const VerifyPage(),
                             ),
                           ),
                         )
                     : null,
               ),
-              SizedBox(height: 24)
+              const SizedBox(height: 24)
             ],
           ),
         ),

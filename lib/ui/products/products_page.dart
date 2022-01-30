@@ -1,9 +1,8 @@
-import 'package:delivery_m/core/models/product.dart';
-import 'package:delivery_m/ui/components/error.dart';
-import 'package:delivery_m/ui/components/loading.dart';
-import 'package:delivery_m/ui/products/providers/products_provider.dart';
-import 'package:delivery_m/ui/products/providers/write_product_view_model_provider.dart';
-import 'package:delivery_m/ui/products/widgets/write_product_sheet.dart';
+import '../components/error.dart';
+import '../components/loading.dart';
+import 'providers/products_provider.dart';
+import 'providers/write_product_view_model_provider.dart';
+import 'widgets/write_product_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -14,7 +13,7 @@ class ProductsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
+    // final theme = Theme.of(context);
     final writer = ref.read(writeProductViewModelProvider);
     final productStream = ref.watch(productsProvider);
     return Scaffold(
@@ -30,7 +29,7 @@ class ProductsPage extends ConsumerWidget {
           );
           writer.clear();
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: productStream.when(
         data: (products) => ListView(
@@ -41,7 +40,7 @@ class ProductsPage extends ConsumerWidget {
               .toList(),
         ),
         error: (e, s) => DataError(e: e),
-        loading: () => Loading(),
+        loading: () => const Loading(),
       ),
     );
   }

@@ -1,8 +1,6 @@
-import 'package:delivery_m/core/models/customer.dart';
-import 'package:delivery_m/core/models/subscription.dart';
-import 'package:delivery_m/ui/customers/providers/customer_provider.dart';
-import 'package:delivery_m/ui/deliveries/utils/generate.dart';
-import 'package:delivery_m/utils/labels.dart';
+import '../../core/models/customer.dart';
+import '../customers/providers/customer_provider.dart';
+import 'utils/generate.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,8 +15,8 @@ class DeliveryPage extends ConsumerWidget {
   final DeliveryStat stat;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final style = theme.textTheme;
+    // final theme = Theme.of(context);
+    // final style = theme.textTheme;
     final customer = ref.watch(customerProvider(c.id)).value ?? c;
     return Scaffold(
       appBar: AppBar(

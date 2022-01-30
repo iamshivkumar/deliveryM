@@ -1,11 +1,12 @@
-import 'package:delivery_m/core/models/address.dart';
-import 'package:delivery_m/ui/pick_address/providers/pick_address_view_model_provider.dart';
+import '../../../core/models/address.dart';
+import '../providers/pick_address_view_model_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../pick_address_page.dart';
 
+// ignore: must_be_immutable
 class PickedAddressCard extends ConsumerWidget {
   PickedAddressCard({Key? key, required this.address, required this.onChanged})
       : super(key: key);

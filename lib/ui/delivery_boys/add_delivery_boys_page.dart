@@ -1,7 +1,7 @@
-import 'package:delivery_m/core/repositories/profile_repository_provider.dart';
-import 'package:delivery_m/ui/components/error.dart';
-import 'package:delivery_m/ui/components/loading.dart';
-import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
+import '../../core/repositories/profile_repository_provider.dart';
+import '../components/error.dart';
+import '../components/loading.dart';
+import '../profile/providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -38,7 +38,7 @@ class AddDeliveryBoysPage extends HookConsumerWidget {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         controller: controller,
-                        decoration: InputDecoration(prefixText: '+91 '),
+                        decoration: const InputDecoration(prefixText: '+91 '),
                         validator: (v) => v!.isEmpty
                             ? "Enter mobile number"
                             : v.length < 10
@@ -47,14 +47,14 @@ class AddDeliveryBoysPage extends HookConsumerWidget {
                         maxLength: 10,
                       ),
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     SizedBox(
                       height: 48,
                       width: 48,
                       child: MaterialButton(
                         padding: EdgeInsets.zero,
                         minWidth: 0,
-                        shape: CircleBorder(),
+                        shape: const CircleBorder(),
                         color: scheme.secondary,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -63,7 +63,7 @@ class AddDeliveryBoysPage extends HookConsumerWidget {
                             controller.clear();
                           }
                         },
-                        child: Icon(Icons.add),
+                        child: const Icon(Icons.add),
                       ),
                     )
                   ],
@@ -74,10 +74,10 @@ class AddDeliveryBoysPage extends HookConsumerWidget {
           Expanded(
               child: profileStream.when(
             data: (profile) => ListView(
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(12, 12, 12, 4),
                       child: Text('Pending Sign Ups'),
                     ),
                   ] +
@@ -92,7 +92,7 @@ class AddDeliveryBoysPage extends HookConsumerWidget {
                       .toList(),
             ),
             error: (e, s) => DataError(e: e),
-            loading: () => Loading(),
+            loading: () => const Loading(),
           )),
         ],
       ),

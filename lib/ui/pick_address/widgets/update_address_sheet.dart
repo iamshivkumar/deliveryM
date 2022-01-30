@@ -1,5 +1,5 @@
-import 'package:delivery_m/ui/pick_address/providers/pick_address_view_model_provider.dart';
-import 'package:delivery_m/utils/labels.dart';
+import '../providers/pick_address_view_model_provider.dart';
+import '../../../utils/labels.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -26,27 +26,27 @@ class UpdateAddressSheet extends ConsumerWidget {
             onSaved: (v) => model.number = v!,
             textCapitalization: TextCapitalization.characters,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             initialValue: model.area,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: Labels.area,
             ),
             validator: (v) => v!.isEmpty ? "Required" : null,
             onSaved: (v) => model.area = v!,
             textCapitalization: TextCapitalization.words,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             initialValue: model.city,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: Labels.cityVillage,
             ),
             validator: (v) => v!.isEmpty ? "Required" : null,
             onSaved: (v) => model.city = v!,
             textCapitalization: TextCapitalization.words,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               model.pickAddress((p0) {
@@ -54,7 +54,7 @@ class UpdateAddressSheet extends ConsumerWidget {
                 Navigator.pop(context,p0);
               });
             },
-            child: Text('Select Address'),
+            child: const Text('Select Address'),
           ),
         ],
       ),

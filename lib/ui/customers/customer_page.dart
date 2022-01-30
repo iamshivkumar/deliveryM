@@ -1,13 +1,13 @@
-import 'package:delivery_m/core/models/address.dart';
-import 'package:delivery_m/core/repositories/customers_repository_provider.dart';
-import 'package:delivery_m/ui/components/error.dart';
-import 'package:delivery_m/ui/components/loading.dart';
-import 'package:delivery_m/ui/customers/providers/customer_subscriptions_provider.dart';
-import 'package:delivery_m/ui/customers/providers/customers_provider.dart';
-import 'package:delivery_m/ui/customers/widgets/add_balance_sheet.dart';
-import 'package:delivery_m/ui/pick_address/pick_address_page.dart';
-import 'package:delivery_m/ui/subscriptions/create_subscription_page.dart';
-import 'package:delivery_m/ui/subscriptions/widgets/subscription_card.dart';
+import '../../core/models/address.dart';
+import '../../core/repositories/customers_repository_provider.dart';
+import '../components/error.dart';
+import '../components/loading.dart';
+import 'providers/customer_subscriptions_provider.dart';
+import 'providers/customers_provider.dart';
+import 'widgets/add_balance_sheet.dart';
+import '../pick_address/pick_address_page.dart';
+import '../subscriptions/create_subscription_page.dart';
+import '../subscriptions/widgets/subscription_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -45,7 +45,9 @@ class CustomerPage extends ConsumerWidget {
             subscriptionsStream.when(
               data: (subscriptions) => subscriptions
                   .map(
-                    (e) => CustSubscriptionCard(subscription: e),
+                    (e) => CustSubscriptionCard(
+                      subscription: e,
+                    ),
                   )
                   .toList(),
               error: (e, s) => [DataError(e: e)],
@@ -119,8 +121,9 @@ class CustomerPage extends ConsumerWidget {
                               builder: (context) => const PickAddressPage(),
                             ),
                           );
-                          if(address!=null){
-                            repository.updateAddress(cId: cId, address: address);
+                          if (address != null) {
+                            repository.updateAddress(
+                                cId: cId, address: address);
                           }
                         },
                         icon: const Icon(Icons.edit),

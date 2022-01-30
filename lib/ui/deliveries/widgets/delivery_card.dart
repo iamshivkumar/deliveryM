@@ -1,9 +1,9 @@
-import 'package:delivery_m/ui/components/error.dart';
-import 'package:delivery_m/ui/components/loading.dart';
-import 'package:delivery_m/ui/customers/providers/customer_provider.dart';
-import 'package:delivery_m/ui/deliveries/delivery_page.dart';
-import 'package:delivery_m/ui/deliveries/utils/generate.dart';
-import 'package:delivery_m/ui/products/providers/products_provider.dart';
+import '../../components/error.dart';
+import '../../components/loading.dart';
+import '../../customers/providers/customer_provider.dart';
+import '../delivery_page.dart';
+import '../utils/generate.dart';
+import '../../products/providers/products_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

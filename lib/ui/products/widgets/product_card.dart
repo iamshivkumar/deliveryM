@@ -1,9 +1,9 @@
-import 'package:delivery_m/core/repositories/products_repository_provider.dart';
-import 'package:delivery_m/ui/products/providers/write_product_view_model_provider.dart';
-import 'package:delivery_m/utils/labels.dart';
+import '../../../core/repositories/products_repository_provider.dart';
+import '../providers/write_product_view_model_provider.dart';
+import '../../../utils/labels.dart';
 import 'package:flutter/material.dart';
 
-import 'package:delivery_m/core/models/product.dart';
+import '../../../core/models/product.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'write_product_sheet.dart';
@@ -17,7 +17,7 @@ class ProductCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final style = theme.textTheme;
+    // final style = theme.textTheme;
     return Dismissible(
       key: ValueKey(product.id),
       onDismissed: (v) =>
@@ -26,19 +26,19 @@ class ProductCard extends ConsumerWidget {
         return await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Are you sure you want to delete this product?'),
+            title: const Text('Are you sure you want to delete this product?'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('NO'),
+                child: const Text('NO'),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context, true);
                 },
-                child: Text('YES'),
+                child: const Text('YES'),
               ),
             ],
           ),
@@ -48,7 +48,7 @@ class ProductCard extends ConsumerWidget {
       background: Material(
         color: theme.errorColor,
         child: Row(
-          children: [
+          children: const [
             AspectRatio(
               aspectRatio: 1,
               child: Icon(

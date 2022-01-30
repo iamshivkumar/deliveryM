@@ -1,6 +1,6 @@
+import 'package:delivery_m/utils/formats.dart';
 import 'package:flutter/material.dart';
 import '../../../../utils/dates.dart';
-import '../../../../utils/utils.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class SchedulePreview extends StatelessWidget {
@@ -29,7 +29,7 @@ class SchedulePreview extends StatelessWidget {
       ),
       selectedDayPredicate: (d) => dates.where((element) => isSameDay(element, d)).isNotEmpty,
       daysOfWeekStyle: DaysOfWeekStyle(
-        dowTextFormatter: (d, e) => Utils.weekD(d),
+        dowTextFormatter: (d, e) => Formats.weekD(d),
       ),
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,

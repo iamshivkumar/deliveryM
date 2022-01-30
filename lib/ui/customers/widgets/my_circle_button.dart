@@ -21,7 +21,7 @@ class MyCircleButton extends StatelessWidget {
       child: RawMaterialButton(
         fillColor: theme.cardColor,
         onPressed: onTap,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         child: icon,
       ),
     );

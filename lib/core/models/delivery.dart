@@ -1,4 +1,4 @@
-import 'package:delivery_m/utils/formats.dart';
+import '../../utils/formats.dart';
 import 'package:equatable/equatable.dart';
 
 class Delivery extends Equatable {

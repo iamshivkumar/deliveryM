@@ -1,5 +1,4 @@
-import 'package:delivery_m/core/providers/form_key_provider.dart';
-import 'package:delivery_m/utils/labels.dart';
+import '../../../core/providers/form_key_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

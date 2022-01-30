@@ -1,5 +1,5 @@
-import 'package:delivery_m/core/models/product.dart';
-import 'package:delivery_m/core/providers/form_key_provider.dart';
+import '../../../core/models/product.dart';
+import '../../../core/providers/form_key_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

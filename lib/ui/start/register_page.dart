@@ -1,7 +1,7 @@
-import 'package:delivery_m/core/models/address.dart';
-import 'package:delivery_m/ui/pick_address/pick_address_page.dart';
-import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
-import 'package:delivery_m/ui/start/providers/register_view_model_provider.dart';
+import '../../core/models/address.dart';
+import '../pick_address/pick_address_page.dart';
+import '../pick_address/widgets/picked_address_card.dart';
+import 'providers/register_view_model_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -78,16 +78,16 @@ class RegisterPage extends ConsumerWidget {
                             final Address? address = await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PickAddressPage(),
+                                builder: (context) => const PickAddressPage(),
                               ),
                             );
                             if (address != null) {
                               model.address = address;
                             }
                           },
-                          leading: Icon(Icons.location_pin),
-                          title: Text('Pick Location'),
-                          trailing: Icon(Icons.keyboard_arrow_right),
+                          leading: const Icon(Icons.location_pin),
+                          title: const Text('Pick Location'),
+                          trailing: const Icon(Icons.keyboard_arrow_right),
                         ),
                       ),
               ],

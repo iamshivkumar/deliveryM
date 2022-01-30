@@ -9,4 +9,8 @@ class Formats {
   static String monthDayFromDate(String date) => monthDay(dateTime(date));
 
   static DateTime dateTime(String date) => DateFormat("dd-MM-yyyy").parse(date);
+
+    static String weekD(DateTime dateTime) {
+    return DateFormat(DateFormat.WEEKDAY).format(dateTime).split('').first;
+  }
 }

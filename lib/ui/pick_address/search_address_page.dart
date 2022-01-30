@@ -1,6 +1,6 @@
-import 'package:delivery_m/core/repositories/geo_repository_provider.dart';
-import 'package:delivery_m/ui/components/loading.dart';
-import 'package:delivery_m/ui/pick_address/providers/pick_address_view_model_provider.dart';
+import '../../core/repositories/geo_repository_provider.dart';
+import '../components/loading.dart';
+import 'providers/pick_address_view_model_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +11,7 @@ class SearchPage extends SearchDelegate {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           showSuggestions(context);
           query = "";
@@ -59,11 +59,11 @@ class SearchView extends ConsumerWidget {
     final addressModel = ref.read(pickAddressViewModelProvider);
     final repo = ref.read(geoReposioryProvider);
     return ListView(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       children: (searches.loading
           ? [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Loading(),
               )
             ]
@@ -71,7 +71,7 @@ class SearchView extends ConsumerWidget {
               .map(
                 (e) => Column(
                   children: [
-                    Divider(),
+                    const Divider(),
                     ListTile(
                       onTap: () async {
                         addressModel.address = await repo.getAddressById(e.id);

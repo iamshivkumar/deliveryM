@@ -1,6 +1,6 @@
-import 'package:delivery_m/core/models/debouncer.dart';
-import 'package:delivery_m/core/models/search_result.dart';
-import 'package:delivery_m/core/repositories/geo_repository_provider.dart';
+import '../../../core/models/debouncer.dart';
+import '../../../core/models/search_result.dart';
+import '../../../core/repositories/geo_repository_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

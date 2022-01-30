@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:delivery_m/core/models/master_data.dart';
-import 'package:delivery_m/utils/constants.dart';
+import '../models/master_data.dart';
+import '../../utils/constants.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final masterDataRepositoryProvider = Provider((ref)=>MasterDataRepository());

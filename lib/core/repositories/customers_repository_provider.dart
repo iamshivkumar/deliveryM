@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:delivery_m/core/models/address.dart';
-import 'package:delivery_m/core/models/customer.dart';
-import 'package:delivery_m/utils/constants.dart';
+import '../models/address.dart';
+import '../models/customer.dart';
+import '../../utils/constants.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

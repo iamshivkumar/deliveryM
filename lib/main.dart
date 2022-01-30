@@ -1,4 +1,4 @@
-import 'package:delivery_m/root.dart';
+import 'root.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     final base = ThemeData.light();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Delyman',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
         primaryColor: Colors.white,
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           onSecondary: Colors.white,
         ),
       ),
-      home: Root(),
+      home: const Root(),
     );
   }
 }

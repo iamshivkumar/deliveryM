@@ -1,15 +1,15 @@
-import 'package:delivery_m/core/models/product.dart';
-import 'package:delivery_m/ui/auth/providers/auth_provider.dart';
-import 'package:delivery_m/ui/components/error.dart';
-import 'package:delivery_m/ui/components/loading.dart';
-import 'package:delivery_m/ui/home/delivery_boy_home_page.dart';
-import 'package:delivery_m/ui/home/providers/calendar_view_model_provider.dart';
-import 'package:delivery_m/ui/home/providers/gave_provider.dart';
-import 'package:delivery_m/ui/home/utils/calc.dart';
-import 'package:delivery_m/ui/home/widgets/drawer.dart';
-import 'package:delivery_m/ui/home/widgets/my_calendar.dart';
-import 'package:delivery_m/ui/products/providers/products_provider.dart';
-import 'package:delivery_m/ui/subscriptions/providers/delivery_boys_provider.dart';
+import '../../core/models/product.dart';
+import '../auth/providers/auth_provider.dart';
+import '../components/error.dart';
+import '../components/loading.dart';
+import 'delivery_boy_home_page.dart';
+import 'providers/calendar_view_model_provider.dart';
+import 'providers/gave_provider.dart';
+import 'utils/calc.dart';
+import 'widgets/drawer.dart';
+import 'widgets/my_calendar.dart';
+import '../products/providers/products_provider.dart';
+import '../subscriptions/providers/delivery_boys_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:delivery_m/core/models/profile.dart';
-import 'package:delivery_m/ui/auth/providers/user_provider.dart';
-import 'package:delivery_m/utils/constants.dart';
+import '../models/profile.dart';
+import '../../ui/auth/providers/user_provider.dart';
+import '../../utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

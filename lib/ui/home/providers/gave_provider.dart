@@ -1,6 +1,6 @@
-import 'package:delivery_m/core/models/gave.dart';
-import 'package:delivery_m/core/repositories/gave_repository_provider.dart';
-import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
+import '../../../core/models/gave.dart';
+import '../../../core/repositories/gave_repository_provider.dart';
+import '../../profile/providers/profile_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final gaveProvider = StreamProvider.family<Gave, DateTime>(

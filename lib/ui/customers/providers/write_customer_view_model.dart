@@ -1,13 +1,10 @@
 import 'dart:io';
 
-import 'package:delivery_m/core/models/address.dart';
-import 'package:delivery_m/core/models/customer.dart';
-import 'package:delivery_m/core/models/product.dart';
-import 'package:delivery_m/core/models/profile.dart';
-import 'package:delivery_m/core/providers/master_data_provider.dart';
-import 'package:delivery_m/core/repositories/customers_repository_provider.dart';
-import 'package:delivery_m/core/repositories/products_repository_provider.dart';
-import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
+import '../../../core/models/address.dart';
+import '../../../core/models/customer.dart';
+import '../../../core/models/profile.dart';
+import '../../../core/repositories/customers_repository_provider.dart';
+import '../../profile/providers/profile_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -84,7 +81,9 @@ class WriteCustomerViewModel extends ChangeNotifier {
      await _repository.write(updated,files: files);
      onDone();
     } catch (e) {
-      print('$e');
+      if (kDebugMode) {
+        print('$e');
+      }
       loading = false;
     }
   }

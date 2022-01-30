@@ -1,8 +1,8 @@
-import 'package:delivery_m/core/models/product.dart';
-import 'package:delivery_m/core/models/profile.dart';
-import 'package:delivery_m/core/providers/master_data_provider.dart';
-import 'package:delivery_m/core/repositories/products_repository_provider.dart';
-import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
+import '../../../core/models/product.dart';
+import '../../../core/models/profile.dart';
+import '../../../core/providers/master_data_provider.dart';
+import '../../../core/repositories/products_repository_provider.dart';
+import '../../profile/providers/profile_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -57,7 +57,9 @@ class WriteProductViewModel extends ChangeNotifier {
     try {
       _repository.write(updated);
     } catch (e) {
-      print('$e');
+      if (kDebugMode) {
+        print('$e');
+      }
     }
   }
 

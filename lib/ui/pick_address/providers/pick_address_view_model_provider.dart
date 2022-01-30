@@ -1,12 +1,11 @@
 import 'package:android_intent/android_intent.dart';
-import 'package:delivery_m/core/models/address.dart';
-import 'package:delivery_m/core/repositories/geo_repository_provider.dart';
+import '../../../core/models/address.dart';
+import '../../../core/repositories/geo_repository_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../utils/labels.dart';
 
 final pickAddressViewModelProvider =
     ChangeNotifierProvider((ref) => WriteAddressModel(ref));
@@ -31,7 +30,7 @@ class WriteAddressModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  LatLng _latLng = LatLng(18.5204, 73.8567);
+  LatLng _latLng = const LatLng(18.5204, 73.8567);
   LatLng get latLng => _latLng;
 
   set latLng(LatLng v) {
@@ -42,7 +41,9 @@ class WriteAddressModel extends ChangeNotifier {
         address = value;
       });
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -57,7 +58,7 @@ class WriteAddressModel extends ChangeNotifier {
  Set<Marker> get markers => _markerPosition!=null?{
    Marker(
         draggable: true,
-        markerId: MarkerId('Marker'),
+        markerId: const MarkerId('Marker'),
         position: LatLng(_markerPosition!.latitude, _markerPosition!.longitude),
         onDragEnd: ((newPosition) {
           latLng = newPosition;
@@ -120,12 +121,16 @@ class WriteAddressModel extends ChangeNotifier {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          print('Location permissions are denied');
+          if (kDebugMode) {
+            print('Location permissions are denied');
+          }
         }
       }
       if (permission == LocationPermission.deniedForever) {
-         print(
+         if (kDebugMode) {
+           print(
             'Location permissions are permanently denied, we cannot request permissions.');
+         }
       }
       final Position position = await Geolocator.getCurrentPosition();
       latLng = LatLng(position.latitude, position.longitude);

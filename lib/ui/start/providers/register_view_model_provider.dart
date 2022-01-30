@@ -1,8 +1,6 @@
-import 'package:delivery_m/core/models/address.dart';
-import 'package:delivery_m/core/models/profile.dart';
-import 'package:delivery_m/core/repositories/profile_repository_provider.dart';
-import 'package:delivery_m/ui/auth/providers/user_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import '../../../core/models/address.dart';
+import '../../../core/models/profile.dart';
+import '../../../core/repositories/profile_repository_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -55,7 +53,9 @@ class RegisterViewModel extends ChangeNotifier {
     try {
       await _repository.writeProfile(updated);
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 }

@@ -1,9 +1,9 @@
-import 'package:delivery_m/ui/components/error.dart';
-import 'package:delivery_m/ui/components/loading.dart';
-import 'package:delivery_m/ui/customers/providers/customers_provider.dart';
-import 'package:delivery_m/ui/customers/providers/write_customer_view_model.dart';
-import 'package:delivery_m/ui/customers/widgets/customer_card.dart';
-import 'package:delivery_m/ui/customers/write_customer_page.dart';
+import '../components/error.dart';
+import '../components/loading.dart';
+import 'providers/customers_provider.dart';
+import 'providers/write_customer_view_model.dart';
+import 'widgets/customer_card.dart';
+import 'write_customer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -15,7 +15,7 @@ class CustomersPage extends ConsumerWidget {
     final customersStream = ref.watch(customersProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Customers'),
+        title: const Text('Customers'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: ()async  {
@@ -27,7 +27,7 @@ class CustomersPage extends ConsumerWidget {
           );
           ref.read(writeCustomerViewModelProvider).clear();
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: customersStream.when(
         data: (customers) => ListView(

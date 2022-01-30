@@ -1,10 +1,11 @@
-import 'package:delivery_m/ui/home/providers/calendar_view_model_provider.dart';
-import 'package:delivery_m/utils/dates.dart';
+import 'package:delivery_m/utils/formats.dart';
+
+import '../providers/calendar_view_model_provider.dart';
+import '../../../utils/dates.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../../../utils/utils.dart';
 
 class MyCalendar extends ConsumerWidget {
     // ignore: prefer_const_constructors_in_immutables
@@ -40,7 +41,7 @@ class MyCalendar extends ConsumerWidget {
         },
         onPageChanged: (d2) => model.focusDate = d2,
         daysOfWeekStyle: DaysOfWeekStyle(
-          dowTextFormatter: (d, e) => Utils.weekD(d),
+          dowTextFormatter: (d, e) => Formats.weekD(d),
         ),
         headerStyle: const HeaderStyle(
           formatButtonVisible: false,

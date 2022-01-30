@@ -1,7 +1,6 @@
-import 'package:delivery_m/ui/pick_address/providers/pick_address_view_model_provider.dart';
-import 'package:delivery_m/ui/pick_address/search_address_page.dart';
-import 'package:delivery_m/ui/pick_address/widgets/update_address_sheet.dart';
-import 'package:delivery_m/utils/labels.dart';
+import 'providers/pick_address_view_model_provider.dart';
+import 'search_address_page.dart';
+import 'widgets/update_address_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -47,26 +46,26 @@ class PickAddressPage extends ConsumerWidget {
                               model.address!.area,
                               style: style.headline6,
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
                               model.address!.formated,
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             ElevatedButton(
                               onPressed: () {
                                 showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
-                                  builder: (context) => UpdateAddressSheet(),
+                                  builder: (context) => const UpdateAddressSheet(),
                                 );
                               },
-                              child: Text('CONTINUE'),
+                              child: const Text('CONTINUE'),
                             )
                           ],
                         ),
                       ),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
             ],
           ),
           SafeArea(
@@ -77,7 +76,7 @@ class PickAddressPage extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.all(4),
                     child: MyCircleButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.arrow_back,
                       ),
                       onTap: () {
@@ -87,7 +86,7 @@ class PickAddressPage extends ConsumerWidget {
                   ),
                   Expanded(
                     child: Card(
-                      shape: StadiumBorder(),
+                      shape: const StadiumBorder(),
                       child: InkWell(
                         onTap: () {
                           showSearch(context: context, delegate: SearchPage());
@@ -96,9 +95,9 @@ class PickAddressPage extends ConsumerWidget {
                           height: 40,
                           child: Center(
                             child: Row(
-                              children: [
+                              children: const [
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
+                                  padding:  EdgeInsets.symmetric(
                                       horizontal: 16),
                                   child: Text('Search Your Location'),
                                 ),
@@ -112,7 +111,7 @@ class PickAddressPage extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.all(4),
                     child: MyCircleButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.layers_outlined,
                       ),
                       onTap: model.toggleMapType,

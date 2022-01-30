@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:delivery_m/core/models/address.dart';
-import 'package:delivery_m/ui/components/progress_loader.dart';
-import 'package:delivery_m/ui/customers/providers/write_customer_view_model.dart';
-import 'package:delivery_m/ui/customers/widgets/my_circle_button.dart';
-import 'package:delivery_m/ui/pick_address/pick_address_page.dart';
-import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
+import '../../core/models/address.dart';
+import '../components/progress_loader.dart';
+import 'providers/write_customer_view_model.dart';
+import 'widgets/my_circle_button.dart';
+import '../pick_address/pick_address_page.dart';
+import '../pick_address/widgets/picked_address_card.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,7 +23,7 @@ class WriteCustomerPage extends ConsumerWidget {
       isLoading: model.loading,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Add Customer'),
+          title: const Text('Add Customer'),
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(
@@ -40,7 +40,7 @@ class WriteCustomerPage extends ConsumerWidget {
                 });
               }
             },
-            child: Text('ADD'),
+            child: const Text('ADD'),
           ),
         ),
         body: Form(

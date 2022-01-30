@@ -56,7 +56,7 @@ class Address {
         area: '',
         city: '',
         number: '',
-        point: GeoPoint(0, 0),
+        point: const GeoPoint(0, 0),
         formated: ''
       );
 }

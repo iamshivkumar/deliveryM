@@ -1,6 +1,6 @@
-import 'package:delivery_m/core/models/subscription.dart';
-import 'package:delivery_m/core/repositories/subscription_repository_provider.dart';
-import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
+import '../../../core/models/subscription.dart';
+import '../../../core/repositories/subscription_repository_provider.dart';
+import '../../profile/providers/profile_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final daySubscriptionsProvider = StreamProvider.family<List<Subscription>,DateTime>(
