@@ -1,0 +1,62 @@
+import 'package:delivery_m/ui/components/error.dart';
+import 'package:delivery_m/ui/components/loading.dart';
+import 'package:delivery_m/ui/delivery_boys/delivery_boy_page.dart';
+import 'package:delivery_m/ui/delivery_boys/providers/delivery_boys_provider.dart';
+import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+class DeliveryBoysPage extends ConsumerWidget {
+  const DeliveryBoysPage({Key? key, this.forSelect = false}) : super(key: key);
+  final bool forSelect;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final style = theme.textTheme;
+    final deliveryBoysStream = ref.watch(delilveryBoysProvider);
+    final profile = ref.read(profileProvider).value!;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(forSelect ? "Select delivery boy" : 'Delivery Boys'),
+      ),
+      body: deliveryBoysStream.when(
+        data: (dboys) => ListView(
+          children: dboys
+              .map(
+                (e) => ListTile(
+                  title: Row(
+                    children: [
+                      Flexible(child: Text(e.name)),
+                      e.id == profile.id
+                          ? Text(
+                              ' - You ',
+                              style: style.subtitle2!.copyWith(
+                                color: theme.colorScheme.secondary,
+                              ),
+                            )
+                          : const SizedBox()
+                    ],
+                  ),
+                  subtitle: Text(e.address.formated),
+                  onTap: () {
+                    if (forSelect) {
+                      Navigator.pop(context, e.id);
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DeliveryBoyPage(dId: e.id),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              )
+              .toList(),
+        ),
+        error: (e, s) => DataError(e: e),
+        loading: () => const Loading(),
+      ),
+    );
+  }
+}

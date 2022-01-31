@@ -1,9 +1,14 @@
+import 'package:delivery_m/core/models/dboy_day.dart';
+import 'package:delivery_m/ui/deliveries/widgets/map_view.dart';
+
 import '../components/error.dart';
 import '../components/loading.dart';
 import 'widgets/deliveries_list_view.dart';
 import '../home/providers/dboy_day_subscriptions_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final mapviewProvider = StateProvider<bool>((ref) => true);
 
 class DeliveriesPage extends ConsumerWidget {
   const DeliveriesPage({
@@ -16,6 +21,7 @@ class DeliveriesPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final subscriptionsStream =
         ref.watch(dboyDaySubscriptionsProvider(dboyDay));
+    final mapview = ref.watch(mapviewProvider.state);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -36,10 +42,16 @@ class DeliveriesPage extends ConsumerWidget {
           ),
         ),
         body: subscriptionsStream.when(
-          data: (subscriptions) => DeliveriesListView(
-            date: dboyDay.date,
-            subscriptions: subscriptions,
-          ),
+          data: (subscriptions) => mapview.state
+              ? MapView(
+                  date: dboyDay.date,
+                  subscriptions: subscriptions,
+                  
+                )
+              : DeliveriesListView(
+                  date: dboyDay.date,
+                  subscriptions: subscriptions,
+                ),
           error: (e, s) => DataError(e: e),
           loading: () => const Loading(),
         ),

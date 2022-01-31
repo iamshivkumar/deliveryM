@@ -8,13 +8,12 @@ class Profile {
   final String mobile;
   final bool isAdmin;
   final Address address;
-     final String eId;
+  final String eId;
 
   final DateTime createdAt;
   final DateTime? end;
   final String? businessName;
   final List<String>? deboys;
-
 
   Profile({
     required this.id,
@@ -23,9 +22,8 @@ class Profile {
     required this.mobile,
     required this.createdAt,
     required this.isAdmin,
-        required this.address,
+    required this.address,
     required this.eId,
-
     this.deboys,
     this.end,
     this.businessName,
@@ -57,7 +55,7 @@ class Profile {
       eId: eId ?? this.eId,
       end: end ?? this.end,
       createdAt: createdAt ?? this.createdAt,
-      deboys: deboys??this.deboys,
+      deboys: deboys ?? this.deboys,
     );
   }
 
@@ -69,7 +67,7 @@ class Profile {
       'isAdmin': isAdmin,
       'businessName': businessName,
       'address': address.toMap(),
-      'eId': isAdmin? id: eId,
+      'eId': isAdmin ? id : eId,
       'createdAt': Timestamp.fromDate(createdAt),
       'end': end != null ? Timestamp.fromDate(end!) : null,
       'deboys': deboys
@@ -89,21 +87,20 @@ class Profile {
       end: map['end']?.toDate(),
       createdAt: map['createdAt'].toDate(),
       isAdmin: map['isAdmin'],
-      deboys: map['deboys']!=null? List<String>.from(map['deboys']):null,
+      deboys: map['deboys'] != null ? List<String>.from(map['deboys']) : null,
     );
   }
 
   factory Profile.empty() {
     return Profile(
-      id: '',
-      firstname: '',
-      lastname: '',
-      mobile: '',
-      address: Address.empty(),
-      createdAt: DateTime.now(),
-      isAdmin: false,
-      eId: ''
-    );
+        id: '',
+        firstname: '',
+        lastname: '',
+        mobile: '',
+        address: Address.empty(),
+        createdAt: DateTime.now(),
+        isAdmin: false,
+        eId: '');
   }
 }
 

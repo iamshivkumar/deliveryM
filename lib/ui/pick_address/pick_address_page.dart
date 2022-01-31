@@ -120,7 +120,7 @@ class PickAddressPage extends ConsumerWidget {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

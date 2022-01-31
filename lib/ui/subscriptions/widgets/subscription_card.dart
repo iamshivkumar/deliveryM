@@ -1,3 +1,8 @@
+import 'package:delivery_m/ui/components/error.dart';
+import 'package:delivery_m/ui/components/loading.dart';
+import 'package:delivery_m/ui/customers/providers/customer_provider.dart';
+import 'package:delivery_m/utils/labels.dart';
+
 import '../../../core/enums/delivery_status.dart';
 import '../../../core/models/subscription.dart';
 import '../../products/providers/products_provider.dart';
@@ -6,91 +11,116 @@ import '../../../utils/formats.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// class SubscriptionCard extends StatelessWidget {
-//   const SubscriptionCard({
-//     Key? key,
-//   }) : super(key: key);
+class SubscriptionCard extends ConsumerWidget {
+  const SubscriptionCard({Key? key, required this.subscription})
+      : super(key: key);
+  final Subscription subscription;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final style = theme.textTheme;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
-//     final style = theme.textTheme;
-//     return Card(
-//       child: Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Text(
-//                     '9 Dec',
-//                     style: style.caption,
-//                   ),
-//                   Text(
-//                     'TO',
-//                     style: style.overline,
-//                   ),
-//                   Text(
-//                     '1 Jan',
-//                     style: style.caption,
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: Row(
-//                 children: [
-//                   Expanded(
-//                     child: Text(
-//                       'Customer Name',
-//                       style: style.bodyText1,
-//                     ),
-//                   ),
-//                   Text('Area')
-//                 ],
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: Row(
-//                 children: [
-//                   Expanded(
-//                     child: Text('Product Name'),
-//                   ),
-//                   Text(
-//                     '\$100',
-//                     style: style.subtitle2,
-//                   )
-//                 ],
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.all(8),
-//               child: Stack(
-//                 children: [
-//                   Container(
-//                     height: 4,
-//                     color: theme.dividerColor,
-//                   ),
-//                   Container(
-//                     width: 100,
-//                     height: 4,
-//                     color: Colors.green,
-//                   ),
-//                 ],
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+    final products = ref.watch(productsProvider).value!;
+    final filtered =
+        products.where((element) => element.id == subscription.productId);
+    final product = filtered.isNotEmpty ? filtered.first : null;
+    final customerStream = ref.watch(customerProvider(subscription.customerId));
+    return GestureDetector(
+      onTap: () {
+        // Navigator.push(context, MaterialPageRoute(builder: (context)=>));
+      },
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      Formats.monthDay(subscription.startDate),
+                      style: style.caption,
+                    ),
+                    Text(
+                      'TO',
+                      style: style.overline,
+                    ),
+                    Text(
+                      Formats.monthDay(subscription.endDate),
+                      style: style.caption,
+                    ),
+                  ],
+                ),
+              ),
+              customerStream.when(
+                data: (customer) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          customer.name,
+                          style: style.bodyText1,
+                        ),
+                      ),
+                      Text("${customer.address.area}, ${customer.address.city}")
+                    ],
+                  ),
+                ),
+                error: (e, s) => DataError(e: e),
+                loading: () => const Loading(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(product?.name ?? "unknown"),
+                    ),
+                    Text(
+                      '${Labels.rupee}${subscription.price}',
+                      style: style.subtitle2,
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: subscription.deliveries
+                          .where((element) =>
+                              element.status == DeliveryStatus.delivered)
+                          .length,
+                      child: Container(
+                        height: 4,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Expanded(
+                      flex: subscription.deliveries
+                          .where((element) =>
+                              element.status == DeliveryStatus.pending)
+                          .length,
+                      child: Container(
+                        height: 4,
+                        color: theme.dividerColor,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class CustSubscriptionCard extends ConsumerWidget {
   const CustSubscriptionCard({
@@ -114,9 +144,19 @@ class CustSubscriptionCard extends ConsumerWidget {
         [];
 
     return GestureDetector(
-      onTap: enabled? (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>SubscriptionPage(cId: subscription.customerId,sId: subscription.id)));
-      }:null,
+      onTap: enabled
+          ? () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SubscriptionPageFromCustomer(
+                    cId: subscription.customerId,
+                    sId: subscription.id,
+                  ),
+                ),
+              );
+            }
+          : null,
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -148,7 +188,8 @@ class CustSubscriptionCard extends ConsumerWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(products.isNotEmpty ? products.first.name : ""),
+                      child:
+                          Text(products.isNotEmpty ? products.first.name : ""),
                     ),
                     Text(
                       '\$${subscription.price}',

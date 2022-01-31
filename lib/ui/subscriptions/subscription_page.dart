@@ -1,3 +1,10 @@
+import 'package:delivery_m/core/models/subscription.dart';
+import 'package:delivery_m/ui/components/error.dart';
+import 'package:delivery_m/ui/components/loading.dart';
+import 'package:delivery_m/ui/delivery_boys/delivery_boys_page.dart';
+import 'package:delivery_m/ui/delivery_boys/providers/delivery_boys_provider.dart';
+import 'package:delivery_m/ui/subscriptions/providers/subscription_provider.dart';
+
 import '../../core/repositories/subscription_repository_provider.dart';
 import '../customers/providers/customer_subscriptions_provider.dart';
 import 'providers/add_delivery_view_model_provider.dart';
@@ -8,22 +15,19 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SubscriptionPage extends ConsumerWidget {
-  const SubscriptionPage({Key? key, required this.cId, required this.sId})
+  const SubscriptionPage({Key? key, required this.subscription})
       : super(key: key);
-  final String cId;
-  final String sId;
+  final Subscription subscription;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    // final style = theme.textTheme;
+    final style = theme.textTheme;
 
     final repository = ref.read(subscriptionRepositoryProvider);
 
-    final subscription = ref
-        .watch(customerSubscriptionsProvider(cId))
-        .value!
-        .where((element) => element.id == sId)
-        .first;
+    final _dboys = ref.watch(delilveryBoysProvider).value!;
+    final filetered = _dboys.where((e) => e.id == subscription.dId);
+    final dboy = filetered.isNotEmpty ? filetered.first : null;
 
     return Scaffold(
       appBar: AppBar(
@@ -48,6 +52,96 @@ class SubscriptionPage extends ConsumerWidget {
                 subscription: subscription,
                 enabled: false,
               ),
+              dboy != null
+                  ? Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              'Delivery boy',
+                              style: style.bodyText1,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(dboy.name),
+                            const SizedBox(height: 4),
+                            Text(
+                              dboy.address.formated,
+                              style: style.caption,
+                            ),
+                            const SizedBox(height: 8),
+                            OutlinedButton(
+                              onPressed: () async {
+                                final String? id = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    fullscreenDialog: true,
+                                    builder: (context) =>
+                                        const DeliveryBoysPage(forSelect: true),
+                                  ),
+                                );
+                                if (id != null) {
+                                  if (id == subscription.dId) {
+                                    return;
+                                  }
+                                  final filetered =
+                                      _dboys.where((e) => e.id == id);
+                                  final newDboy = filetered.isNotEmpty
+                                      ? filetered.first
+                                      : null;
+                                  if (newDboy != null) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: RichText(
+                                          text: TextSpan(
+                                            text:
+                                                'Are you sure you want assign this subscrption to ',
+                                            style: style.subtitle1,
+                                            children: [
+                                              TextSpan(
+                                                text: "${newDboy.name} ",
+                                                style:
+                                                    style.subtitle1!.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const TextSpan(
+                                                text: "for delivery?",
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('NO'),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              repository.changeDboy(
+                                                  sId: subscription.id,
+                                                  dId: id);
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('YES'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                }
+                              },
+                              child: const Text('CHANGE'),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
             ] +
             (subscription.deliveries
                 .map(
@@ -71,7 +165,8 @@ class SubscriptionPage extends ConsumerWidget {
                       ),
                     ),
                     onDismissed: (v) {
-                      repository.deleteDelivery(sId: sId, delivery: e);
+                      repository.deleteDelivery(
+                          sId: subscription.id, delivery: e);
                     },
                     confirmDismiss: (v) async {
                       return await showDialog(
@@ -132,5 +227,36 @@ class SubscriptionPage extends ConsumerWidget {
                 .toList()),
       ),
     );
+  }
+}
+
+class SubscriptionPageFromCustomer extends ConsumerWidget {
+  const SubscriptionPageFromCustomer(
+      {Key? key, required this.cId, required this.sId})
+      : super(key: key);
+  final String cId;
+  final String sId;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final subscription = ref
+        .watch(customerSubscriptionsProvider(cId))
+        .value!
+        .where((element) => element.id == sId)
+        .first;
+    return SubscriptionPage(subscription: subscription);
+  }
+}
+
+class SubscriptionPageRoot extends ConsumerWidget {
+  const SubscriptionPageRoot({Key? key, required this.sId}) : super(key: key);
+
+  final String sId;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ref.watch(subscriptionProvider(sId)).when(
+          data: (subscription) => SubscriptionPage(subscription: subscription),
+          error: (e, s) => DataErrorPage(e: e),
+          loading: () => const LoadingPage(),
+        );
   }
 }

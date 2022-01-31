@@ -1,0 +1,71 @@
+import 'package:delivery_m/core/repositories/profile_repository_provider.dart';
+import 'package:delivery_m/ui/components/error.dart';
+import 'package:delivery_m/ui/components/loading.dart';
+import 'package:delivery_m/ui/delivery_boys/providers/delivery_boys_provider.dart';
+import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
+import 'package:delivery_m/ui/subscriptions/assigned_subscriptions_page.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+class DeliveryBoyPage extends ConsumerWidget {
+  const DeliveryBoyPage({Key? key, required this.dId}) : super(key: key);
+
+  final String dId;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ref.watch(delilveryBoysProvider).when(
+          data: (dboys) {
+            final dboy = dboys.where((element) => element.id == dId).first;
+
+            final repository = ref.read(profileRepositoryProvider);
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(dboy.name),
+              ),
+              body: ListView(
+                children: [
+                  Card(
+                    child: ListTile(
+                      title: const Text("Assigned Subscriptions"),
+                      trailing: const Icon(Icons.keyboard_arrow_right),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AssignedSubscriptionsPage(
+                              dId: dId,
+                              dName: dboy.name,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                      title: Text(dboy.mobile),
+                      leading: const Icon(Icons.call),
+                      trailing: const Icon(Icons.keyboard_arrow_right),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: PickedAddressCard(
+                      address: dboy.address,
+                      onChanged: (v) {
+                        repository.updateAddress(
+                          dId: dId,
+                          address: v,
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
+          error: (e, s) => DataError(e: e),
+          loading: () => const Loading(material: true),
+        );
+  }
+}

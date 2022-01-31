@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_m/core/models/address.dart';
 import '../models/profile.dart';
 import '../../ui/auth/providers/user_provider.dart';
 import '../../utils/constants.dart';
@@ -65,5 +66,10 @@ class ProfileRepository {
               )
               .toList(),
         );
+  }
+    void updateAddress({required String dId, required Address address}) {
+    _firestore.collection(Constants.users).doc(dId).update({
+      Constants.address: address.toMap(),
+    });
   }
 }

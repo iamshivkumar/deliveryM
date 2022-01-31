@@ -69,7 +69,8 @@ class SubscriptionRepository {
         );
   }
 
-  void update({required Subscription subscription, required Delivery updated}) async{
+  void update(
+      {required Subscription subscription, required Delivery updated}) async {
     final initial =
         subscription.deliveries.where((element) => element == updated).first;
     subscription.deliveries[subscription.deliveries.indexOf(updated)] = updated;
@@ -199,7 +200,8 @@ class SubscriptionRepository {
     final _batch = _firestore.batch();
     _batch.update(
         _firestore.collection(Constants.subscriptions).doc(subscription.id), {
-      Constants.deliveries: subscription.deliveries.map((e) => e.toMap()).toList(),
+      Constants.deliveries:
+          subscription.deliveries.map((e) => e.toMap()).toList(),
       Constants.dates: subscription.dates,
       Constants.returnKitsQt: subscription.returnKitsQt != null
           ? FieldValue.increment(delivery.status == DeliveryStatus.delivered
@@ -233,5 +235,37 @@ class SubscriptionRepository {
       );
     }
     _batch.commit();
+  }
+
+  void changeDboy({required String sId, required String dId}) {
+    _firestore.collection(Constants.subscriptions).doc(sId).update({
+      Constants.dId: dId,
+    });
+  }
+
+  Stream<List<Subscription>> dboyMonthSubscriptionsStream(
+      {required String dId, required DateTime month}) {
+    return _firestore
+        .collection(Constants.subscriptions)
+        .where(Constants.dId, isEqualTo: dId)
+        .where(
+          Constants.startDate,
+          isGreaterThanOrEqualTo: month,
+          isLessThanOrEqualTo: DateTime(month.year, month.month + 1, 0),
+        )
+        .orderBy(Constants.startDate)
+        .snapshots()
+        .map((event) =>
+            event.docs.map((e) => Subscription.fromFirestore(e)).toList());
+  }
+
+  Stream<Subscription> subscriptionStream(String sId) {
+    return _firestore
+        .collection(Constants.subscriptions)
+        .doc(sId)
+        .snapshots()
+        .map(
+          (event) => Subscription.fromFirestore(event),
+        );
   }
 }

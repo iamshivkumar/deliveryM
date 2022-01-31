@@ -3,7 +3,7 @@ import '../../core/models/delivery.dart';
 import '../../core/models/product.dart';
 import '../products/providers/products_provider.dart';
 import 'providers/create_subscription_view_model_provider.dart';
-import 'providers/delivery_boys_provider.dart';
+import '../delivery_boys/providers/delivery_boys_provider.dart';
 import 'widgets/schedule_preview.dart';
 import '../../utils/dates.dart';
 import '../../utils/formats.dart';
@@ -172,12 +172,22 @@ class CreateSubscriptionPage extends HookConsumerWidget {
                 decoration: const InputDecoration(
                   labelText: "Delivery Boy",
                 ),
+                isExpanded: true,
                 value: model.dId,
+                selectedItemBuilder: (BuildContext context) {
+                  return dboys.map<Widget>((e) {
+                    return Text(e.name);
+                  }).toList();
+                },
                 validator: (v) => v!.isEmpty ? "Select delivery boy" : null,
                 items: dboys
                     .map(
                       (e) => DropdownMenuItem<String>(
-                        child: Text(e.name),
+                        child: ListTile(
+                          dense: true,
+                          title: Text(e.name),
+                          subtitle: Text(e.address.formated),
+                        ),
                         value: e.id,
                       ),
                     )

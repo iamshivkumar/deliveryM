@@ -1,15 +1,14 @@
-import '../../core/models/address.dart';
+import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
+
 import '../../core/repositories/customers_repository_provider.dart';
 import '../components/error.dart';
 import '../components/loading.dart';
 import 'providers/customer_subscriptions_provider.dart';
 import 'providers/customers_provider.dart';
 import 'widgets/add_balance_sheet.dart';
-import '../pick_address/pick_address_page.dart';
 import '../subscriptions/create_subscription_page.dart';
 import '../subscriptions/widgets/subscription_card.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CustomerPage extends ConsumerWidget {
@@ -86,50 +85,13 @@ class CustomerPage extends ConsumerWidget {
                   trailing: const Icon(Icons.keyboard_arrow_right),
                 ),
               ),
-              Card(
-                child: Column(
-                  children: [
-                    AspectRatio(
-                      aspectRatio: 2,
-                      child: GoogleMap(
-                        liteModeEnabled: true,
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(
-                            customer.address.point.latitude,
-                            customer.address.point.longitude,
-                          ),
-                          zoom: 14,
-                        ),
-                        markers: {
-                          Marker(
-                            markerId: const MarkerId('0'),
-                            position: LatLng(
-                              customer.address.point.latitude,
-                              customer.address.point.longitude,
-                            ),
-                          ),
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: Text(customer.address.formated),
-                      trailing: IconButton(
-                        onPressed: () async {
-                          final Address? address = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PickAddressPage(),
-                            ),
-                          );
-                          if (address != null) {
-                            repository.updateAddress(
-                                cId: cId, address: address);
-                          }
-                        },
-                        icon: const Icon(Icons.edit),
-                      ),
-                    ),
-                  ],
+              Padding(
+                padding: const EdgeInsets.all(4),
+                child: PickedAddressCard(
+                  address: customer.address,
+                  onChanged: (v) {
+                    repository.updateAddress(cId: cId, address: v);
+                  },
                 ),
               ),
             ],

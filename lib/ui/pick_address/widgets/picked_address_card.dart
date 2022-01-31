@@ -6,19 +6,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../pick_address_page.dart';
 
+final controllerProvider = StateProvider<GoogleMapController?>((ref)=>null);
 // ignore: must_be_immutable
 class PickedAddressCard extends ConsumerWidget {
-  PickedAddressCard({Key? key, required this.address, required this.onChanged})
+  const PickedAddressCard({Key? key, required this.address, required this.onChanged})
       : super(key: key);
 
   final Address address;
 
   final ValueChanged<Address> onChanged;
 
-  GoogleMapController? controller;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(controllerProvider.state);
     return Card(
       margin: EdgeInsets.zero,
       child: Column(
@@ -41,6 +42,9 @@ class PickedAddressCard extends ConsumerWidget {
                       address.point.longitude,
                     ))
               },
+              onMapCreated: (v){
+                controller.state = v;
+              },
             ),
           ),
           ListTile(
@@ -59,18 +63,19 @@ class PickedAddressCard extends ConsumerWidget {
                 );
                 if (picked != null) {
                   onChanged(picked);
-                  if (controller != null) {
-                    controller!.animateCamera(
-                      CameraUpdate.newCameraPosition(
-                        CameraPosition(
-                          target: LatLng(
-                            picked.point.latitude,
-                            picked.point.longitude,
+                  if (controller.state != null) {
+                    controller.state!
+                        .animateCamera(
+                          CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                              target: LatLng(
+                                picked.point.latitude,
+                                picked.point.longitude,
+                              ),
+                              zoom: 14,
+                            ),
                           ),
-                          zoom: 14,
-                        ),
-                      ),
-                    );
+                        );
                   }
                 }
               },

@@ -9,7 +9,7 @@ import 'utils/calc.dart';
 import 'widgets/drawer.dart';
 import 'widgets/my_calendar.dart';
 import '../products/providers/products_provider.dart';
-import '../subscriptions/providers/delivery_boys_provider.dart';
+import '../delivery_boys/providers/delivery_boys_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
