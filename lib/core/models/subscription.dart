@@ -10,18 +10,24 @@ class Subscription {
   final bool recure;
   final bool active;
 
+  final int quantity;
   final String productId;
+  final String productName;
+  final String productImage;
   final double price;
   final int? returnKitsQt;
   final DateTime startDate;
   final DateTime endDate;
   final List<Delivery> deliveries;
   final List<String> dates;
+  final int diff;
   final String dId;
-  
 
+  String get name =>
+      "$quantity $productName ${DeliveryType.getName(diff)} - ${Formats.monthDay(startDate)} to ${Formats.monthDay(endDate)}";
 
   Subscription({
+    required this.productName,
     required this.id,
     required this.eId,
     required this.customerId,
@@ -34,6 +40,9 @@ class Subscription {
     required this.deliveries,
     required this.dates,
     required this.dId,
+    required this.diff,
+    required this.productImage,
+    required this.quantity,
     this.returnKitsQt,
   });
 
@@ -51,7 +60,11 @@ class Subscription {
     List<Delivery>? deliveries,
     List<String>? dates,
     String? dId,
-   int? returnKitsQt
+    int? returnKitsQt,
+    int? diff,
+    String? productName,
+    String? productImage,
+    int? quantity,
   }) {
     return Subscription(
       id: id ?? this.id,
@@ -64,9 +77,13 @@ class Subscription {
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       deliveries: deliveries ?? this.deliveries,
-      dates: dates??this.dates,
-      dId: dId??this.dId,
-      returnKitsQt: returnKitsQt
+      dates: dates ?? this.dates,
+      dId: dId ?? this.dId,
+      returnKitsQt: returnKitsQt,
+      diff: diff ?? this.diff,
+      productImage: productImage ?? this.productImage,
+      productName: productName ?? this.productName,
+      quantity: quantity ?? this.quantity,
     );
   }
 
@@ -78,12 +95,16 @@ class Subscription {
       'active': active,
       'productId': productId,
       'price': price,
+      'productImage': productImage,
+      'productName': productName,
       'startDate': Timestamp.fromDate(startDate),
       'endDate': Timestamp.fromDate(endDate),
       'deliveries': deliveries.map((x) => x.toMap()).toList(),
       'dates': dates,
-      'dId':dId,
-      'returnKitsQt':returnKitsQt,
+      'dId': dId,
+      'returnKitsQt': returnKitsQt,
+      'diff': diff,
+      'quantity': quantity,
     };
   }
 
@@ -97,6 +118,8 @@ class Subscription {
       active: map['active'],
       productId: map['productId'],
       price: map['price'].toDouble(),
+      productImage: map['productImage'],
+      productName: map['productName'],
       startDate: map['startDate'].toDate(),
       endDate: map['endDate'].toDate(),
       deliveries: List<Delivery>.from(
@@ -104,11 +127,14 @@ class Subscription {
           (x) => Delivery.fromMap(x),
         ),
       ),
-      dates: List<String>.from(map['dates'].map((e)=>e as String)),
+      dates: List<String>.from(map['dates'].map((e) => e as String)),
       dId: map['dId'],
-      returnKitsQt: map['returnKitsQt']
+      returnKitsQt: map['returnKitsQt'],
+      diff: map['diff'],
+      quantity: map['quantity'],
     );
   }
 
-  Delivery getDelivery(DateTime date) => deliveries.where((element) => element.date==Formats.date(date)).first;
+  Delivery getDelivery(DateTime date) =>
+      deliveries.where((element) => element.date == Formats.date(date)).first;
 }

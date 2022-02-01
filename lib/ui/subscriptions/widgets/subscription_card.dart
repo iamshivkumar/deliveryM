@@ -27,7 +27,12 @@ class SubscriptionCard extends ConsumerWidget {
     final customerStream = ref.watch(customerProvider(subscription.customerId));
     return GestureDetector(
       onTap: () {
-        // Navigator.push(context, MaterialPageRoute(builder: (context)=>));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SubscriptionPageRoot(sId: subscription.id),
+          ),
+        );
       },
       child: Card(
         child: Padding(
@@ -78,7 +83,7 @@ class SubscriptionCard extends ConsumerWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(product?.name ?? "unknown"),
+                      child: Text(product?.name ?? subscription.productName),
                     ),
                     Text(
                       '${Labels.rupee}${subscription.price}',

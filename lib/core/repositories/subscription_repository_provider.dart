@@ -116,6 +116,7 @@ class SubscriptionRepository {
             quantity: updated.quantity,
             amount: -subscription.price * updated.quantity,
             createdAt: DateTime.now(),
+            name: subscription.name,
           ).toMap(),
         );
       } else if (initial.status == DeliveryStatus.delivered &&
@@ -140,6 +141,7 @@ class SubscriptionRepository {
             quantity: -updated.quantity,
             amount: subscription.price * updated.quantity,
             createdAt: DateTime.now(),
+            name: subscription.name,
           ).toMap(),
         );
       }
@@ -166,6 +168,7 @@ class SubscriptionRepository {
           quantity: quantity,
           amount: -subscription.price * quantity,
           createdAt: DateTime.now(),
+          name: subscription.name,
         ).toMap(),
       );
     }
@@ -231,6 +234,7 @@ class SubscriptionRepository {
           quantity: delivery.quantity,
           amount: -subscription.price * delivery.quantity,
           createdAt: DateTime.now(),
+          name: subscription.name,
         ).toMap(),
       );
     }
@@ -266,6 +270,21 @@ class SubscriptionRepository {
         .snapshots()
         .map(
           (event) => Subscription.fromFirestore(event),
+        );
+  }
+
+  Stream<List<WalletTransaction>> transactionsStream(String sId) {
+    return _firestore
+        .collection(Constants.walletTransactions)
+        .where(Constants.sId, isEqualTo: sId)
+        .orderBy(Constants.createdAt)
+        .snapshots()
+        .map(
+          (event) => event.docs
+              .map(
+                (e) => WalletTransaction.fromMap(e),
+              )
+              .toList(),
         );
   }
 }

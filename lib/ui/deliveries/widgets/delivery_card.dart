@@ -55,7 +55,7 @@ class DeliveryCard extends ConsumerWidget {
                               child: Chip(
                                 label: RichText(
                                   text: TextSpan(
-                                    text: '${product?.name ?? "unknown"}:  ',
+                                    text: '${product?.name ?? e.productName}:  ',
                                     style: style.caption,
                                     children: [
                                       TextSpan(
@@ -66,9 +66,7 @@ class DeliveryCard extends ConsumerWidget {
                                     ],
                                   ),
                                 ),
-                                avatar: product != null
-                                    ? Image.network(product.image)
-                                    : const Icon(Icons.info_outline),
+                                avatar: Image.network(product?.image??e.productImage),
                               ),
                             );
                           }).toList(),

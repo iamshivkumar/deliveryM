@@ -19,7 +19,8 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
   final String cId;
   CreateSubscriptionViewModel(this._ref, this.cId);
 
-  SubscriptionRepository get _repository => _ref.read(subscriptionRepositoryProvider);
+  SubscriptionRepository get _repository =>
+      _ref.read(subscriptionRepositoryProvider);
 
   Profile get _profile => _ref.read(profileProvider).value!;
 
@@ -88,11 +89,14 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
       customerId: cId,
       recure: true,
       active: true,
-      productId: _product!.id,
-      price: _product!.price,
+      productId: product!.id,
+      productImage: product!.image,
+      productName: product!.name,
+      price: product!.price,
+      quantity: quantity,
       startDate: startDate!,
       endDate: endDate!,
-      returnKitsQt: manage?0:null,
+      returnKitsQt: manage ? 0 : null,
       dates: dates.map((e) => Formats.date(e)).toList(),
       deliveries: dates
           .map(
@@ -103,6 +107,7 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
             ),
           )
           .toList(),
+      diff: deliveryType.diff,
     );
 
     try {

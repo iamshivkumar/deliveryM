@@ -56,7 +56,10 @@ class DeliveryType {
 
   static List<DeliveryType> values = [
     DeliveryType('Daily', 1),
-    DeliveryType('Alternate Date', 2),
+    DeliveryType('Alternate Day', 2),
     DeliveryType('Weekly', 7),
   ];
+
+
+  static String getName(int d)=> values.where((element) => element.diff==d).first.name; 
 }

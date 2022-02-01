@@ -4,6 +4,9 @@ class Formats {
   static String monthDay(DateTime date) =>
       DateFormat(DateFormat.MONTH_DAY).format(date);
 
+    static String monthDayTime(DateTime date) =>
+      DateFormat(DateFormat.MONTH_DAY+ " hh:mm a").format(date);
+      
   static String date(DateTime date) => DateFormat("dd-MM-yyyy").format(date);
   static String month(DateTime date) => DateFormat(DateFormat.YEAR_MONTH).format(date);
 

@@ -47,14 +47,14 @@ class DeliveryProductWidget extends ConsumerWidget {
               child: SizedBox(
                 height: 32,
                 width: 32,
-                child: product != null
-                    ? Image.network(product.image)
-                    : const Icon(Icons.info_outline),
+                child:
+                    Image.network(product?.image ?? subscription.productImage),
               ),
             ),
             title: Row(
               children: [
-                Flexible(child: Text(product?.name ?? "unknown")),
+                Flexible(
+                    child: Text(product?.name ?? subscription.productName)),
                 const SizedBox(width: 8),
                 Material(
                   color: theme.dividerColor,
@@ -82,14 +82,19 @@ class DeliveryProductWidget extends ConsumerWidget {
                 IconButton(
                   onPressed: () async {
                     final int? quantity = await showModalBottomSheet(
-                        context: context,
-                        builder: (context) => DeliverSheet(
-                            initial: delivery.quantity, product: product!));
+                      context: context,
+                      builder: (context) => DeliverSheet(
+                        initial: delivery.quantity,
+                        product: product!,
+                      ),
+                    );
                     if (quantity != null) {
                       repository.update(
-                          subscription: updated,
-                          updated: delivery.copyWith(
-                              quantity: delivery.quantity + quantity));
+                        subscription: updated,
+                        updated: delivery.copyWith(
+                          quantity: delivery.quantity + quantity,
+                        ),
+                      );
                     }
                   },
                   icon: const Icon(Icons.add),
@@ -143,8 +148,9 @@ class DeliveryProductWidget extends ConsumerWidget {
                           builder: (context) => AddReturnedKitsQuantitySheet(
                               available: updated.returnKitsQt!),
                         );
-                        if(quantity!=null){
-                          repository.returnKitsQuantity(sId: updated.id, qt: quantity);
+                        if (quantity != null) {
+                          repository.returnKitsQuantity(
+                              sId: updated.id, qt: quantity);
                         }
                       },
                       icon: const Icon(Icons.edit),

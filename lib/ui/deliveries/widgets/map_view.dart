@@ -2,6 +2,7 @@ import 'package:delivery_m/core/enums/delivery_status.dart';
 import 'package:delivery_m/core/models/subscription.dart';
 import 'package:delivery_m/ui/customers/providers/customer_provider.dart';
 import 'package:delivery_m/ui/deliveries/utils/generate.dart';
+import 'package:delivery_m/ui/products/providers/products_provider.dart';
 import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -11,7 +12,7 @@ import 'delivery_card.dart';
 
 final stateProvider = StateProvider<int>((ref) => 0);
 
-final selectedStatProvider = StateProvider<DeliveryStat?>((ref)=>null);
+final selectedStatProvider = StateProvider<DeliveryStat?>((ref) => null);
 
 class MapView extends ConsumerWidget {
   const MapView({
@@ -52,48 +53,60 @@ class MapView extends ConsumerWidget {
               ),
               zoom: 14,
             ),
-            onTap: (_){
+            onTap: (_) {
               selected.state = null;
             },
-            markers: generate.stats
-                .map(
-                  (e) => ref.watch(customerProvider(e.cId)).when(
-                        data: (customer) => Marker(
+            markers: generate.stats.map(
+              (e) {
+                return ref.watch(customerProvider(e.cId)).when(
+                      data: (customer) => Marker(
                           markerId: MarkerId(e.subscriptions.first.id),
                           position: LatLng(
                             customer.address.point.latitude,
                             customer.address.point.longitude,
                           ),
-                          onTap: (){
+                          onTap: () {
                             selected.state = e;
                           },
                           infoWindow: InfoWindow(
-                            title: customer.name,
-                            snippet: "Product 2"
-                          )
-                        ),
-                        error: (err, s) => Marker(
-                            markerId: MarkerId(e.subscriptions.first.id),
-                            position: const LatLng(0, 0)),
-                        loading: () => Marker(
+                              title: customer.name,
+                              snippet: e.subscriptions
+                                  .map((s) {
+                                    final filtered = ref
+                                        .watch(productsProvider)
+                                        .value!
+                                        .where((element) =>
+                                            element.id == s.productId);
+                                    return filtered.isNotEmpty
+                                        ? "${filtered.first.name} ${s.getDelivery(date).quantity}"
+                                        : "${s.productName} ${s.getDelivery(date).quantity}";
+                                  })
+                                  .toList()
+                                  .join(', '))),
+                      error: (err, s) => Marker(
                           markerId: MarkerId(e.subscriptions.first.id),
-                          position: const LatLng(0, 0),
-                        ),
+                          position: const LatLng(0, 0)),
+                      loading: () => Marker(
+                        markerId: MarkerId(e.subscriptions.first.id),
+                        position: const LatLng(0, 0),
                       ),
-                )
-                .toSet(),
+                    );
+              },
+            ).toSet(),
           ),
-         selected.state!=null? Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DeliveryCard(
-                  deliveryStat: selected.state!,
-                ),
-              )
-            ],
-          ):const SizedBox()
+          selected.state != null
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DeliveryCard(
+                        deliveryStat: selected.state!,
+                      ),
+                    )
+                  ],
+                )
+              : const SizedBox()
         ],
       ),
     );

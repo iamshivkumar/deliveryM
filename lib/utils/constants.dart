@@ -8,6 +8,7 @@ class Constants {
   static const String products = 'products';
   static const String eId = 'eId';
   static const String dId = 'dId';
+  static const String sId = 'sId';
   static const String customers = 'customers';
   static const String subscriptions = 'subscriptions';
   static const String customerId = "customerId";

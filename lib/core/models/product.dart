@@ -61,15 +61,6 @@ class Product {
     );
   }
 
-    factory Product.unknown() {
-    return Product(
-      id: '',
-      eId: '',
-      image: '',
-      name: '',
-      price: 0,
-    );
-  }
 
   @override
   bool operator ==(Object other) {

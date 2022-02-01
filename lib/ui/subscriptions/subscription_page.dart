@@ -1,9 +1,11 @@
 import 'package:delivery_m/core/models/subscription.dart';
+import 'package:delivery_m/ui/colors.dart';
 import 'package:delivery_m/ui/components/error.dart';
 import 'package:delivery_m/ui/components/loading.dart';
 import 'package:delivery_m/ui/delivery_boys/delivery_boys_page.dart';
 import 'package:delivery_m/ui/delivery_boys/providers/delivery_boys_provider.dart';
 import 'package:delivery_m/ui/subscriptions/providers/subscription_provider.dart';
+import 'package:delivery_m/ui/subscriptions/wallet_transactions_page.dart';
 
 import '../../core/repositories/subscription_repository_provider.dart';
 import '../customers/providers/customer_subscriptions_provider.dart';
@@ -142,6 +144,23 @@ class SubscriptionPage extends ConsumerWidget {
                       ),
                     )
                   : const SizedBox(),
+              Card(
+                child: ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WalletTransactionsPage(
+                          name: subscription.name,
+                          sId: subscription.id,
+                        ),
+                      ),
+                    );
+                  },
+                  title: const Text('Wallet Transactions'),
+                  trailing: const Icon(Icons.keyboard_arrow_right),
+                ),
+              )
             ] +
             (subscription.deliveries
                 .map(
@@ -210,11 +229,16 @@ class SubscriptionPage extends ConsumerWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Material(
                                 shape: const StadiumBorder(),
-                                color: theme.dividerColor,
+                                color: AppColors.statusColor(e.status),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 2),
-                                  child: Text(e.status),
+                                      horizontal: 12, vertical: 4),
+                                  child: Text(
+                                    e.status.toUpperCase(),
+                                    style: style.caption!.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
