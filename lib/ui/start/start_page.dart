@@ -2,7 +2,7 @@ import '../components/error.dart';
 import '../components/loading.dart';
 import '../profile/create_dboy_profile_page.dart';
 import 'providers/businesses_provider.dart';
-import 'register_page.dart';
+import 'write_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -21,7 +21,7 @@ class StartPage extends ConsumerWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => RegisterPage(),
+              builder: (context) => WriteProfilePage(),
             ),
           );
         },
@@ -50,7 +50,7 @@ class StartPage extends ConsumerWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    'Your mobile number added as delivery boy number for this company.',
+                                    'Your mobile number has been added as delivery boy number for this company.',
                                     style: style.caption,
                                   ),
                                 ),

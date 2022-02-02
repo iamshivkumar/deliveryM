@@ -15,7 +15,7 @@ class VerifyPage extends HookConsumerWidget {
   const VerifyPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final style = theme.textTheme;
 
@@ -39,7 +39,7 @@ class VerifyPage extends HookConsumerWidget {
           child: Column(
             children: [
               Expanded(
-                child: SizedBox(  
+                child: SizedBox(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,18 +105,7 @@ class VerifyPage extends HookConsumerWidget {
                                     disabledColor: style.overline!.color,
                                     color: theme.primaryColor,
                                     onPressed: snapshot.data! <= 00
-                                        ? () => model.sendOTP(
-                                            onSend: () {},
-                                            onComplete: () {
-                                              Navigator.pushAndRemoveUntil(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => const Root(),
-                                                ),
-                                                (route) => false,
-                                              );
-                                             
-                                            })
+                                        ? () => model.sendOTP()
                                         : null,
                                     icon: Column(
                                       children: [
@@ -152,16 +141,7 @@ class VerifyPage extends HookConsumerWidget {
                 onPressed: model.code.length == 6
                     ? () {
                         model.verifyOTP(
-                            clear: controller.clear,
-                            onVerify: () {
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Root(),
-                                ),
-                                (route) => false,
-                              );
-                            });
+                            clear: controller.clear);
                       }
                     : null,
               ),

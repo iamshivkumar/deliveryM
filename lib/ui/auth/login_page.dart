@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../utils/labels.dart';
-import '../../root.dart';
-import 'verify_page.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -53,23 +51,7 @@ class LoginPage extends ConsumerWidget {
               ElevatedButton(
                 child: const Text('CONTINUE'),
                 onPressed: model.phone.length == 10
-                    ? () => model.sendOTP(
-                          onComplete: () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Root(),
-                              ),
-                              (route) => false,
-                            );
-                          },
-                          onSend: () => Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const VerifyPage(),
-                            ),
-                          ),
-                        )
+                    ? () => model.sendOTP()
                     : null,
               ),
               const SizedBox(height: 24)

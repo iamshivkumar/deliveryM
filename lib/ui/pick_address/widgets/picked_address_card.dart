@@ -9,11 +9,11 @@ import '../pick_address_page.dart';
 final controllerProvider = StateProvider<GoogleMapController?>((ref)=>null);
 // ignore: must_be_immutable
 class PickedAddressCard extends ConsumerWidget {
-  const PickedAddressCard({Key? key, required this.address, required this.onChanged})
+  const PickedAddressCard({Key? key, required this.address, required this.onChanged, this.showOnly= false})
       : super(key: key);
 
   final Address address;
-
+  final bool showOnly;
   final ValueChanged<Address> onChanged;
 
 
@@ -52,7 +52,7 @@ class PickedAddressCard extends ConsumerWidget {
             title: Text(
               '${address.number}, ${address.area}, ${address.city}',
             ),
-            trailing: IconButton(
+            trailing: showOnly? null:IconButton(
               onPressed: () async {
                 ref.read(pickAddressViewModelProvider).address = address;
                 final Address? picked = await Navigator.push(

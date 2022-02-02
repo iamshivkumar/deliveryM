@@ -12,12 +12,18 @@ class Auth extends ChangeNotifier {
 
   Stream<User?> get userStream => _auth.authStateChanges();
 
-  String? verificationId;
+  String? _verificationId;
+  String? get verificationId => _verificationId;
+  set verificationId(String? verificationId) {
+    _verificationId = verificationId;
+    notifyListeners();
+  }
 
   String _phone = '';
   String get phone => _phone;
   set phone(String phone) {
     _phone = phone;
+    _resendToken = null;
     notifyListeners();
   }
 
@@ -51,10 +57,7 @@ class Auth extends ChangeNotifier {
   Stream<int> get _stream =>
       Stream.periodic(const Duration(seconds: 1), (v) => 30 - v);
 
-  void sendOTP({
-    required VoidCallback onSend,
-    required VoidCallback onComplete,
-  }) async {
+  void sendOTP() async {
     loading = true;
     try {
       await _auth.verifyPhoneNumber(
@@ -62,13 +65,9 @@ class Auth extends ChangeNotifier {
         phoneNumber: "+91" + phone,
         verificationCompleted: (PhoneAuthCredential credential) async {
           loading = true;
-          // user = (
-          await _auth.signInWithCredential(credential)
-              // )
-              // .user
-              ;
+          await _auth.signInWithCredential(credential);
           loading = false;
-          onComplete();
+          verificationId = null;
         },
         verificationFailed: (FirebaseAuthException e) {
           if (e.code == 'invalid-phone-number') {
@@ -86,10 +85,8 @@ class Auth extends ChangeNotifier {
             authMessage = AuthMessage.otpResent();
           }
           _resendToken = forceResendingToken;
-
           stream = _stream;
           loading = false;
-          onSend();
         },
       );
     } catch (e) {
@@ -101,19 +98,16 @@ class Auth extends ChangeNotifier {
   }
 
   Future<void> verifyOTP(
-      {required VoidCallback clear, required VoidCallback onVerify}) async {
+      {required VoidCallback clear}) async {
     loading = true;
     try {
       final AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId!,
         smsCode: code,
       );
-      // user = (
-      await _auth.signInWithCredential(credential)
-          // ).user
-          ;
+      await _auth.signInWithCredential(credential);
       phone = '';
-      onVerify();
+      verificationId = null;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-verification-code') {
         _authMessage = AuthMessage.incorrectOtp();

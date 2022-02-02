@@ -1,18 +1,18 @@
 import '../../core/models/address.dart';
 import '../pick_address/pick_address_page.dart';
 import '../pick_address/widgets/picked_address_card.dart';
-import 'providers/register_view_model_provider.dart';
+import 'providers/write_profile_view_model_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RegisterPage extends ConsumerWidget {
-  RegisterPage({Key? key}) : super(key: key);
+class WriteProfilePage extends ConsumerWidget {
+  WriteProfilePage({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(registerViewModelProvider);
+    final model = ref.watch(writeProfileViewModelProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Register your business'),

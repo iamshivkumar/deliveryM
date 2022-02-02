@@ -1,4 +1,5 @@
 import 'package:delivery_m/core/models/dboy_day.dart';
+import 'package:delivery_m/ui/profile/profile_page.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../core/models/profile.dart';
@@ -42,9 +43,16 @@ class DeliveryBoyHomePage extends ConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              ref.read(authProvider).signOut();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProfilePage(),
+                ),
+              );
             },
-            icon: const Icon(Icons.logout),
+            icon: const CircleAvatar(
+              child: Icon(Icons.person_outline),
+            ),
           ),
         ],
       ),

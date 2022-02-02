@@ -287,4 +287,23 @@ class SubscriptionRepository {
               .toList(),
         );
   }
+
+
+  Future<List<DocumentSnapshot>> reviewsLimitFuture(
+      {required int limit,
+      DocumentSnapshot? last,
+      required String cId}) async {
+    var collectionRef = _firestore
+        .collection(Constants.walletTransactions)
+        .where(Constants.cId, isEqualTo: cId)
+        .limit(limit);
+    if (last != null) {
+      collectionRef = collectionRef.startAfterDocument(last);
+    }
+    return await collectionRef.get().then(
+          (value) => value.docs,
+        );
+  }
+
+
 }

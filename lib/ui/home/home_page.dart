@@ -1,3 +1,5 @@
+import 'package:delivery_m/ui/profile/profile_page.dart';
+
 import '../../core/models/product.dart';
 import '../auth/providers/auth_provider.dart';
 import '../components/error.dart';
@@ -36,9 +38,16 @@ class HomePage extends ConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              ref.read(authProvider).signOut();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProfilePage(),
+                ),
+              );
             },
-            icon: const Icon(Icons.logout),
+            icon: const CircleAvatar(
+              child: Icon(Icons.person_outline),
+            ),
           ),
         ],
       ),

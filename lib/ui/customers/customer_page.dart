@@ -1,3 +1,4 @@
+import 'package:delivery_m/ui/customers/customer_transactions_page.dart';
 import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
 
 import '../../core/repositories/customers_repository_provider.dart';
@@ -75,6 +76,20 @@ class CustomerPage extends ConsumerWidget {
                         icon: const Icon(Icons.add),
                       ),
                     ),
+                    ListTile(
+                      title: const Text('Transactions'),
+                      trailing: const Icon(Icons.keyboard_arrow_right),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CustomerTransactionsPage(
+                              cId: customer.id,
+                            ),
+                          ),
+                        );
+                      },
+                    )
                   ],
                 ),
               ),
@@ -83,6 +98,7 @@ class CustomerPage extends ConsumerWidget {
                   title: Text('+91${customer.mobile}'),
                   leading: const Icon(Icons.call),
                   trailing: const Icon(Icons.keyboard_arrow_right),
+                  onTap: () {},
                 ),
               ),
               Padding(

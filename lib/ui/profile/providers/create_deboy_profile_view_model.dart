@@ -37,6 +37,13 @@ class RegisterViewModel extends ChangeNotifier {
     _address = address;
     notifyListeners();
   }
+  
+  void clear(){
+    _address = null;
+    _lastname = null;
+    _firstname = null;
+    initial = Profile.empty();
+  }
 
   void register(String eId) async {
     final updated = initial.copyWith(
@@ -44,7 +51,6 @@ class RegisterViewModel extends ChangeNotifier {
       lastname: lastname,
       address: address,
       eId: eId,
-      
     );
     try {
       await _repository.writeProfile(updated);

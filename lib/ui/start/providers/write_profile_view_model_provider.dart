@@ -4,17 +4,19 @@ import '../../../core/repositories/profile_repository_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final registerViewModelProvider =
-    ChangeNotifierProvider((ref) => RegisterViewModel(ref));
+final writeProfileViewModelProvider =
+    ChangeNotifierProvider((ref) => WriteProfileViewModel(ref));
 
-class RegisterViewModel extends ChangeNotifier {
+class WriteProfileViewModel extends ChangeNotifier {
   final Ref _ref;
-  RegisterViewModel(this._ref);
+  WriteProfileViewModel(this._ref);
 
   ProfileRepository get _repository => _ref.read(profileRepositoryProvider);
 
 
   Profile initial = Profile.empty();
+
+  bool get forEdit => initial.id.isNotEmpty;
 
   String? _firstname;
   String get firstname => _firstname ?? initial.firstname;
@@ -39,6 +41,14 @@ class RegisterViewModel extends ChangeNotifier {
   set address(Address? address) {
     _address = address;
     notifyListeners();
+  }
+
+  void clear(){
+    _address = null;
+    _lastname = null;
+    _businessName = null;
+    _firstname = null;
+    initial = Profile.empty();
   }
 
   void register() async {
