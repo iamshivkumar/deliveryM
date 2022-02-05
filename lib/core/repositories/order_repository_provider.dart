@@ -39,7 +39,7 @@ class OrderRepository {
       id: '',
       uid: uid,
       amount: amount,
-      paymentStatus: PaymentStatus.pending,
+      paymentStatus: PaymentStatus.processing,
       createdAt: DateTime.now(),
     );
     final response =
