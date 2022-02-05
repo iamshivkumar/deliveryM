@@ -5,6 +5,7 @@ import 'ui/auth/providers/user_provider.dart';
 import 'ui/components/loading.dart';
 import 'ui/home/delivery_boy_home_page.dart';
 import 'ui/home/home_page.dart';
+import 'ui/order/order_page.dart';
 import 'ui/profile/providers/profile_provider.dart';
 import 'ui/start/start_page.dart';
 import 'package:flutter/material.dart';
@@ -25,20 +26,22 @@ class Root extends ConsumerWidget {
       color: theme.scaffoldBackgroundColor,
       child: userStream.when(
         data: (user) => user == null
-            ?  Navigator(
-              pages: [
-                const MaterialPage(child: LoginPage()),
-                if(auth.verificationId!=null)
-                const MaterialPage(child: VerifyPage()),
-              ],
-              onPopPage: (route,value){
-                return route.didPop(value);
-              },
-            )
+            ? Navigator(
+                pages: [
+                  const MaterialPage(child: LoginPage()),
+                  if (auth.verificationId != null)
+                    const MaterialPage(child: VerifyPage()),
+                ],
+                onPopPage: (route, value) {
+                  return route.didPop(value);
+                },
+              )
             : ref.watch(profileProvider).when(
                   data: (profile) => profile != null
                       ? profile.isAdmin
-                          ? const HomePage()
+                          ? profile.expired
+                              ? OrderPage()
+                              : const HomePage()
                           : DeliveryBoyHomePage(
                               profile: profile,
                             )
@@ -52,3 +55,4 @@ class Root extends ConsumerWidget {
     );
   }
 }
+

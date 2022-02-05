@@ -6,8 +6,8 @@ import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
 import 'package:delivery_m/ui/profile/create_dboy_profile_page.dart';
 import 'package:delivery_m/ui/profile/providers/create_deboy_profile_view_model.dart';
 import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
-import 'package:delivery_m/ui/start/providers/write_profile_view_model_provider.dart';
-import 'package:delivery_m/ui/start/write_profile_page.dart';
+import 'package:delivery_m/ui/profile/providers/write_profile_view_model_provider.dart';
+import 'package:delivery_m/ui/profile/write_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

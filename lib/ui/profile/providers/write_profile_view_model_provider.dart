@@ -13,8 +13,7 @@ class WriteProfileViewModel extends ChangeNotifier {
 
   ProfileRepository get _repository => _ref.read(profileRepositoryProvider);
 
-
-  Profile initial = Profile.empty();
+  Profile initial = Profile.emptyAdmin();
 
   bool get forEdit => initial.id.isNotEmpty;
 
@@ -37,18 +36,19 @@ class WriteProfileViewModel extends ChangeNotifier {
   }
 
   Address? _address;
-  Address? get address => _address??(initial.address.isEmpty?null:initial.address);
+  Address? get address =>
+      _address ?? (initial.address.isEmpty ? null : initial.address);
   set address(Address? address) {
     _address = address;
     notifyListeners();
   }
 
-  void clear(){
+  void clear() {
     _address = null;
     _lastname = null;
     _businessName = null;
     _firstname = null;
-    initial = Profile.empty();
+    initial = Profile.emptyAdmin();
   }
 
   void register() async {
@@ -56,9 +56,7 @@ class WriteProfileViewModel extends ChangeNotifier {
       firstname: firstname,
       lastname: lastname,
       businessName: businessName,
-      isAdmin: true,
       address: address,
-      deboys: [],
     );
     try {
       await _repository.writeProfile(updated);

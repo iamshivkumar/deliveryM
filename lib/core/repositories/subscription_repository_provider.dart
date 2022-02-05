@@ -289,13 +289,14 @@ class SubscriptionRepository {
   }
 
 
-  Future<List<DocumentSnapshot>> reviewsLimitFuture(
+  Future<List<DocumentSnapshot>> walletTransactionsLimitFuture(
       {required int limit,
       DocumentSnapshot? last,
       required String cId}) async {
     var collectionRef = _firestore
         .collection(Constants.walletTransactions)
         .where(Constants.cId, isEqualTo: cId)
+        .orderBy(Constants.createdAt,descending: true)
         .limit(limit);
     if (last != null) {
       collectionRef = collectionRef.startAfterDocument(last);

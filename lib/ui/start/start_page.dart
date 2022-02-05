@@ -2,7 +2,7 @@ import '../components/error.dart';
 import '../components/loading.dart';
 import '../profile/create_dboy_profile_page.dart';
 import 'providers/businesses_provider.dart';
-import 'write_profile_page.dart';
+import '../profile/write_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

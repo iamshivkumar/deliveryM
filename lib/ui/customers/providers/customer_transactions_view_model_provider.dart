@@ -32,7 +32,7 @@ class CustomerTransactionsViewModel extends ChangeNotifier {
 
   Future<void> init() async {
     try {
-      _snapshots = await _repository.reviewsLimitFuture(limit: 10, cId: id);
+      _snapshots = await _repository.walletTransactionsLimitFuture(limit: 10, cId: id);
       initLoading = false;
       notifyListeners();
     } catch (e) {
@@ -52,7 +52,7 @@ class CustomerTransactionsViewModel extends ChangeNotifier {
     var previous = _snapshots;
     try {
       _snapshots = _snapshots +
-          await _repository.reviewsLimitFuture(
+          await _repository.walletTransactionsLimitFuture(
             cId: id,
             limit: 6,
             last: _snapshots.last,

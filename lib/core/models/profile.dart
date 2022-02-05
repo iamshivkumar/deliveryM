@@ -93,15 +93,33 @@ class Profile {
 
   factory Profile.empty() {
     return Profile(
-        id: '',
-        firstname: '',
-        lastname: '',
-        mobile: '',
-        address: Address.empty(),
-        createdAt: DateTime.now(),
-        isAdmin: false,
-        eId: '');
+      id: '',
+      firstname: '',
+      lastname: '',
+      mobile: '',
+      address: Address.empty(),
+      createdAt: DateTime.now(),
+      isAdmin: false,
+      eId: '',
+    );
   }
+
+  factory Profile.emptyAdmin() {
+    return Profile(
+      id: '',
+      firstname: '',
+      lastname: '',
+      mobile: '',
+      address: Address.empty(),
+      createdAt: DateTime.now(),
+      isAdmin: true,
+      eId: '',
+      end: DateTime.now().add(const Duration(days: 31)),
+      deboys: [],
+    );
+  }
+
+  bool get expired => end!.isBefore(DateTime.now());
 }
 
 

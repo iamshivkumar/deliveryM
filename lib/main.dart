@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import 'root.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final base = ThemeData.light();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+       systemNavigationBarColor: Colors.white,
+       systemNavigationBarDividerColor: Colors.blueGrey.shade100
+    ));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Delyman',
