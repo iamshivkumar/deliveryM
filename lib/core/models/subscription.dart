@@ -23,8 +23,7 @@ class Subscription {
   final int diff;
   final String dId;
 
-  String get name =>
-      "$quantity $productName ${DeliveryType.getName(diff)} - ${Formats.monthDay(startDate)} to ${Formats.monthDay(endDate)}";
+ 
 
   Subscription({
     required this.productName,

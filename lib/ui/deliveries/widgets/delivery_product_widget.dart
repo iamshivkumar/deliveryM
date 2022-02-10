@@ -1,4 +1,5 @@
 import 'package:delivery_m/core/models/dboy_day.dart';
+import 'package:delivery_m/utils/labels.dart';
 
 import '../../../core/enums/delivery_status.dart';
 import '../../../core/models/subscription.dart';
@@ -70,7 +71,7 @@ class DeliveryProductWidget extends ConsumerWidget {
                 ),
               ],
             ),
-            subtitle: Text('\$${updated.price}'),
+            subtitle: Text('${Labels.rupee}${updated.price}'),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

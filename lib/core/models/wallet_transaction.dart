@@ -10,6 +10,7 @@ class WalletTransaction {
   final String name;
   final int quantity;
   final double amount;
+  final double balance;
   final DateTime createdAt;
 
   WalletTransaction({
@@ -23,6 +24,7 @@ class WalletTransaction {
     required this.createdAt,
     required this.pId,
     required this.name,
+    required this.balance,
   });
 
   WalletTransaction copyWith({
@@ -36,6 +38,7 @@ class WalletTransaction {
     DateTime? createdAt,
     String? pId,
     String? name,
+    double? balance,
   }) {
     return WalletTransaction(
       id: id ?? this.id,
@@ -48,6 +51,7 @@ class WalletTransaction {
       amount: amount ?? this.amount,
       createdAt: createdAt ?? this.createdAt,
       name: name??this.name,
+      balance: balance??this.balance
     );
   }
 
@@ -62,6 +66,7 @@ class WalletTransaction {
       'amount': amount,
       'createdAt': Timestamp.fromDate(createdAt),
       'name':name,
+      'balance': balance,
     };
   }
 
@@ -78,6 +83,7 @@ class WalletTransaction {
       amount: map['amount'].toDouble(),
       createdAt: map['createdAt'].toDate(),
       name: map['name'],
+      balance: map['balance'],
     );
   }
 }

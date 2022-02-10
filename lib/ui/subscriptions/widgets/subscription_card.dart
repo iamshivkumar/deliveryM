@@ -197,7 +197,7 @@ class CustSubscriptionCard extends ConsumerWidget {
                           Text(products.isNotEmpty ? products.first.name : ""),
                     ),
                     Text(
-                      '\$${subscription.price}',
+                      '${Labels.rupee}${subscription.price}',
                       style: style.subtitle2,
                     )
                   ],

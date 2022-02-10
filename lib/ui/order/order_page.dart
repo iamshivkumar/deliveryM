@@ -25,7 +25,7 @@ class OrderPage extends ConsumerWidget {
           appBar: AppBar(
             title: Text('Delivery M'),
             actions: [
-              TextButton(onPressed: () {}, child: Text('Skip to my deliveries'))
+              TextButton(onPressed: () {}, child: const Text('Skip to my deliveries'))
             ],
           ),
           bottomNavigationBar: payable ||
@@ -47,7 +47,7 @@ class OrderPage extends ConsumerWidget {
                   ),
                 )
               : null,
-          body: payable ? CheckoutView() : OrderView(order: orders.first),
+          body: payable ? const CheckoutView() : OrderView(order: orders.first),
         );
       },
       error: (e, s) => DataErrorPage(e: e),

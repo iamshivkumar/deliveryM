@@ -2,8 +2,11 @@ import 'package:delivery_m/core/models/subscription.dart';
 import 'package:delivery_m/ui/colors.dart';
 import 'package:delivery_m/ui/components/error.dart';
 import 'package:delivery_m/ui/components/loading.dart';
+import 'package:delivery_m/ui/customers/providers/customer_provider.dart';
 import 'package:delivery_m/ui/delivery_boys/delivery_boys_page.dart';
 import 'package:delivery_m/ui/delivery_boys/providers/delivery_boys_provider.dart';
+import 'package:delivery_m/ui/doc/doc_viewer_page.dart';
+import 'package:delivery_m/ui/pdf/providers/generate_pdf_view_model_provider.dart';
 import 'package:delivery_m/ui/subscriptions/providers/subscription_provider.dart';
 import 'package:delivery_m/ui/subscriptions/wallet_transactions_page.dart';
 
@@ -26,14 +29,34 @@ class SubscriptionPage extends ConsumerWidget {
     final style = theme.textTheme;
 
     final repository = ref.read(subscriptionRepositoryProvider);
-
+    ref.read(customerProvider(subscription.customerId));
     final _dboys = ref.watch(delilveryBoysProvider).value!;
     final filetered = _dboys.where((e) => e.id == subscription.dId);
     final dboy = filetered.isNotEmpty ? filetered.first : null;
-
+    final generator = ref.read(generatePdfViewModelProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Subscription Details'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              generator.generate(
+                onDone: (v) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DocViewerPage(file: v),
+                    ),
+                  );
+                },
+                subscription: subscription,
+                customer:
+                    ref.read(customerProvider(subscription.customerId)).value!,
+              );
+            },
+            icon: const Icon(Icons.download),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
@@ -151,7 +174,7 @@ class SubscriptionPage extends ConsumerWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => WalletTransactionsPage(
-                          name: subscription.name,
+                          name: subscription.productName,
                           sId: subscription.id,
                         ),
                       ),

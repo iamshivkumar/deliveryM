@@ -1,3 +1,5 @@
+import 'package:delivery_m/utils/labels.dart';
+
 import '../../core/models/customer.dart';
 import '../customers/providers/customer_provider.dart';
 import 'utils/generate.dart';
@@ -45,7 +47,7 @@ class DeliveryPage extends ConsumerWidget {
               Card(
                 child: ListTile(
                   // onTap: () {},
-                  title: Text("\$${customer.balance}"),
+                  title: Text("${Labels.rupee}${customer.balance}"),
                   leading: const Icon(Icons.account_balance_wallet),
                   // trailing: const Icon(Icons.keyboard_arrow_right),
                 ),

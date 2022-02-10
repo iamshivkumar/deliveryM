@@ -54,6 +54,12 @@ dependencies:
   equatable: ^2.0.3
   http: ^0.13.4
   razorpay_flutter: ^1.2.9
+  path_provider: ^2.0.8
+
+  syncfusion_flutter_pdf: ^19.4.48-beta
+  syncfusion_flutter_pdfviewer: ^19.4.50-beta
+
+
 
 dev_dependencies:
   flutter_test:

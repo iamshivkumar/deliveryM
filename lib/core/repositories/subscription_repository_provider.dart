@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_m/ui/customers/providers/customer_provider.dart';
 import '../enums/delivery_status.dart';
 import '../models/delivery.dart';
 import '../models/subscription.dart';
@@ -8,9 +9,12 @@ import '../../utils/formats.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final subscriptionRepositoryProvider =
-    Provider<SubscriptionRepository>((ref) => SubscriptionRepository());
+    Provider<SubscriptionRepository>((ref) => SubscriptionRepository(ref));
 
 class SubscriptionRepository {
+  final Ref _ref;
+  SubscriptionRepository(this._ref);
+
   final _firestore = FirebaseFirestore.instance;
 
   void create(Subscription subscription) {
@@ -69,12 +73,15 @@ class SubscriptionRepository {
         );
   }
 
-  void update(
-      {required Subscription subscription, required Delivery updated}) async {
+  void update({
+    required Subscription subscription,
+    required Delivery updated,
+  }) async {
     final initial =
         subscription.deliveries.where((element) => element == updated).first;
     subscription.deliveries[subscription.deliveries.indexOf(updated)] = updated;
-
+    final balance =
+        _ref.read(customerProvider(subscription.customerId)).value!.balance;
     final _batch = _firestore.batch();
     _batch.update(
         _firestore.collection(Constants.subscriptions).doc(subscription.id), {
@@ -107,17 +114,18 @@ class SubscriptionRepository {
         _batch.set(
           _firestore.collection(Constants.walletTransactions).doc(),
           WalletTransaction(
-            id: '',
-            cId: subscription.customerId,
-            sId: subscription.id,
-            dId: subscription.dId,
-            pId: subscription.productId,
-            date: updated.date,
-            quantity: updated.quantity,
-            amount: -subscription.price * updated.quantity,
-            createdAt: DateTime.now(),
-            name: subscription.name,
-          ).toMap(),
+                  id: '',
+                  cId: subscription.customerId,
+                  sId: subscription.id,
+                  dId: subscription.dId,
+                  pId: subscription.productId,
+                  date: updated.date,
+                  quantity: updated.quantity,
+                  amount: -subscription.price * updated.quantity,
+                  createdAt: DateTime.now(),
+                  name: subscription.productName,
+                  balance: balance + (-subscription.price * updated.quantity))
+              .toMap(),
         );
       } else if (initial.status == DeliveryStatus.delivered &&
           updated.status == DeliveryStatus.canceled) {
@@ -141,7 +149,8 @@ class SubscriptionRepository {
             quantity: -updated.quantity,
             amount: subscription.price * updated.quantity,
             createdAt: DateTime.now(),
-            name: subscription.name,
+            name: subscription.productName,
+            balance: balance + (subscription.price * updated.quantity),
           ).toMap(),
         );
       }
@@ -159,17 +168,18 @@ class SubscriptionRepository {
       _batch.set(
         _firestore.collection(Constants.walletTransactions).doc(),
         WalletTransaction(
-          id: '',
-          pId: subscription.productId,
-          cId: subscription.customerId,
-          sId: subscription.id,
-          dId: subscription.dId,
-          date: updated.date,
-          quantity: quantity,
-          amount: -subscription.price * quantity,
-          createdAt: DateTime.now(),
-          name: subscription.name,
-        ).toMap(),
+                id: '',
+                pId: subscription.productId,
+                cId: subscription.customerId,
+                sId: subscription.id,
+                dId: subscription.dId,
+                date: updated.date,
+                quantity: quantity,
+                amount: -subscription.price * quantity,
+                createdAt: DateTime.now(),
+                name: subscription.productName,
+                balance: balance + (-subscription.price * quantity))
+            .toMap(),
       );
     }
     _batch.commit();
@@ -191,6 +201,8 @@ class SubscriptionRepository {
   void addDelivery(
       {required Subscription subscription, required Delivery delivery}) async {
     subscription.deliveries.add(delivery);
+    final balance =
+        _ref.read(customerProvider(subscription.customerId)).value!.balance;
 
     subscription.dates.add(delivery.date);
 
@@ -234,7 +246,8 @@ class SubscriptionRepository {
           quantity: delivery.quantity,
           amount: -subscription.price * delivery.quantity,
           createdAt: DateTime.now(),
-          name: subscription.name,
+          name: subscription.productName,
+          balance: balance + (-subscription.price * delivery.quantity),
         ).toMap(),
       );
     }
@@ -288,15 +301,12 @@ class SubscriptionRepository {
         );
   }
 
-
   Future<List<DocumentSnapshot>> walletTransactionsLimitFuture(
-      {required int limit,
-      DocumentSnapshot? last,
-      required String cId}) async {
+      {required int limit, DocumentSnapshot? last, required String cId}) async {
     var collectionRef = _firestore
         .collection(Constants.walletTransactions)
         .where(Constants.cId, isEqualTo: cId)
-        .orderBy(Constants.createdAt,descending: true)
+        .orderBy(Constants.createdAt, descending: true)
         .limit(limit);
     if (last != null) {
       collectionRef = collectionRef.startAfterDocument(last);
@@ -305,6 +315,4 @@ class SubscriptionRepository {
           (value) => value.docs,
         );
   }
-
-
 }
