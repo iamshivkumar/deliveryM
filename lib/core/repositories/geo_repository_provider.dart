@@ -10,7 +10,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final geoReposioryProvider = Provider<GeoRepository>((ref) => GeoRepository());
 
 class GeoRepository {
-  static const String _key = "AIzaSyA2KwctHOaF0styLEowjV9cZMJf_gxaC2g";
+  // static const String _key = "AIzaSyA2KwctHOaF0styLEowjV9cZMJf_gxaC2g";
+  static const String _key = "";
 
   GoogleMapsGeocoding get geocoding => GoogleMapsGeocoding(apiKey: _key);
 

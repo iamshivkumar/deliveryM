@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 
 import '../../core/models/profile.dart';
 import '../../core/repositories/gave_repository_provider.dart';
-import '../auth/providers/auth_provider.dart';
 import '../components/error.dart';
 import '../components/loading.dart';
 import '../deliveries/deliveries_page.dart';

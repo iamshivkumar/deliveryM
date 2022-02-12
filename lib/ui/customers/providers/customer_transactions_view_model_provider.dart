@@ -1,8 +1,18 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_m/core/models/customer.dart';
 import 'package:delivery_m/core/models/wallet_transaction.dart';
 import 'package:delivery_m/core/repositories/subscription_repository_provider.dart';
+import 'package:delivery_m/ui/customers/providers/customer_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../../core/models/profile.dart';
+import '../../deliveries/utils/generate.dart';
+import '../../pdf/providers/generate_pdf_view_model_provider.dart';
+import '../../profile/providers/profile_provider.dart';
+import 'customers_provider.dart';
 
 final customerTransactionsViewModelProvider =
     ChangeNotifierProvider.family<CustomerTransactionsViewModel, String>(
@@ -32,7 +42,11 @@ class CustomerTransactionsViewModel extends ChangeNotifier {
 
   Future<void> init() async {
     try {
-      _snapshots = await _repository.walletTransactionsLimitFuture(limit: 10, cId: id);
+      _snapshots =
+          await _repository.walletTransactionsLimitFuture(limit: 10, cId: id);
+      if (kDebugMode) {
+        print(_snapshots.length);
+      }
       initLoading = false;
       notifyListeners();
     } catch (e) {
@@ -69,5 +83,26 @@ class CustomerTransactionsViewModel extends ChangeNotifier {
     }
     busy = false;
     notifyListeners();
+  }
+
+  Customer get _customer =>
+      _ref.watch(customersProvider).value!.where((e) => e.id == id).first;
+  Profile get _profile => _ref.read(profileProvider).value!;
+
+  void generate({
+    required Function(File) onDone,
+  }) async {
+    try {
+      final file = await GeneratePdf.generateTransactionsHistory(
+        transactions: transactions,
+        customer: _customer,
+        name: _profile.businessName!,
+      );
+      onDone(file);
+    } catch (e) {
+      if (kDebugMode) {
+        print('$e');
+      }
+    }
   }
 }

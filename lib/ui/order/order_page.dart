@@ -16,14 +16,14 @@ class OrderPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final style = theme.textTheme;
+    // final style = theme.textTheme;
     final ordersStream = ref.watch(ordersProvider);
     return ordersStream.when(
       data: (orders) {
         final bool payable = orders.isEmpty || orders.first.fair;
         return Scaffold(
           appBar: AppBar(
-            title: Text('Delivery M'),
+            title: const Text('Delivery M'),
             actions: [
               TextButton(onPressed: () {}, child: const Text('Skip to my deliveries'))
             ],
@@ -64,7 +64,7 @@ class CheckoutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
+    // final scheme = theme.colorScheme;
     final style = theme.textTheme;
     return ListView(
       padding: const EdgeInsets.all(24),
@@ -112,7 +112,7 @@ class OrderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
+    // final scheme = theme.colorScheme;
     final style = theme.textTheme;
     return ListView(
       padding: const EdgeInsets.all(24),

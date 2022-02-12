@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_m/core/models/wallet_transaction.dart';
 import '../models/address.dart';
 import '../models/customer.dart';
 import '../../utils/constants.dart';
@@ -54,10 +55,23 @@ class CustomersRepository {
         );
   }
 
-  void addBalance({required String cId, required double amount}) {
-    _firestore.collection(Constants.customers).doc(cId).update({
+  void addBalance(
+      {required String cId, required double amount, required double balance}) {
+    final _batch = _firestore.batch();
+    _batch.update(_firestore.collection(Constants.customers).doc(cId), {
       Constants.balance: FieldValue.increment(amount),
     });
+    _batch.set(
+      _firestore.collection(Constants.walletTransactions).doc(),
+      WalletTransaction(
+        id: '',
+        cId: cId,
+        amount: amount,
+        createdAt: DateTime.now(),
+        balance: balance + amount,
+      ).toMap(),
+    );
+    _batch.commit();
   }
 
   void updateAddress({required String cId, required Address address}) {

@@ -286,20 +286,20 @@ class SubscriptionRepository {
         );
   }
 
-  Stream<List<WalletTransaction>> transactionsStream(String sId) {
-    return _firestore
-        .collection(Constants.walletTransactions)
-        .where(Constants.sId, isEqualTo: sId)
-        .orderBy(Constants.createdAt)
-        .snapshots()
-        .map(
-          (event) => event.docs
-              .map(
-                (e) => WalletTransaction.fromMap(e),
-              )
-              .toList(),
-        );
-  }
+  // Stream<List<WalletTransaction>> transactionsStream(String sId) {
+  //   return _firestore
+  //       .collection(Constants.walletTransactions)
+  //       .where(Constants.sId, isEqualTo: sId)
+  //       .orderBy(Constants.createdAt)
+  //       .snapshots()
+  //       .map(
+  //         (event) => event.docs
+  //             .map(
+  //               (e) => WalletTransaction.fromMap(e),
+  //             )
+  //             .toList(),
+  //       );
+  // }
 
   Future<List<DocumentSnapshot>> walletTransactionsLimitFuture(
       {required int limit, DocumentSnapshot? last, required String cId}) async {

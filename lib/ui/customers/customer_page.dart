@@ -70,7 +70,11 @@ class CustomerPage extends ConsumerWidget {
                             builder: (context) => const AddBalanceSheet(),
                           );
                           if (amount != null) {
-                            repository.addBalance(cId: cId, amount: amount);
+                            repository.addBalance(
+                              cId: cId,
+                              amount: amount,
+                              balance: customer.balance,
+                            );
                           }
                         },
                         icon: const Icon(Icons.add),

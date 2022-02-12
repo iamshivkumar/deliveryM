@@ -46,10 +46,10 @@ class MyApp extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all(Colors.white))),
         colorScheme: base.colorScheme.copyWith(
           primary: Colors.indigo,
-          primaryVariant: Colors.indigo,
+          primaryContainer: Colors.indigo,
           onPrimary: Colors.white,
           secondary: Colors.indigo,
-          secondaryVariant: Colors.indigo,
+          secondaryContainer: Colors.indigo,
           onSecondary: Colors.white,
         ),
       ),

@@ -1,29 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 
-class WalletTransaction {
+class WalletTransaction extends Equatable{
   final String id;
   final String cId;
-  final String sId;
-  final String dId;
-  final String pId;
-  final String date;
-  final String name;
-  final int quantity;
+  final String? sId;
+  final String? dId;
+  final String? pId;
+  final String? date;
+  final String? name;
+  final int? quantity;
   final double amount;
   final double balance;
   final DateTime createdAt;
 
+  bool get isDeliveryTransaction => name!=null&&date!=null&&quantity!=null;
+
   WalletTransaction({
     required this.id,
     required this.cId,
-    required this.sId,
-    required this.dId,
-    required this.date,
-    required this.quantity,
+     this.sId,
+     this.dId,
+     this.date,
+     this.quantity,
     required this.amount,
     required this.createdAt,
-    required this.pId,
-    required this.name,
+     this.pId,
+     this.name,
     required this.balance,
   });
 
@@ -79,11 +82,14 @@ class WalletTransaction {
       dId: map['dId'],
       pId: map['pId'],
       date: map['date'],
-      quantity: map['quantity'].toInt(),
+      quantity: map['quantity']?.toInt(),
       amount: map['amount'].toDouble(),
       createdAt: map['createdAt'].toDate(),
       name: map['name'],
       balance: map['balance'],
     );
   }
+
+  @override
+  List<Object?> get props => [id];
 }

@@ -1,7 +1,6 @@
 import 'package:delivery_m/ui/profile/profile_page.dart';
 
 import '../../core/models/product.dart';
-import '../auth/providers/auth_provider.dart';
 import '../components/error.dart';
 import '../components/loading.dart';
 import 'delivery_boy_home_page.dart';

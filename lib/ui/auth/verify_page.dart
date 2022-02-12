@@ -8,7 +8,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../utils/labels.dart';
-import '../../root.dart';
 import 'utils/auth_message.dart';
 
 class VerifyPage extends HookConsumerWidget {

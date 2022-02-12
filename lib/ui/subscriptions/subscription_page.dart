@@ -8,7 +8,6 @@ import 'package:delivery_m/ui/delivery_boys/providers/delivery_boys_provider.dar
 import 'package:delivery_m/ui/doc/doc_viewer_page.dart';
 import 'package:delivery_m/ui/pdf/providers/generate_pdf_view_model_provider.dart';
 import 'package:delivery_m/ui/subscriptions/providers/subscription_provider.dart';
-import 'package:delivery_m/ui/subscriptions/wallet_transactions_page.dart';
 
 import '../../core/repositories/subscription_repository_provider.dart';
 import '../customers/providers/customer_subscriptions_provider.dart';
@@ -56,7 +55,6 @@ class SubscriptionPage extends ConsumerWidget {
             },
             icon: const Icon(Icons.download),
           ),
-          
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -168,23 +166,23 @@ class SubscriptionPage extends ConsumerWidget {
                       ),
                     )
                   : const SizedBox(),
-              Card(
-                child: ListTile(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WalletTransactionsPage(
-                          name: subscription.productName,
-                          sId: subscription.id,
-                        ),
-                      ),
-                    );
-                  },
-                  title: const Text('Wallet Transactions'),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                ),
-              )
+              // Card(
+              //   child: ListTile(
+              //     onTap: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => WalletTransactionsPage(
+              //             name: subscription.productName,
+              //             sId: subscription.id,
+              //           ),
+              //         ),
+              //       );
+              //     },
+              //     title: const Text('Wallet Transactions'),
+              //     trailing: const Icon(Icons.keyboard_arrow_right),
+              //   ),
+              // )
             ] +
             (subscription.deliveries
                 .map(
