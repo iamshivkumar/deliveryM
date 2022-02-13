@@ -1,3 +1,4 @@
+import 'package:delivery_m/ui/colors.dart';
 import 'package:flutter/services.dart';
 
 import 'root.dart';
@@ -25,32 +26,31 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Delyman',
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        primaryColor: Colors.white,
+        primarySwatch: Palette.swatch,
+        scaffoldBackgroundColor: Palette.background,
         buttonTheme: const ButtonThemeData(
           textTheme: ButtonTextTheme.primary,
         ),
-        cardTheme: const CardTheme(
+        
+        cardTheme: CardTheme(
           clipBehavior: Clip.antiAlias,
+          shape: ContinuousRectangleBorder(
+            borderRadius: BorderRadius.circular(24)
+          )
         ),
-        appBarTheme: const AppBarTheme(
-          color: Colors.white,
-          elevation: 0,
-          foregroundColor: Colors.black,
-        ),
+    
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.white))),
-        colorScheme: base.colorScheme.copyWith(
-          primary: Colors.indigo,
-          primaryContainer: Colors.indigo,
-          onPrimary: Colors.white,
-          secondary: Colors.indigo,
-          secondaryContainer: Colors.indigo,
-          onSecondary: Colors.white,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Palette.swatch
+        ).copyWith(
+          secondary: Palette.secondary,
+          secondaryContainer: Palette.secondary, 
+          onSecondary: Palette.primaryDark,
         ),
       ),
       home: const Root(),

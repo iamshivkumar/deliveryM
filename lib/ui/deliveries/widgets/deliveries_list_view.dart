@@ -24,6 +24,7 @@ class DeliveriesListView extends ConsumerWidget {
           final generate =
               Generate(date: date, subscriptions: subscriptions, status: e);
           return ListView(
+            padding: const EdgeInsets.all(4),
             children: generate.stats
                 .map(
                   (e) => DeliveryCard(deliveryStat: e),

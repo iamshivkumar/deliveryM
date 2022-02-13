@@ -33,6 +33,7 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       drawer: MyDrawer(),
       appBar: AppBar(
+        elevation: 0,
         title: const Text('Home'),
         actions: [
           IconButton(

@@ -99,7 +99,7 @@ class MapView extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: DeliveryCard(
                         deliveryStat: selected.state!,
                       ),

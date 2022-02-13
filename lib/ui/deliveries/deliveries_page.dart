@@ -20,6 +20,8 @@ class DeliveriesPage extends ConsumerWidget {
   final DboyDay dboyDay;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
     final subscriptionsStream =
         ref.watch(dboyDaySubscriptionsProvider(dboyDay));
     final mapview = ref.watch(mapviewProvider.state);
@@ -38,14 +40,16 @@ class DeliveriesPage extends ConsumerWidget {
               ),
             ),
             Switch(
+              activeColor: scheme.secondary,
               value: mapview.state,
               onChanged: (v) {
                 mapview.state = v;
               },
             ),
           ],
-          bottom: const TabBar(
-            tabs: [
+          bottom:  TabBar(
+            indicatorColor: scheme.secondary,
+            tabs: const [
               Tab(
                 text: 'Pending',
               ),

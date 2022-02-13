@@ -25,6 +25,7 @@ class ProfilePage extends ConsumerWidget {
       ),
       body: profileStream.when(
         data: (profile) => ListView(
+          padding: const EdgeInsets.all(4),
           children: [
             Card(
               child: ListTile(
@@ -70,14 +71,17 @@ class ProfilePage extends ConsumerWidget {
                 },
               ),
             ),
-            ListTile(
-              onTap: (){
-                ref.read(authProvider).signOut();
-                Navigator.pop(context);
-              },
-              title: const Text('Logout'),
-              leading: const Icon(Icons.logout),
-            )
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OutlinedButton.icon(
+                onPressed: (){
+                  ref.read(authProvider).signOut();
+                  Navigator.pop(context);
+                },
+                label: const Text('Logout'),
+                icon: const Icon(Icons.logout),
+              ),
+            ),
           ],
         ),
         error: (e, s) => DataError(e: e),

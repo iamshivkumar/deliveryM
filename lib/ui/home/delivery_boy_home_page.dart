@@ -1,5 +1,6 @@
 import 'package:delivery_m/core/models/dboy_day.dart';
 import 'package:delivery_m/ui/profile/profile_page.dart';
+import 'package:delivery_m/utils/formats.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../core/models/profile.dart';
@@ -26,7 +27,7 @@ class DeliveryBoyHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final width = MediaQuery.of(context).size.width;
-    // final theme = Theme.of(context);
+    final theme = Theme.of(context);
     // final style = theme.textTheme;
     final model = ref.watch(calendarViewModelProvider);
     final dboyDay = 
@@ -38,7 +39,9 @@ class DeliveryBoyHomePage extends ConsumerWidget {
     final _repository = ref.read(gaveRepositoryProvider);
     return Scaffold(
       appBar: AppBar(
+        // elevation: 0,
         title: const Text('Shivkumar Konade'),
+        shadowColor: theme.primaryColor.withOpacity(0.4),
         actions: [
           IconButton(
             onPressed: () {
@@ -75,10 +78,17 @@ class DeliveryBoyHomePage extends ConsumerWidget {
             expandedHeight: (width / 2.65),
             floating: true,
             pinned: false,
-            flexibleSpace: FlexibleSpaceBar(
+            forceElevated: true,
+            flexibleSpace: FlexibleSpaceBar(              
               collapseMode: CollapseMode.pin,
               background: MyCalendar(),
             ),
+            shape: const ContinuousRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(32),
+          bottomRight: Radius.circular(32),
+        ),
+      ),
           ),
           SliverPadding(
             padding: const EdgeInsets.all(4),
@@ -89,7 +99,7 @@ class DeliveryBoyHomePage extends ConsumerWidget {
                     data: (subscriptions) {
                       final calc =
                           Calc(list: subscriptions, date: model.selectedDate);
-                      return products
+                      return (products+products)
                           .map(
                             (e) => BigAnaCard(
                               product: e,

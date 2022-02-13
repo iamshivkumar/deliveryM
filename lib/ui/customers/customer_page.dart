@@ -38,9 +38,10 @@ class CustomerPage extends ConsumerWidget {
           );
         },
         label: const Text('Subscription'),
-        icon: const Icon(Icons.add),
+        icon: const Icon(Icons.add_rounded),
       ),
       body: ListView(
+        padding: const EdgeInsets.all(4),
         children: <Widget>[] +
             subscriptionsStream.when(
               data: (subscriptions) => subscriptions
