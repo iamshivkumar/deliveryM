@@ -14,7 +14,6 @@ class DeliveryCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final style = theme.textTheme;
-    final products = ref.watch(productsProvider).value!;
 
     return ref.watch(customerProvider(deliveryStat.cId)).when(
           data: (customer) => GestureDetector(
@@ -45,17 +44,14 @@ class DeliveryCard extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Row(
                           children: deliveryStat.subscriptions.map((e) {
-                            final filtered = products
-                                .where((element) => element.id == e.productId);
-                            final product =
-                                filtered.isNotEmpty ? filtered.first : null;
+                           
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 4),
                               child: Chip(
                                 label: RichText(
                                   text: TextSpan(
-                                    text: '${product?.name ?? e.productName}:  ',
+                                    text: '${e.productName}:  ',
                                     style: style.caption,
                                     children: [
                                       TextSpan(
@@ -66,7 +62,7 @@ class DeliveryCard extends ConsumerWidget {
                                     ],
                                   ),
                                 ),
-                                avatar: Image.network(product?.image??e.productImage),
+                                avatar: Image.network(e.productImage),
                               ),
                             );
                           }).toList(),

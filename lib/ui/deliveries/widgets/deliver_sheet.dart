@@ -4,10 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class DeliverSheet extends ConsumerWidget {
-  const DeliverSheet({Key? key, required this.initial, required this.product})
+  const DeliverSheet(
+      {Key? key,
+      required this.initial,
+      required this.name,
+      required this.image})
       : super(key: key);
 
-  final Product product;
+  final String name;
+  final String image;
   final int initial;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,13 +37,13 @@ class DeliverSheet extends ConsumerWidget {
                     child: SizedBox(
                       height: 28,
                       width: 28,
-                      child: Image.network(product.image),
+                      child: Image.network(image),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(4),
                     child: Text(
-                      product.name,
+                      name,
                       style: style.subtitle2,
                     ),
                   ),
@@ -65,9 +70,13 @@ class DeliverSheet extends ConsumerWidget {
                     child: TextFormField(
                       autofocus: true,
                       keyboardType: TextInputType.number,
-                      validator: (v)=>v!.isEmpty?"Enter quantity":(int.tryParse(v)==null?"Enter valid quantity":null),
-                      onSaved: (v){
-                         Navigator.pop(context,int.parse(v!));
+                      validator: (v) => v!.isEmpty
+                          ? "Enter quantity"
+                          : (int.tryParse(v) == null
+                              ? "Enter valid quantity"
+                              : null),
+                      onSaved: (v) {
+                        Navigator.pop(context, int.parse(v!));
                       },
                     ),
                   )
@@ -78,7 +87,7 @@ class DeliverSheet extends ConsumerWidget {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () {
-                  if(_formKey.currentState!.validate()){
+                  if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                   }
                 },

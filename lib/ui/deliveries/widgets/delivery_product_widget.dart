@@ -25,7 +25,6 @@ class DeliveryProductWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final style = theme.textTheme;
-    final products = ref.watch(productsProvider).value!;
     final updated = ref
         .watch(dboyDaySubscriptionsProvider(
             DboyDay(dId: subscription.dId, date: date)))
@@ -33,9 +32,7 @@ class DeliveryProductWidget extends ConsumerWidget {
         .where((element) => element.id == subscription.id)
         .first;
 
-    final filtered =
-        products.where((element) => element.id == updated.productId);
-    final product = filtered.isNotEmpty ? filtered.first : null;
+ 
     final delivery = updated.getDelivery(date);
     final repository = ref.read(subscriptionRepositoryProvider);
     return Card(
@@ -49,13 +46,13 @@ class DeliveryProductWidget extends ConsumerWidget {
                 height: 32,
                 width: 32,
                 child:
-                    Image.network(product?.image ?? subscription.productImage),
+                    Image.network(subscription.productImage),
               ),
             ),
             title: Row(
               children: [
                 Flexible(
-                    child: Text(product?.name ?? subscription.productName)),
+                    child: Text(subscription.productName)),
                 const SizedBox(width: 8),
                 Material(
                   color: theme.dividerColor,
@@ -86,7 +83,8 @@ class DeliveryProductWidget extends ConsumerWidget {
                       context: context,
                       builder: (context) => DeliverSheet(
                         initial: delivery.quantity,
-                        product: product!,
+                        name: subscription.productName,
+                        image: subscription.productImage,
                       ),
                     );
                     if (quantity != null) {
