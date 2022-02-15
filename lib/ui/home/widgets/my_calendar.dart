@@ -22,7 +22,6 @@ class MyCalendar extends ConsumerWidget {
       displayColor: theme.cardColor.withOpacity(0.6),
     );
 
-    const calenderStyle = CalendarStyle();
     final model = ref.read(calendarViewModelProvider);
     return Card(
       shape: const ContinuousRectangleBorder(

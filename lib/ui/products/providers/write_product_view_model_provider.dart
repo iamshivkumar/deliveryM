@@ -47,12 +47,20 @@ class WriteProductViewModel extends ChangeNotifier {
     _price = price;
   }
 
+  bool? _returnKit;
+  bool get returnKit => _returnKit??initial.returnKit;
+  set returnKit(bool returnKit) {
+    _returnKit = returnKit;
+    notifyListeners();
+  }
+
   void write() {
     final updated = initial.copyWith(
       image: image,
       name: name,
       price: price,
       eId: _profile.id,
+      returnKit: returnKit,
     );
     try {
       _repository.write(updated);
@@ -67,6 +75,7 @@ class WriteProductViewModel extends ChangeNotifier {
     _name = null;
     _image = null;
     _price = null;
+    _returnKit = null;
     initial = Product.empty();
   }
 }

@@ -10,7 +10,7 @@ class Calc {
 
   int delivered(String pId) {
     final counts = list
-        .where((element) => element.productId == pId)
+        .where((element) => element.product.id == pId)
         .map((e) => e.deliveries
             .where((element) => element.date == Formats.date(date))
             .first)
@@ -23,7 +23,7 @@ class Calc {
 
   int estimated(String pId) {
     final counts = list
-        .where((element) => element.productId == pId)
+        .where((element) => element.product.id == pId)
         .map((e) => e.deliveries
             .where((element) => element.date == Formats.date(date))
             .first)
@@ -37,7 +37,7 @@ class Calc {
 
     int estimatedByD(String pId, String dId) {
     final counts = list
-        .where((element) => element.productId == pId)
+        .where((element) => element.product.id == pId)
         .where((element) => element.dId == dId)
         .map((e) => e.deliveries
             .where((element) => element.date == Formats.date(date))
@@ -51,7 +51,7 @@ class Calc {
 
     int pendingByD(String pId, String dId) {
     final counts = list
-        .where((element) => element.productId == pId)
+        .where((element) => element.product.id == pId)
         .where((element) => element.dId == dId)
         .map((e) => e.deliveries
             .where((element) => element.date == Formats.date(date))
@@ -65,7 +65,7 @@ class Calc {
 
     int deliveredByD(String pId, String dId) {
     final counts = list
-        .where((element) => element.productId == pId)
+        .where((element) => element.product.id == pId)
         .where((element) => element.dId == dId)
         .map((e) => e.deliveries
             .where((element) => element.date == Formats.date(date))

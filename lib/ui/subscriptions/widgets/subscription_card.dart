@@ -5,7 +5,6 @@ import 'package:delivery_m/utils/labels.dart';
 
 import '../../../core/enums/delivery_status.dart';
 import '../../../core/models/subscription.dart';
-import '../../products/providers/products_provider.dart';
 import '../subscription_page.dart';
 import '../../../utils/formats.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +19,6 @@ class SubscriptionCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final style = theme.textTheme;
 
-    final products = ref.watch(productsProvider).value!;
-    final filtered =
-        products.where((element) => element.id == subscription.productId);
-    final product = filtered.isNotEmpty ? filtered.first : null;
     final customerStream = ref.watch(customerProvider(subscription.customerId));
     return GestureDetector(
       onTap: () {
@@ -83,10 +78,10 @@ class SubscriptionCard extends ConsumerWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(product?.name ?? subscription.productName),
+                      child: Text(subscription.product.name),
                     ),
                     Text(
-                      '${Labels.rupee}${subscription.price}',
+                      '${Labels.rupee}${subscription.product.price}',
                       style: style.subtitle2,
                     )
                   ],
@@ -141,13 +136,6 @@ class CustSubscriptionCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final style = theme.textTheme;
 
-    final products = ref
-            .watch(productsProvider)
-            .asData
-            ?.value
-            .where((element) => element.id == subscription.productId) ??
-        [];
-
     return GestureDetector(
       onTap: enabled
           ? () {
@@ -194,10 +182,10 @@ class CustSubscriptionCard extends ConsumerWidget {
                   children: [
                     Expanded(
                       child:
-                          Text(products.isNotEmpty ? products.first.name : ""),
+                          Text(subscription.product.name),
                     ),
                     Text(
-                      '${Labels.rupee}${subscription.price}',
+                      '${Labels.rupee}${subscription.product.price}',
                       style: style.subtitle2,
                     )
                   ],

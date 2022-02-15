@@ -4,12 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_m/core/models/customer.dart';
 import 'package:delivery_m/core/models/wallet_transaction.dart';
 import 'package:delivery_m/core/repositories/subscription_repository_provider.dart';
-import 'package:delivery_m/ui/customers/providers/customer_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/models/profile.dart';
-import '../../deliveries/utils/generate.dart';
 import '../../pdf/providers/generate_pdf_view_model_provider.dart';
 import '../../profile/providers/profile_provider.dart';
 import 'customers_provider.dart';

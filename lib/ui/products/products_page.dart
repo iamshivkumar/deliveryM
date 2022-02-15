@@ -33,6 +33,7 @@ class ProductsPage extends ConsumerWidget {
       ),
       body: productStream.when(
         data: (products) => ListView(
+          padding: const EdgeInsets.all(4),
           children: products
               .map(
                 (e) => ProductCard(product: e),

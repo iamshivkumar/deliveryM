@@ -92,7 +92,7 @@ class GeneratePdf {
                 ),
                 pw.Spacer(),
                 pw.Text(
-                  subscription.productName,
+                  subscription.product.name,
                   style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                   ),
@@ -103,7 +103,7 @@ class GeneratePdf {
                 ),
                 pw.Spacer(),
                 pw.Text(
-                  "Rs ${subscription.price}",
+                  "Rs ${subscription.product.price}",
                   style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                   ),
@@ -157,7 +157,7 @@ class GeneratePdf {
                                 pw.Padding(
                                   padding: const pw.EdgeInsets.all(8),
                                   child: pw.Text(
-                                      "${e.quantity * subscription.price}"),
+                                      "${e.quantity * subscription.product.price}"),
                                 ),
                               ],
                             ),
@@ -190,7 +190,7 @@ class GeneratePdf {
                                     padding: const pw.EdgeInsets.all(8),
                                     child: pw.Text(list
                                         .map((e) =>
-                                            e.quantity * subscription.price)
+                                            e.quantity * subscription.product.price)
                                         .reduce(
                                             (value, element) => value + element)
                                         .toString()),
@@ -253,7 +253,7 @@ class GeneratePdf {
                             pw.Padding(
                               padding: const pw.EdgeInsets.all(8),
                               child:
-                                  pw.Text("${e.quantity * subscription.price}"),
+                                  pw.Text("${e.quantity * subscription.product.price}"),
                             ),
                           ],
                         ),
@@ -282,7 +282,7 @@ class GeneratePdf {
                         pw.Padding(
                           padding: const pw.EdgeInsets.all(8),
                           child: pw.Text(list
-                              .map((e) => e.quantity * subscription.price)
+                              .map((e) => e.quantity * subscription.product.price)
                               .reduce((value, element) => value + element)
                               .toString()),
                         ),

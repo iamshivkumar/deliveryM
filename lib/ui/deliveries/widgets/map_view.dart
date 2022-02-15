@@ -2,7 +2,6 @@ import 'package:delivery_m/core/enums/delivery_status.dart';
 import 'package:delivery_m/core/models/subscription.dart';
 import 'package:delivery_m/ui/customers/providers/customer_provider.dart';
 import 'package:delivery_m/ui/deliveries/utils/generate.dart';
-import 'package:delivery_m/ui/products/providers/products_provider.dart';
 import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -71,16 +70,7 @@ class MapView extends ConsumerWidget {
                           infoWindow: InfoWindow(
                               title: customer.name,
                               snippet: e.subscriptions
-                                  .map((s) {
-                                    final filtered = ref
-                                        .watch(productsProvider)
-                                        .value!
-                                        .where((element) =>
-                                            element.id == s.productId);
-                                    return filtered.isNotEmpty
-                                        ? "${filtered.first.name} ${s.getDelivery(date).quantity}"
-                                        : "${s.productName} ${s.getDelivery(date).quantity}";
-                                  })
+                                  .map((s) =>"${s.product.name} ${s.getDelivery(date).quantity}")
                                   .toList()
                                   .join(', '))),
                       error: (err, s) => Marker(

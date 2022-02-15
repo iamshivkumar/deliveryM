@@ -109,7 +109,7 @@ class SubscriptionRepository {
                 .doc(subscription.customerId),
             {
               Constants.balance:
-                  FieldValue.increment(-updated.quantity * subscription.price)
+                  FieldValue.increment(-updated.quantity * subscription.product.price)
             });
         _batch.set(
           _firestore.collection(Constants.walletTransactions).doc(),
@@ -118,13 +118,13 @@ class SubscriptionRepository {
                   cId: subscription.customerId,
                   sId: subscription.id,
                   dId: subscription.dId,
-                  pId: subscription.productId,
+                  pId: subscription.product.id,
                   date: updated.date,
                   quantity: updated.quantity,
-                  amount: -subscription.price * updated.quantity,
+                  amount: -subscription.product.price * updated.quantity,
                   createdAt: DateTime.now(),
-                  name: subscription.productName,
-                  balance: balance + (-subscription.price * updated.quantity))
+                  name: subscription.product.name,
+                  balance: balance + (-subscription.product.price * updated.quantity))
               .toMap(),
         );
       } else if (initial.status == DeliveryStatus.delivered &&
@@ -135,7 +135,7 @@ class SubscriptionRepository {
                 .doc(subscription.customerId),
             {
               Constants.balance:
-                  FieldValue.increment(updated.quantity * subscription.price)
+                  FieldValue.increment(updated.quantity * subscription.product.price)
             });
         _batch.set(
           _firestore.collection(Constants.walletTransactions).doc(),
@@ -144,13 +144,13 @@ class SubscriptionRepository {
             cId: subscription.customerId,
             sId: subscription.id,
             dId: subscription.dId,
-            pId: subscription.productId,
+            pId: subscription.product.id,
             date: updated.date,
             quantity: -updated.quantity,
-            amount: subscription.price * updated.quantity,
+            amount: subscription.product.price * updated.quantity,
             createdAt: DateTime.now(),
-            name: subscription.productName,
-            balance: balance + (subscription.price * updated.quantity),
+            name: subscription.product.name,
+            balance: balance + (subscription.product.price * updated.quantity),
           ).toMap(),
         );
       }
@@ -163,22 +163,22 @@ class SubscriptionRepository {
               .doc(subscription.customerId),
           {
             Constants.balance:
-                FieldValue.increment(-quantity * subscription.price)
+                FieldValue.increment(-quantity * subscription.product.price)
           });
       _batch.set(
         _firestore.collection(Constants.walletTransactions).doc(),
         WalletTransaction(
                 id: '',
-                pId: subscription.productId,
+                pId: subscription.product.id,
                 cId: subscription.customerId,
                 sId: subscription.id,
                 dId: subscription.dId,
                 date: updated.date,
                 quantity: quantity,
-                amount: -subscription.price * quantity,
+                amount: -subscription.product.price * quantity,
                 createdAt: DateTime.now(),
-                name: subscription.productName,
-                balance: balance + (-subscription.price * quantity))
+                name: subscription.product.name,
+                balance: balance + (-subscription.product.price * quantity))
             .toMap(),
       );
     }
@@ -232,7 +232,7 @@ class SubscriptionRepository {
               .doc(subscription.customerId),
           {
             Constants.balance:
-                FieldValue.increment(-delivery.quantity * subscription.price)
+                FieldValue.increment(-delivery.quantity * subscription.product.price)
           });
       _batch.set(
         _firestore.collection(Constants.walletTransactions).doc(),
@@ -241,13 +241,13 @@ class SubscriptionRepository {
           cId: subscription.customerId,
           sId: subscription.id,
           dId: subscription.dId,
-          pId: subscription.productId,
+          pId: subscription.product.id,
           date: delivery.date,
           quantity: delivery.quantity,
-          amount: -subscription.price * delivery.quantity,
+          amount: -subscription.product.price * delivery.quantity,
           createdAt: DateTime.now(),
-          name: subscription.productName,
-          balance: balance + (-subscription.price * delivery.quantity),
+          name: subscription.product.name,
+          balance: balance + (-subscription.product.price * delivery.quantity),
         ).toMap(),
       );
     }

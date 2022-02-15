@@ -7,7 +7,6 @@ import '../../../core/repositories/subscription_repository_provider.dart';
 import 'add_returned_kits_quantity_sheet.dart';
 import 'deliver_sheet.dart';
 import '../../home/providers/dboy_day_subscriptions_provider.dart';
-import '../../products/providers/products_provider.dart';
 import '../../../utils/formats.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -46,13 +45,13 @@ class DeliveryProductWidget extends ConsumerWidget {
                 height: 32,
                 width: 32,
                 child:
-                    Image.network(subscription.productImage),
+                    Image.network(subscription.product.image),
               ),
             ),
             title: Row(
               children: [
                 Flexible(
-                    child: Text(subscription.productName)),
+                    child: Text(subscription.product.name)),
                 const SizedBox(width: 8),
                 Material(
                   color: theme.dividerColor,
@@ -68,7 +67,7 @@ class DeliveryProductWidget extends ConsumerWidget {
                 ),
               ],
             ),
-            subtitle: Text('${Labels.rupee}${updated.price}'),
+            subtitle: Text('${Labels.rupee}${updated.product.price}'),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -83,8 +82,8 @@ class DeliveryProductWidget extends ConsumerWidget {
                       context: context,
                       builder: (context) => DeliverSheet(
                         initial: delivery.quantity,
-                        name: subscription.productName,
-                        image: subscription.productImage,
+                        name: subscription.product.name,
+                        image: subscription.product.image,
                       ),
                     );
                     if (quantity != null) {

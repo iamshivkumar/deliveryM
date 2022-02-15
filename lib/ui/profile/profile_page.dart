@@ -21,7 +21,6 @@ class ProfilePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Profile'),
-        actions: [],
       ),
       body: profileStream.when(
         data: (profile) => ListView(

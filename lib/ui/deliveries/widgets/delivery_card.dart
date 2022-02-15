@@ -3,7 +3,6 @@ import '../../components/loading.dart';
 import '../../customers/providers/customer_provider.dart';
 import '../delivery_page.dart';
 import '../utils/generate.dart';
-import '../../products/providers/products_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -51,7 +50,7 @@ class DeliveryCard extends ConsumerWidget {
                               child: Chip(
                                 label: RichText(
                                   text: TextSpan(
-                                    text: '${e.productName}:  ',
+                                    text: '${e.product.name}:  ',
                                     style: style.caption,
                                     children: [
                                       TextSpan(
@@ -62,7 +61,7 @@ class DeliveryCard extends ConsumerWidget {
                                     ],
                                   ),
                                 ),
-                                avatar: Image.network(e.productImage),
+                                avatar: Image.network(e.product.image),
                               ),
                             );
                           }).toList(),

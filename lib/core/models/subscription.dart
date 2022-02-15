@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_m/core/models/product.dart';
 
 import 'delivery.dart';
 import '../../utils/formats.dart';
@@ -11,10 +12,8 @@ class Subscription {
   final bool active;
 
   final int quantity;
-  final String productId;
-  final String productName;
-  final String productImage;
-  final double price;
+  
+  final Product product;
   final int? returnKitsQt;
   final DateTime startDate;
   final DateTime endDate;
@@ -26,22 +25,20 @@ class Subscription {
  
 
   Subscription({
-    required this.productName,
     required this.id,
     required this.eId,
     required this.customerId,
     required this.recure,
     required this.active,
-    required this.productId,
-    required this.price,
+
     required this.startDate,
     required this.endDate,
     required this.deliveries,
     required this.dates,
     required this.dId,
     required this.diff,
-    required this.productImage,
     required this.quantity,
+    required this.product,
     this.returnKitsQt,
   });
 
@@ -51,9 +48,6 @@ class Subscription {
     String? customerId,
     bool? recure,
     bool? active,
-    String? productId,
-    String? image,
-    double? price,
     DateTime? startDate,
     DateTime? endDate,
     List<Delivery>? deliveries,
@@ -61,9 +55,8 @@ class Subscription {
     String? dId,
     int? returnKitsQt,
     int? diff,
-    String? productName,
-    String? productImage,
     int? quantity,
+    Product? product,
   }) {
     return Subscription(
       id: id ?? this.id,
@@ -71,8 +64,6 @@ class Subscription {
       customerId: customerId ?? this.customerId,
       recure: recure ?? this.recure,
       active: active ?? this.active,
-      productId: productId ?? this.productId,
-      price: price ?? this.price,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       deliveries: deliveries ?? this.deliveries,
@@ -80,9 +71,8 @@ class Subscription {
       dId: dId ?? this.dId,
       returnKitsQt: returnKitsQt,
       diff: diff ?? this.diff,
-      productImage: productImage ?? this.productImage,
-      productName: productName ?? this.productName,
       quantity: quantity ?? this.quantity,
+      product: product??this.product,
     );
   }
 
@@ -92,10 +82,7 @@ class Subscription {
       'customerId': customerId,
       'recure': recure,
       'active': active,
-      'productId': productId,
-      'price': price,
-      'productImage': productImage,
-      'productName': productName,
+      'product':product.toMap(),
       'startDate': Timestamp.fromDate(startDate),
       'endDate': Timestamp.fromDate(endDate),
       'deliveries': deliveries.map((x) => x.toMap()).toList(),
@@ -115,10 +102,7 @@ class Subscription {
       customerId: map['customerId'],
       recure: map['recure'],
       active: map['active'],
-      productId: map['productId'],
-      price: map['price'].toDouble(),
-      productImage: map['productImage'],
-      productName: map['productName'],
+      product: Product.fromMap(map['product']),
       startDate: map['startDate'].toDate(),
       endDate: map['endDate'].toDate(),
       deliveries: List<Delivery>.from(

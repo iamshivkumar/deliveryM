@@ -7,13 +7,15 @@ class Product {
   final String image;
   final String name;
   final double price;
-  
+  final bool returnKit;
+
   Product({
     required this.id,
     required this.eId,
     required this.image,
     required this.name,
     required this.price,
+    required this.returnKit,
   });
 
   Product copyWith({
@@ -22,6 +24,7 @@ class Product {
     String? image,
     String? name,
     double? price,
+    bool? returnKit,
   }) {
     return Product(
       id: id ?? this.id,
@@ -29,6 +32,7 @@ class Product {
       image: image ?? this.image,
       name: name ?? this.name,
       price: price ?? this.price,
+      returnKit: returnKit??this.returnKit
     );
   }
 
@@ -38,6 +42,7 @@ class Product {
       'image': image,
       'name': name,
       'price': price,
+      'returnKit':returnKit,
     };
   }
 
@@ -49,6 +54,7 @@ class Product {
       image: map['image'],
       name: map['name'],
       price: map['price'].toDouble(),
+      returnKit: map['returnKit']??false,
     );
   }
 
@@ -59,6 +65,7 @@ class Product {
       image: '',
       name: '',
       price: 0,
+      returnKit: false
     );
   }
 

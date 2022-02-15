@@ -16,7 +16,7 @@ class WalletTransaction extends Equatable{
 
   bool get isDeliveryTransaction => name!=null&&date!=null&&quantity!=null;
 
-  WalletTransaction({
+   const WalletTransaction({
     required this.id,
     required this.cId,
      this.sId,

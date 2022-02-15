@@ -52,8 +52,8 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _manage = false;
-  bool get manage => _manage;
+  bool? _manage;
+  bool get manage => _manage??_product?.returnKit??false;
   set manage(bool manage) {
     _manage = manage;
     notifyListeners();
@@ -89,10 +89,7 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
       customerId: cId,
       recure: true,
       active: true,
-      productId: product!.id,
-      productImage: product!.image,
-      productName: product!.name,
-      price: product!.price,
+      product: product!,
       quantity: quantity,
       startDate: startDate!,
       endDate: endDate!,

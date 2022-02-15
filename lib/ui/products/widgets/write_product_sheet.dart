@@ -40,7 +40,6 @@ class WriteProductSheet extends ConsumerWidget {
                           width: 100,
                           decoration: BoxDecoration(
                             color: theme.cardColor,
-                          
                             border: model.image == e ? Border.all() : null,
                           ),
                           child: Padding(
@@ -68,13 +67,23 @@ class WriteProductSheet extends ConsumerWidget {
               onSaved: (v) => model.price = double.tryParse(v!) ?? 0,
             ),
             const SizedBox(height: 16),
+            Row(
+              children: [
+                Checkbox(
+                  value: model.returnKit,
+                  onChanged: (v) => model.returnKit = v!,
+                ),
+                const Text('Has return kit.')
+              ],
+            ),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                 if(_formKey.currentState!.validate()){
-                   _formKey.currentState!.save();
-                     model.write();
-                Navigator.pop(context);
-                 }
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  model.write();
+                  Navigator.pop(context);
+                }
               },
               child: const Text('SAVE'),
             )

@@ -178,7 +178,7 @@ class TransactionCard extends StatelessWidget {
                       ],
                     ),
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ],
         ),
       ),
