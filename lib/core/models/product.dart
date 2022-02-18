@@ -36,7 +36,7 @@ class Product {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toFireMap() {
     return {
       'eId': eId,
       'image': image,
@@ -46,10 +46,32 @@ class Product {
     };
   }
 
-  factory Product.fromMap(DocumentSnapshot doc) {
+    Map<String, dynamic> toMap() {
+    return {
+      'id':id,
+      'eId': eId,
+      'image': image,
+      'name': name,
+      'price': price,
+      'returnKit':returnKit,
+    };
+  }
+
+  factory Product.fromFirestore(DocumentSnapshot doc) {
     final Map<String, dynamic> map = doc.data() as Map<String, dynamic>;
     return Product(
       id: doc.id,
+      eId: map['eId'],
+      image: map['image'],
+      name: map['name'],
+      price: map['price'].toDouble(),
+      returnKit: map['returnKit']??false,
+    );
+  }
+
+    factory Product.fromMap(Map<String, dynamic> map) {
+    return Product(
+      id: map['id'],
       eId: map['eId'],
       image: map['image'],
       name: map['name'],

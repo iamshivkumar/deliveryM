@@ -11,18 +11,18 @@ class ProductsRepository {
 
   void write(Product product) {
     if (product.id.isEmpty) {
-      _firestore.collection(Constants.products).add(product.toMap());
+      _firestore.collection(Constants.products).add(product.toFireMap());
     } else {
       _firestore
           .collection(Constants.products)
           .doc(product.id)
-          .update(product.toMap());
+          .update(product.toFireMap());
     }
   }
 
   Stream<List<Product>> productsStream(String eid) =>
       _firestore.collection(Constants.products).where(Constants.eId,isEqualTo: eid).snapshots().map(
-            (event) => event.docs.map((e) => Product.fromMap(e)).toList(),
+            (event) => event.docs.map((e) => Product.fromFirestore(e)).toList(),
           );
 
   void delete(String id){

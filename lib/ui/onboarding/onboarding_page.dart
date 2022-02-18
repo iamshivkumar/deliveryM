@@ -18,89 +18,94 @@ class OnboardingPage extends HookConsumerWidget {
       },
     );
     return Scaffold(
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextButton(
-            onPressed: () {
-              // context.read(localRepositoryProvider).saveSeen();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
-              );
-            },
-            child: Text(
-              "SKIP",
-              style: TextStyle(color: style.caption!.color),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (_controller.index == 2) {
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              onPressed: () {
+                // context.read(localRepositoryProvider).saveSeen();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Root(),
+                    builder: (context) => const LoginPage(),
                   ),
                 );
-              } else {
-                _controller.animateTo(_controller.index + 1);
-              }
-            },
-            child: const Icon(Icons.keyboard_arrow_right_rounded),
-          ),
-        ],
+              },
+              child: Text(
+                "SKIP",
+                style: TextStyle(color: style.caption!.color),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (_controller.index == 2) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Root(),
+                    ),
+                  );
+                } else {
+                  _controller.animateTo(_controller.index + 1);
+                }
+              },
+              child: const Icon(Icons.keyboard_arrow_right_rounded),
+            ),
+          ],
+        ),
+      ),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+        child: Consumer(
+          builder: (context, ref, child) {
+            final index = ref.watch(onBoardingIndexProvider);
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [0, 1, 2]
+                  .map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: CircleAvatar(
+                        radius: 4,
+                        backgroundColor: index == e
+                            ? theme.primaryColorLight
+                            : theme.dividerColor,
+                      ),
+                    ),
+                  )
+                  .toList(),
+            );
+          },
+        ),
       ),
       body: SafeArea(
-        child: Column(
+        child: TabBarView(
+          controller: _controller,
           children: [
-            Expanded(
-              child: TabBarView(
-                controller: _controller,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Image.asset(''),
-                        Text(
-                          "",
-                          style: style.headline6,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            Container(
+              color: Colors.yellow.shade100,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
-              child: Consumer(
-                builder: (context, ref, child) {
-                  final index = ref.watch(onBoardingIndexProvider);
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [0, 1, 2]
-                        .map(
-                          (e) => Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: CircleAvatar(
-                              radius: 4,
-                              backgroundColor: index == e
-                                  ? theme.primaryColorLight
-                                  : theme.dividerColor,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  );
-                },
-              ),
+            Container(
+              color: Colors.red.shade100,
             ),
+            Container(
+              color: Colors.blue.shade100,
+            ), // Padding(
+            //   padding: const EdgeInsets.all(24),
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //     children: [
+            //       Image.asset(''),
+            //       Text(
+            //         "",
+            //         style: style.headline6,
+            //         textAlign: TextAlign.center,
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -17,7 +17,7 @@ class SchedulePreview extends StatelessWidget {
       availableGestures: AvailableGestures.horizontalSwipe,
       calendarStyle: CalendarStyle(
         selectedDecoration: BoxDecoration(
-          color: scheme.secondary,
+          color: scheme.primary,
           shape: BoxShape.circle,
         ),
         todayTextStyle: calenderStyle.defaultTextStyle,

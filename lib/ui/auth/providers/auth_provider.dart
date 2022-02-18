@@ -1,3 +1,5 @@
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
 import '../utils/auth_message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -23,7 +25,8 @@ class Auth extends ChangeNotifier {
   String get phone => _phone;
   set phone(String phone) {
     _phone = phone;
-    _resendToken = null;
+    _code = '';
+    resendToken = null;
     notifyListeners();
   }
 
@@ -43,12 +46,19 @@ class Auth extends ChangeNotifier {
     notifyListeners();
   }
 
-  int? _resendToken;
+  int? resendToken;
 
   bool _loading = false;
   bool get loading => _loading;
   set loading(bool value) {
     _loading = value;
+    notifyListeners();
+  }
+
+    bool _phoneLoading = false;
+  bool get phoneLoading => _phoneLoading;
+  set phoneLoading(bool value) {
+    _phoneLoading = value;
     notifyListeners();
   }
 
@@ -58,15 +68,15 @@ class Auth extends ChangeNotifier {
       Stream.periodic(const Duration(seconds: 1), (v) => 30 - v);
 
   void sendOTP() async {
-    loading = true;
+    phoneLoading = true;
     try {
       await _auth.verifyPhoneNumber(
-        forceResendingToken: _resendToken,
+        forceResendingToken: resendToken,
         phoneNumber: "+91" + phone,
         verificationCompleted: (PhoneAuthCredential credential) async {
-          loading = true;
+          phoneLoading = true;
           await _auth.signInWithCredential(credential);
-          loading = false;
+          phoneLoading = false;
           verificationId = null;
         },
         verificationFailed: (FirebaseAuthException e) {
@@ -75,25 +85,25 @@ class Auth extends ChangeNotifier {
               print("The provided phone number is not valid.");
             }
           }
-          loading = false;
+          phoneLoading = false;
         },
         timeout: const Duration(seconds: 30),
         codeAutoRetrievalTimeout: (_) {},
         codeSent: (String id, int? forceResendingToken) {
           verificationId = id;
-          if (_resendToken != null) {
+          if (resendToken != null) {
             authMessage = AuthMessage.otpResent();
           }
-          _resendToken = forceResendingToken;
+          resendToken = forceResendingToken;
           stream = _stream;
-          loading = false;
+          phoneLoading = false;
         },
       );
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
-      loading = false;
+      phoneLoading = false;
     }
   }
 
@@ -125,6 +135,18 @@ class Auth extends ChangeNotifier {
     await _auth.signOut();
     // user = null;
   }
+
+
+    final formater = MaskTextInputFormatter(
+    mask: '##########',
+    filter: {"#": RegExp(r'[0-9]')},
+    type: MaskAutoCompletionType.eager,
+  );
+  final otpformater = MaskTextInputFormatter(
+                    mask: '#   #   #   #   #   #',
+                    filter: {"#": RegExp(r'[0-9]')},
+                    type: MaskAutoCompletionType.lazy,
+                  );
 
   // void update() async {
   //   if (_auth.currentUser == null) {

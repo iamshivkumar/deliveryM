@@ -30,6 +30,11 @@ class ProfileRepository {
             mobile: _user.phoneNumber,
           )
           .toMap());
+      if(!profile.isAdmin){
+        _firestore.collection(Constants.users).doc(profile.eId).update({
+          Constants.deboys: FieldValue.arrayRemove([profile.mobile]) 
+        });
+      }
     }
   }
 

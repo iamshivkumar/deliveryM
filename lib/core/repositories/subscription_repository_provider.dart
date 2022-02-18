@@ -286,6 +286,16 @@ class SubscriptionRepository {
         );
   }
 
+    Stream<bool> isSubscriptionExist(String eId) {
+    return _firestore
+        .collection(Constants.subscriptions)
+        .limit(1)
+        .snapshots()
+        .map(
+          (event) => event.docs.isEmpty?false:true,
+        );
+  }
+
   // Stream<List<WalletTransaction>> transactionsStream(String sId) {
   //   return _firestore
   //       .collection(Constants.walletTransactions)

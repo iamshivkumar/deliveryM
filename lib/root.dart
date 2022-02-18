@@ -1,3 +1,4 @@
+import 'package:delivery_m/ui/auth/auth_page.dart';
 import 'package:delivery_m/ui/auth/providers/auth_provider.dart';
 import 'package:delivery_m/ui/auth/verify_page.dart';
 
@@ -26,16 +27,7 @@ class Root extends ConsumerWidget {
       color: theme.scaffoldBackgroundColor,
       child: userStream.when(
         data: (user) => user == null
-            ? Navigator(
-                pages: [
-                  const MaterialPage(child: LoginPage()),
-                  if (auth.verificationId != null)
-                    const MaterialPage(child: VerifyPage()),
-                ],
-                onPopPage: (route, value) {
-                  return route.didPop(value);
-                },
-              )
+            ? AuthPage()
             : ref.watch(profileProvider).when(
                   data: (profile) => profile != null
                       ? profile.isAdmin
