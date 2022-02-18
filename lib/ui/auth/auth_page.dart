@@ -104,7 +104,7 @@ class AuthPage extends HookConsumerWidget {
                 ],
               ),
               const SizedBox(height: 32),
-             model.loading?Loading(): ElevatedButton(
+             model.loading?const Loading(): ElevatedButton(
                 onPressed:
                     model.verificationId != null && model.code.length == 6
                         ? () {
