@@ -8,6 +8,7 @@ import 'package:delivery_m/ui/delivery_boys/providers/delivery_boys_provider.dar
 import 'package:delivery_m/ui/doc/doc_viewer_page.dart';
 import 'package:delivery_m/ui/pdf/providers/generate_pdf_view_model_provider.dart';
 import 'package:delivery_m/ui/subscriptions/providers/subscription_provider.dart';
+import 'package:delivery_m/utils/labels.dart';
 
 import '../../core/repositories/subscription_repository_provider.dart';
 import '../customers/providers/customer_subscriptions_provider.dart';
@@ -37,23 +38,47 @@ class SubscriptionPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Subscription Details'),
         actions: [
-          IconButton(
-            onPressed: () {
-              generator.generate(
-                onDone: (v) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DocViewerPage(file: v),
-                    ),
-                  );
-                },
-                subscription: subscription,
-                customer:
-                    ref.read(customerProvider(subscription.customerId)).value!,
-              );
+          PopupMenuButton<String>(
+            itemBuilder: (context) => [
+              subscription.active ? Labels.deactivate : Labels.activate,
+              Labels.downloadBillPdf
+            ]
+                .map(
+                  (e) => PopupMenuItem(
+                    child: Text(e),
+                    value: e,
+                  ),
+                )
+                .toList(),
+            onSelected: (v) {
+              if (v == Labels.downloadBillPdf) {
+                generator.generate(
+                  onDone: (f) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DocViewerPage(
+                          file: f,
+                          mobile: ref
+                              .read(customerProvider(subscription.customerId))
+                              .value!
+                              .mobile,
+                        ),
+                      ),
+                    );
+                  },
+                  subscription: subscription,
+                  customer: ref
+                      .read(customerProvider(subscription.customerId))
+                      .value!,
+                );
+              } else {
+                repository.updateActive(
+                  value: v == Labels.activate,
+                  sId: subscription.id,
+                );
+              }
             },
-            icon: const Icon(Icons.download),
           ),
         ],
       ),
@@ -70,7 +95,7 @@ class SubscriptionPage extends ConsumerWidget {
         label: const Text('Add Delivery Day'),
       ),
       body: ListView(
-        padding: const EdgeInsets.only(bottom: 64),
+        padding: const EdgeInsets.fromLTRB(4, 4, 4, 64),
         children: <Widget>[
               CustSubscriptionCard(
                 subscription: subscription,
@@ -165,24 +190,33 @@ class SubscriptionPage extends ConsumerWidget {
                         ),
                       ),
                     )
-                  : const SizedBox(),
-              // Card(
-              //   child: ListTile(
-              //     onTap: () {
-              //       Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //           builder: (context) => WalletTransactionsPage(
-              //             name: subscription.productName,
-              //             sId: subscription.id,
-              //           ),
-              //         ),
-              //       );
-              //     },
-              //     title: const Text('Wallet Transactions'),
-              //     trailing: const Icon(Icons.keyboard_arrow_right),
-              //   ),
-              // )
+                  : OutlinedButton(
+                      onPressed: () async {
+                        final String? id = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            fullscreenDialog: true,
+                            builder: (context) =>
+                                const DeliveryBoysPage(forSelect: true),
+                          ),
+                        );
+                        if (id != null) {
+                          if (id == subscription.dId) {
+                            return;
+                          }
+                          final filetered = _dboys.where((e) => e.id == id);
+                          final newDboy =
+                              filetered.isNotEmpty ? filetered.first : null;
+                          if (newDboy != null) {
+                            repository.changeDboy(
+                              sId: subscription.id,
+                              dId: id,
+                            );
+                          }
+                        }
+                      },
+                      child: const Text('Assign to delivery boy'),
+                    ),
             ] +
             (subscription.deliveries
                 .map(

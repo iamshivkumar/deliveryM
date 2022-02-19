@@ -6,6 +6,7 @@ import 'package:delivery_m/core/models/profile.dart';
 import 'package:delivery_m/core/models/subscription.dart';
 import 'package:delivery_m/core/models/wallet_transaction.dart';
 import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
+import 'package:delivery_m/utils/dates.dart';
 import 'package:delivery_m/utils/formats.dart';
 import 'package:flutter/foundation.dart';
 
@@ -190,7 +191,8 @@ class GeneratePdf {
                                     padding: const pw.EdgeInsets.all(8),
                                     child: pw.Text(list
                                         .map((e) =>
-                                            e.quantity * subscription.product.price)
+                                            e.quantity *
+                                            subscription.product.price)
                                         .reduce(
                                             (value, element) => value + element)
                                         .toString()),
@@ -252,8 +254,8 @@ class GeneratePdf {
                             ),
                             pw.Padding(
                               padding: const pw.EdgeInsets.all(8),
-                              child:
-                                  pw.Text("${e.quantity * subscription.product.price}"),
+                              child: pw.Text(
+                                  "${e.quantity * subscription.product.price}"),
                             ),
                           ],
                         ),
@@ -282,7 +284,8 @@ class GeneratePdf {
                         pw.Padding(
                           padding: const pw.EdgeInsets.all(8),
                           child: pw.Text(list
-                              .map((e) => e.quantity * subscription.product.price)
+                              .map((e) =>
+                                  e.quantity * subscription.product.price)
                               .reduce((value, element) => value + element)
                               .toString()),
                         ),
@@ -295,7 +298,7 @@ class GeneratePdf {
       ); // Page
     }
 
-    final file = await File('${tempDir.path}/generated.pdf')
+    final file = await File('${tempDir.path}/${Formats.date(Dates.today)}.pdf')
         .writeAsBytes(await pdf.save());
     return file;
   }
@@ -428,7 +431,6 @@ class GeneratePdf {
       for (var i = 0;
           i < ((transactions.length - 28) / 34 + 0.5).toInt();
           i++) {
-            
         final list = transactions
             .where((element) => transactions.indexOf(element) > 28)
             .where(
@@ -451,8 +453,9 @@ class GeneratePdf {
       }
     }
 
-    final file = await File('${tempDir.path}/generated2.pdf')
-        .writeAsBytes(await pdf.save());
+    final file =
+        await File('${tempDir.path}/${Formats.date(Dates.today)}.pdf')
+            .writeAsBytes(await pdf.save());
     return file;
   }
 }

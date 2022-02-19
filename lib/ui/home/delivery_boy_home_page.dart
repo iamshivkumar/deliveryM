@@ -98,7 +98,7 @@ class DeliveryBoyHomePage extends ConsumerWidget {
                     data: (subscriptions) {
                       final calc =
                           Calc(list: subscriptions, date: model.selectedDate);
-                      return (products+products)
+                      return products
                           .map(
                             (e) => BigAnaCard(
                               product: e,

@@ -21,35 +21,38 @@ class DeliveryBoysPage extends ConsumerWidget {
       ),
       body: deliveryBoysStream.when(
         data: (dboys) => ListView(
+          padding: const EdgeInsets.all(4),
           children: dboys
               .map(
-                (e) => ListTile(
-                  title: Row(
-                    children: [
-                      Flexible(child: Text(e.name)),
-                      e.id == profile.id
-                          ? Text(
-                              ' - You ',
-                              style: style.subtitle2!.copyWith(
-                                color: theme.colorScheme.secondary,
-                              ),
-                            )
-                          : const SizedBox()
-                    ],
+                (e) => Card(
+                  child: ListTile(
+                    title: Row(
+                      children: [
+                        Flexible(child: Text(e.name)),
+                        e.id == profile.id
+                            ? Text(
+                                ' - You ',
+                                style: style.subtitle2!.copyWith(
+                                  color: theme.colorScheme.secondary,
+                                ),
+                              )
+                            : const SizedBox()
+                      ],
+                    ),
+                    subtitle: Text(e.address.formated),
+                    onTap: () {
+                      if (forSelect) {
+                        Navigator.pop(context, e.id);
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DeliveryBoyPage(dId: e.id),
+                          ),
+                        );
+                      }
+                    },
                   ),
-                  subtitle: Text(e.address.formated),
-                  onTap: () {
-                    if (forSelect) {
-                      Navigator.pop(context, e.id);
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DeliveryBoyPage(dId: e.id),
-                        ),
-                      );
-                    }
-                  },
                 ),
               )
               .toList(),

@@ -1,4 +1,4 @@
-import 'package:delivery_m/ui/auth/login_page.dart';
+import 'package:delivery_m/ui/auth/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,7 +29,7 @@ class OnboardingPage extends HookConsumerWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
+                    builder: (context) => const AuthPage(),
                   ),
                 );
               },

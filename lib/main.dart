@@ -1,7 +1,6 @@
-import 'package:delivery_m/ui/auth/auth_page.dart';
 import 'package:delivery_m/ui/colors.dart';
-import 'package:delivery_m/ui/onboarding/onboarding_page.dart';
 import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'root.dart';
 import 'package:firebase_core/firebase_core.dart';

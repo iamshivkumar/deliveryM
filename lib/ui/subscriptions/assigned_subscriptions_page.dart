@@ -21,9 +21,13 @@ class AssignedSubscriptionsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final style = theme.textTheme;
+    final style = theme.textTheme.apply(
+      bodyColor: theme.cardColor,
+      displayColor: theme.cardColor.withOpacity(0.6),
+    );
     final diff = ref.watch(diffProvider.state);
     final date = DateTime(Dates.today.year, Dates.today.month + diff.state);
+
     final subscriptionsStream = ref.watch(
       assignedSubscriptionsProvider(
         DboyDay(dId: dId, date: date),
@@ -39,6 +43,7 @@ class AssignedSubscriptionsPage extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
+                color: theme.cardColor,
                 onPressed: () {
                   diff.state--;
                 },
@@ -56,6 +61,7 @@ class AssignedSubscriptionsPage extends ConsumerWidget {
                     ]),
               ),
               IconButton(
+                color: theme.cardColor,
                 onPressed: () {
                   diff.state++;
                 },

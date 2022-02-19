@@ -1,6 +1,4 @@
 import 'package:delivery_m/ui/auth/auth_page.dart';
-import 'package:delivery_m/ui/auth/providers/auth_provider.dart';
-import 'package:delivery_m/ui/auth/verify_page.dart';
 
 import 'ui/auth/providers/user_provider.dart';
 import 'ui/components/loading.dart';
@@ -12,7 +10,6 @@ import 'ui/start/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'ui/auth/login_page.dart';
 import 'ui/components/error.dart';
 
 class Root extends ConsumerWidget {
@@ -22,12 +19,11 @@ class Root extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final userStream = ref.watch(userProvider);
-    final auth = ref.watch(authProvider);
     return Material(
       color: theme.scaffoldBackgroundColor,
       child: userStream.when(
         data: (user) => user == null
-            ? AuthPage()
+            ? const AuthPage()
             : ref.watch(profileProvider).when(
                   data: (profile) => profile != null
                       ? profile.isAdmin

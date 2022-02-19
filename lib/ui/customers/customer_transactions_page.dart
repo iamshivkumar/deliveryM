@@ -6,13 +6,15 @@ import 'package:delivery_m/utils/labels.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'providers/customer_provider.dart';
 import 'providers/customer_transactions_view_model_provider.dart';
 
 class CustomerTransactionsPage extends ConsumerWidget {
-  const CustomerTransactionsPage({Key? key, required this.cId})
+  const CustomerTransactionsPage({Key? key, required this.cId, required this.mobile})
       : super(key: key);
 
   final String cId;
+  final String mobile;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final theme = Theme.of(context);
@@ -29,7 +31,10 @@ class CustomerTransactionsPage extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DocViewerPage(file: v),
+                      builder: (context) => DocViewerPage(
+                        file: v,
+                        mobile: mobile,
+                      ),
                     ),
                   );
                 });

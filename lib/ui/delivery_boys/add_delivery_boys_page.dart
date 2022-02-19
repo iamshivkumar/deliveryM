@@ -17,6 +17,7 @@ class AddDeliveryBoysPage extends HookConsumerWidget {
     final controller = useTextEditingController();
 
     final profileStream = ref.watch(profileProvider);
+    final repository = ref.read(profileRepositoryProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -58,8 +59,7 @@ class AddDeliveryBoysPage extends HookConsumerWidget {
                         color: scheme.secondary,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            ref.read(profileRepositoryProvider)
-                                .addDeliveryBoy('+91${controller.text}');
+                            repository.addDeliveryBoy('+91${controller.text}');
                             controller.clear();
                           }
                         },
@@ -86,6 +86,13 @@ class AddDeliveryBoysPage extends HookConsumerWidget {
                         (e) => Card(
                           child: ListTile(
                             title: Text(e),
+                            trailing: IconButton(
+                              onPressed: () {
+                                repository.removeDboyMobile(
+                                    mobile: e, eId: profile.id);
+                              },
+                              icon: const Icon(Icons.delete),
+                            ),
                           ),
                         ),
                       )

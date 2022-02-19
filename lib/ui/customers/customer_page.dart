@@ -1,5 +1,6 @@
 import 'package:delivery_m/ui/customers/customer_transactions_page.dart';
 import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
+import 'package:delivery_m/ui/subscriptions/customer_subscriptions_page.dart';
 
 import '../../core/repositories/customers_repository_provider.dart';
 import '../components/error.dart';
@@ -18,6 +19,8 @@ class CustomerPage extends ConsumerWidget {
   final String cId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final style = theme.textTheme;
     final subscriptionsStream = ref.watch(customerSubscriptionsProvider(cId));
     final customer =
         ref.watch(customersProvider).value!.where((e) => e.id == cId).first;
@@ -42,7 +45,12 @@ class CustomerPage extends ConsumerWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.all(4),
-        children: <Widget>[] +
+        children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+                child: Text('Active Subscriptions'),
+              ),
+            ] +
             subscriptionsStream.when(
               data: (subscriptions) => subscriptions
                   .map(
@@ -57,6 +65,22 @@ class CustomerPage extends ConsumerWidget {
               ],
             ) +
             [
+              ChoiceChip(
+                label: const Text("VIEW ALL"),
+                labelStyle: style.overline,
+                selected: false,
+                onSelected: (v) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CustomerSubscriptionsPage(
+                        cId: cId,
+                        name: customer.name,
+                      ),
+                    ),
+                  );
+                },
+              ),
               Card(
                 child: Column(
                   children: [
@@ -90,6 +114,7 @@ class CustomerPage extends ConsumerWidget {
                           MaterialPageRoute(
                             builder: (context) => CustomerTransactionsPage(
                               cId: customer.id,
+                              mobile: customer.mobile,
                             ),
                           ),
                         );

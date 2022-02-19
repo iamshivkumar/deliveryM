@@ -1,5 +1,4 @@
 import 'package:delivery_m/ui/customers/customers_page.dart';
-import 'package:delivery_m/ui/delivery_boys/add_delivery_boys_page.dart';
 import 'package:delivery_m/ui/home/providers/single_subscription_provider.dart';
 import 'package:delivery_m/ui/products/products_page.dart';
 import 'package:delivery_m/ui/profile/profile_page.dart';
@@ -151,7 +150,7 @@ class HomePage extends ConsumerWidget {
                           [
                            products.isNotEmpty&& subscriptions.isEmpty
                                 ? ref.watch(isSubscriptionExistProvider).when(
-                                      data: (value) => !value
+                                      data: (value) => value
                                           ? const SizedBox()
                                           : Card(
                                               child: ListTile(

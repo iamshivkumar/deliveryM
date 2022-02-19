@@ -108,7 +108,7 @@ class SubscriptionCard extends ConsumerWidget {
                           .length,
                       child: Container(
                         height: 4,
-                        color: theme.dividerColor,
+                        color: subscription.active? theme.dividerColor:theme.errorColor,
                       ),
                     ),
                   ],
@@ -181,8 +181,7 @@ class CustSubscriptionCard extends ConsumerWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child:
-                          Text(subscription.product.name),
+                      child: Text(subscription.product.name),
                     ),
                     Text(
                       '${Labels.rupee}${subscription.product.price}',
@@ -212,7 +211,9 @@ class CustSubscriptionCard extends ConsumerWidget {
                           .length,
                       child: Container(
                         height: 4,
-                        color: theme.dividerColor,
+                        color: subscription.active
+                            ? theme.dividerColor
+                            : theme.errorColor,
                       ),
                     ),
                   ],

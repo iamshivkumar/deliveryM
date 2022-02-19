@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_m/ui/customers/providers/customer_provider.dart';
+import 'package:delivery_m/utils/dates.dart';
 import '../enums/delivery_status.dart';
 import '../models/delivery.dart';
 import '../models/subscription.dart';
@@ -29,6 +30,26 @@ class SubscriptionRepository {
         .collection(Constants.subscriptions)
         .where(Constants.eId, isEqualTo: eId)
         .where(Constants.customerId, isEqualTo: cId)
+        .where(Constants.endDate, isGreaterThanOrEqualTo: Dates.today)
+        .orderBy(Constants.endDate, descending: true)
+        .snapshots()
+        .map(
+          (event) => event.docs
+              .map(
+                (e) => Subscription.fromFirestore(e),
+              )
+              .toList(),
+        );
+  }
+
+  Stream<List<Subscription>> customerInactiveSubscriptionsStream(
+      {required String cId, required String eId}) {
+    return _firestore
+        .collection(Constants.subscriptions)
+        .where(Constants.eId, isEqualTo: eId)
+        .where(Constants.customerId, isEqualTo: cId)
+        .where(Constants.endDate, isLessThan: Dates.today)
+        .orderBy(Constants.endDate, descending: true)
         .snapshots()
         .map(
           (event) => event.docs
@@ -73,6 +94,13 @@ class SubscriptionRepository {
         );
   }
 
+  void updateActive({required bool value, required String sId}) {
+    _firestore
+        .collection(Constants.subscriptions)
+        .doc(sId)
+        .update({Constants.active: value});
+  }
+
   void update({
     required Subscription subscription,
     required Delivery updated,
@@ -108,8 +136,8 @@ class SubscriptionRepository {
                 .collection(Constants.customers)
                 .doc(subscription.customerId),
             {
-              Constants.balance:
-                  FieldValue.increment(-updated.quantity * subscription.product.price)
+              Constants.balance: FieldValue.increment(
+                  -updated.quantity * subscription.product.price)
             });
         _batch.set(
           _firestore.collection(Constants.walletTransactions).doc(),
@@ -124,7 +152,8 @@ class SubscriptionRepository {
                   amount: -subscription.product.price * updated.quantity,
                   createdAt: DateTime.now(),
                   name: subscription.product.name,
-                  balance: balance + (-subscription.product.price * updated.quantity))
+                  balance: balance +
+                      (-subscription.product.price * updated.quantity))
               .toMap(),
         );
       } else if (initial.status == DeliveryStatus.delivered &&
@@ -134,8 +163,8 @@ class SubscriptionRepository {
                 .collection(Constants.customers)
                 .doc(subscription.customerId),
             {
-              Constants.balance:
-                  FieldValue.increment(updated.quantity * subscription.product.price)
+              Constants.balance: FieldValue.increment(
+                  updated.quantity * subscription.product.price)
             });
         _batch.set(
           _firestore.collection(Constants.walletTransactions).doc(),
@@ -231,8 +260,8 @@ class SubscriptionRepository {
               .collection(Constants.customers)
               .doc(subscription.customerId),
           {
-            Constants.balance:
-                FieldValue.increment(-delivery.quantity * subscription.product.price)
+            Constants.balance: FieldValue.increment(
+                -delivery.quantity * subscription.product.price)
           });
       _batch.set(
         _firestore.collection(Constants.walletTransactions).doc(),
@@ -286,30 +315,18 @@ class SubscriptionRepository {
         );
   }
 
-    Stream<bool> isSubscriptionExist(String eId) {
+  Stream<bool> isSubscriptionExist(String eId) {
     return _firestore
         .collection(Constants.subscriptions)
+        .where(Constants.eId,isEqualTo: eId)
         .limit(1)
         .snapshots()
         .map(
-          (event) => event.docs.isEmpty?false:true,
+          (event) => event.docs.isEmpty ? false : true,
         );
   }
 
-  // Stream<List<WalletTransaction>> transactionsStream(String sId) {
-  //   return _firestore
-  //       .collection(Constants.walletTransactions)
-  //       .where(Constants.sId, isEqualTo: sId)
-  //       .orderBy(Constants.createdAt)
-  //       .snapshots()
-  //       .map(
-  //         (event) => event.docs
-  //             .map(
-  //               (e) => WalletTransaction.fromMap(e),
-  //             )
-  //             .toList(),
-  //       );
-  // }
+  
 
   Future<List<DocumentSnapshot>> walletTransactionsLimitFuture(
       {required int limit, DocumentSnapshot? last, required String cId}) async {

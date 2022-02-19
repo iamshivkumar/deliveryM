@@ -25,17 +25,27 @@ class ProfileRepository {
           .doc(profile.id)
           .update(profile.toMap());
     } else {
-      await _firestore.collection(Constants.users).doc(_user.uid).set(profile
-          .copyWith(
-            mobile: _user.phoneNumber,
-          )
-          .toMap());
-      if(!profile.isAdmin){
-        _firestore.collection(Constants.users).doc(profile.eId).update({
-          Constants.deboys: FieldValue.arrayRemove([profile.mobile]) 
+      final _batch = _firestore.batch();
+      _batch.set(
+          _firestore.collection(Constants.users).doc(_user.uid),
+          profile
+              .copyWith(
+                mobile: _user.phoneNumber,
+              )
+              .toMap());
+      if (!profile.isAdmin) {
+        _batch.update(_firestore.collection(Constants.users).doc(profile.eId), {
+          Constants.deboys: FieldValue.arrayRemove([profile.mobile])
         });
       }
+      _batch.commit();
     }
+  }
+
+  void removeDboyMobile({required String mobile, required String eId}) {
+    _firestore.collection(Constants.users).doc(eId).update({
+      Constants.deboys: FieldValue.arrayRemove([mobile])
+    });
   }
 
   Stream<Profile?> profileStream(String id) =>
@@ -72,7 +82,8 @@ class ProfileRepository {
               .toList(),
         );
   }
-    void updateAddress({required String dId, required Address address}) {
+
+  void updateAddress({required String dId, required Address address}) {
     _firestore.collection(Constants.users).doc(dId).update({
       Constants.address: address.toMap(),
     });

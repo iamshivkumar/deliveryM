@@ -57,9 +57,13 @@ dependencies:
   http: ^0.13.4
   razorpay_flutter: ^1.2.9
   path_provider: ^2.0.8
+  
+  share_plus: ^3.0.5
+
 
   pdf: ^3.7.1
   syncfusion_flutter_pdfviewer: ^19.4.50-beta
+  fluttertoast: ^8.0.8
 
 
 
