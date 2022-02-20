@@ -88,4 +88,10 @@ class ProfileRepository {
       Constants.address: address.toMap(),
     });
   }
+
+  void updateDeliveryBoyStatus({required String dId, required bool value}) {
+    _firestore.collection(Constants.users).doc(dId).update({
+      Constants.active: value,
+    });
+  }
 }

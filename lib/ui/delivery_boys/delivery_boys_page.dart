@@ -3,6 +3,7 @@ import 'package:delivery_m/ui/components/loading.dart';
 import 'package:delivery_m/ui/delivery_boys/delivery_boy_page.dart';
 import 'package:delivery_m/ui/delivery_boys/providers/delivery_boys_provider.dart';
 import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
+import 'package:delivery_m/utils/labels.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -33,10 +34,27 @@ class DeliveryBoysPage extends ConsumerWidget {
                             ? Text(
                                 ' - You ',
                                 style: style.subtitle2!.copyWith(
-                                  color: theme.colorScheme.secondary,
+                                  color: theme.colorScheme.primary,
                                 ),
                               )
-                            : const SizedBox()
+                            : const SizedBox(),
+                        const SizedBox(width: 8),
+                        !e.active
+                            ? Material(
+                                color: Colors.red,
+                                shape: const StadiumBorder(),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 2),
+                                  child: Text(
+                                    Labels.disabled.toUpperCase(),
+                                    style: style.overline!.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : SizedBox()
                       ],
                     ),
                     subtitle: Text(e.address.formated),

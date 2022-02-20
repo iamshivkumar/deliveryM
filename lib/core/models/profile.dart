@@ -9,7 +9,7 @@ class Profile {
   final bool isAdmin;
   final Address address;
   final String eId;
-
+  final bool active;
   final DateTime createdAt;
   final DateTime? end;
   final String? businessName;
@@ -24,6 +24,7 @@ class Profile {
     required this.isAdmin,
     required this.address,
     required this.eId,
+    required this.active,
     this.deboys,
     this.end,
     this.businessName,
@@ -43,6 +44,7 @@ class Profile {
     DateTime? end,
     bool? isAdmin,
     List<String>? deboys,
+    bool? active,
   }) {
     return Profile(
       id: id ?? this.id,
@@ -56,6 +58,7 @@ class Profile {
       end: end ?? this.end,
       createdAt: createdAt ?? this.createdAt,
       deboys: deboys ?? this.deboys,
+      active: active??this.active,
     );
   }
 
@@ -70,7 +73,8 @@ class Profile {
       'eId': isAdmin ? id : eId,
       'createdAt': Timestamp.fromDate(createdAt),
       'end': end != null ? Timestamp.fromDate(end!) : null,
-      'deboys': deboys
+      'deboys': deboys,
+      'active': active,
     };
   }
 
@@ -88,6 +92,7 @@ class Profile {
       createdAt: map['createdAt'].toDate(),
       isAdmin: map['isAdmin'],
       deboys: map['deboys'] != null ? List<String>.from(map['deboys']) : null,
+      active: map['active']??true,
     );
   }
 
@@ -101,6 +106,7 @@ class Profile {
       createdAt: DateTime.now(),
       isAdmin: false,
       eId: '',
+      active: true,
     );
   }
 
@@ -116,6 +122,7 @@ class Profile {
       eId: '',
       end: DateTime.now().add(const Duration(days: 31)),
       deboys: [],
+      active: true,
     );
   }
 

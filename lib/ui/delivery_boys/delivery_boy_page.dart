@@ -4,6 +4,7 @@ import 'package:delivery_m/ui/components/loading.dart';
 import 'package:delivery_m/ui/delivery_boys/providers/delivery_boys_provider.dart';
 import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
 import 'package:delivery_m/ui/subscriptions/assigned_subscriptions_page.dart';
+import 'package:delivery_m/utils/labels.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -21,6 +22,36 @@ class DeliveryBoyPage extends ConsumerWidget {
             return Scaffold(
               appBar: AppBar(
                 title: Text(dboy.name),
+                actions: [
+                  dboy.active
+                      ? const SizedBox()
+                      : const Chip(
+                          label: Text(
+                            Labels.disabled,
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          backgroundColor: Colors.red,
+                        ),
+                 dboy.isAdmin?const SizedBox(): PopupMenuButton<String>(
+                      itemBuilder: (context) => [
+                            dboy.active ? Labels.disable : Labels.enable,
+                          ]
+                              .map(
+                                (e) => PopupMenuItem(
+                                  child: Text(e),
+                                  value: e,
+                                ),
+                              )
+                              .toList(),
+                      onSelected: (v) {
+                        repository.updateDeliveryBoyStatus(
+                          dId: dId,
+                          value: v == Labels.enable,
+                        );
+                      })
+                ],
               ),
               body: ListView(
                 children: [

@@ -18,4 +18,8 @@ class Labels {
   static const String deactivate = "Deactivate";
   static const String activate = "Activate";
   static const String downloadBillPdf = "Download bill pdf";
+
+  static const String enable = 'Enable';
+  static const String disable = 'Disable';
+  static const String disabled = "Disabled";
 }

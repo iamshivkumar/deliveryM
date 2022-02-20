@@ -74,9 +74,9 @@ class Auth extends ChangeNotifier {
         forceResendingToken: resendToken,
         phoneNumber: "+91" + phone,
         verificationCompleted: (PhoneAuthCredential credential) async {
-          phoneLoading = true;
+          loading = true;
           await _auth.signInWithCredential(credential);
-          phoneLoading = false;
+          loading = false;
           verificationId = null;
         },
         verificationFailed: (FirebaseAuthException e) {
