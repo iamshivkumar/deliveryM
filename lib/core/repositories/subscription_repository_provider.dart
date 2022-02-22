@@ -105,6 +105,8 @@ class SubscriptionRepository {
     required Subscription subscription,
     required Delivery updated,
   }) async {
+    final bool isLast =
+        subscription.dates.last == updated.date && subscription.recure;
     final initial =
         subscription.deliveries.where((element) => element == updated).first;
     subscription.deliveries[subscription.deliveries.indexOf(updated)] = updated;
@@ -113,6 +115,7 @@ class SubscriptionRepository {
     final _batch = _firestore.batch();
     _batch.update(
         _firestore.collection(Constants.subscriptions).doc(subscription.id), {
+      Constants.recure: isLast ? false : subscription.recure,
       Constants.deliveries:
           subscription.deliveries.map((e) => e.toMap()).toList(),
       Constants.returnKitsQt: subscription.returnKitsQt != null
@@ -212,6 +215,37 @@ class SubscriptionRepository {
       );
     }
     _batch.commit();
+    if (isLast) {
+      final List<DateTime> dates = [];
+      final duration = subscription.endDate.difference(subscription.startDate);
+      var start = subscription.endDate.add(Duration(days: subscription.diff));
+      final end = start.add(duration);
+      while (start.isBefore(end)) {
+        dates.add(start);
+        start = start.add(
+          Duration(
+            days: subscription.diff,
+          ),
+        );
+      }
+
+      final updated = subscription.copyWith(
+        returnKitsQt: subscription.returnKitsQt == null ? null : 0,
+        dates: dates.map((e) => Formats.date(e)).toList(),
+        deliveries: dates
+            .map(
+              (e) => Delivery(
+                date: Formats.date(e),
+                quantity: subscription.quantity,
+                status: DeliveryStatus.pending,
+              ),
+            )
+            .toList(),
+        startDate: start,
+        endDate: end,
+      );
+      _firestore.collection(Constants.subscriptions).add(updated.toMap());
+    }
   }
 
   void returnKitsQuantity({required String sId, required int qt}) {
@@ -289,8 +323,6 @@ class SubscriptionRepository {
     });
   }
 
-  
-
   Stream<List<Subscription>> dboyMonthSubscriptionsStream(
       {required String dId, required DateTime month}) {
     return _firestore
@@ -320,15 +352,13 @@ class SubscriptionRepository {
   Stream<bool> isSubscriptionExist(String eId) {
     return _firestore
         .collection(Constants.subscriptions)
-        .where(Constants.eId,isEqualTo: eId)
+        .where(Constants.eId, isEqualTo: eId)
         .limit(1)
         .snapshots()
         .map(
           (event) => event.docs.isEmpty ? false : true,
         );
   }
-
-  
 
   Future<List<DocumentSnapshot>> walletTransactionsLimitFuture(
       {required int limit, DocumentSnapshot? last, required String cId}) async {

@@ -45,7 +45,7 @@ class DeliveryProductWidget extends ConsumerWidget {
                 height: 32,
                 width: 32,
                 child:
-                    Image.network(subscription.product.image),
+                    Image.asset(subscription.product.image),
               ),
             ),
             title: Row(

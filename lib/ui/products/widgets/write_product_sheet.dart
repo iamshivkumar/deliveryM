@@ -1,3 +1,5 @@
+import 'package:delivery_m/utils/assets.dart';
+
 import '../../../core/providers/form_key_provider.dart';
 import '../providers/write_product_view_model_provider.dart';
 import 'package:flutter/material.dart';
@@ -28,28 +30,29 @@ class WriteProductSheet extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             Row(
-                children: model.images
-                    .map(
-                      (e) => GestureDetector(
-                        onTap: () {
-                          model.image = e;
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 16),
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: theme.cardColor,
-                            border: model.image == e ? Border.all() : null,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.network(e),
-                          ),
+              children: Assets.products
+                  .map(
+                    (e) => GestureDetector(
+                      onTap: () {
+                        model.image = e;
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 16),
+                        height: 64,
+                        width: 64,
+                        decoration: BoxDecoration(
+                          color: theme.cardColor,
+                          border: model.image == e ? Border.all() : null,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(e),
                         ),
                       ),
-                    )
-                    .toList()),
+                    ),
+                  )
+                  .toList(),
+            ),
             const SizedBox(height: 16),
             TextFormField(
               initialValue: model.name,

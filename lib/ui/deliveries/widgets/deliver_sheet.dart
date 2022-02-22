@@ -36,7 +36,7 @@ class DeliverSheet extends ConsumerWidget {
                     child: SizedBox(
                       height: 28,
                       width: 28,
-                      child: Image.network(image),
+                      child: Image.asset(image),
                     ),
                   ),
                   Padding(

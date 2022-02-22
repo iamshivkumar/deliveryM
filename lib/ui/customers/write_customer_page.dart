@@ -102,7 +102,7 @@ class WriteCustomerPage extends ConsumerWidget {
                           children: [
                             AspectRatio(
                               aspectRatio: 2,
-                              child: Image.network(e),
+                              child: Image.asset(e),
                             ),
                             Positioned(
                               right: 0,

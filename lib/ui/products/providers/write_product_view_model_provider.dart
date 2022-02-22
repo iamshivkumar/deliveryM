@@ -1,3 +1,5 @@
+import 'package:delivery_m/utils/assets.dart';
+
 import '../../../core/models/product.dart';
 import '../../../core/models/profile.dart';
 import '../../../core/providers/master_data_provider.dart';
@@ -19,17 +21,12 @@ class WriteProductViewModel extends ChangeNotifier {
 
   Product initial = Product.empty();
 
-  List<String> get images =>
-      _ref.watch(masterDataProvider).asData?.value.images ?? [];
   
 
   bool get forEdit => initial.id.isNotEmpty;
 
   String? _image;
-  String? get image =>
-      _image ??
-      (initial.image.isNotEmpty ? initial.image : null) ??
-      (images.isNotEmpty ? images.first : null);
+  String? get image => _image??Assets.products.first;
   set image(String? image) {
     _image = image;
     notifyListeners();

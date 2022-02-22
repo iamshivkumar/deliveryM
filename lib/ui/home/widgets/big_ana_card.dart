@@ -40,7 +40,7 @@ class BigAnaCard extends StatelessWidget {
                         child: SizedBox(
                           height: 28,
                           width: 28,
-                          child: Image.network(product.image),
+                          child: Image.asset(product.image),
                         ),
                       ),
                       Padding(

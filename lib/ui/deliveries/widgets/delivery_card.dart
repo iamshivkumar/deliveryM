@@ -61,7 +61,7 @@ class DeliveryCard extends ConsumerWidget {
                                     ],
                                   ),
                                 ),
-                                avatar: Image.network(e.product.image),
+                                avatar: Image.asset(e.product.image),
                               ),
                             );
                           }).toList(),

@@ -69,7 +69,7 @@ class CreateSubscriptionPage extends HookConsumerWidget {
                             SizedBox(
                               height: 40,
                               width: 40,
-                              child: Image.network(e.image),
+                              child: Image.asset(e.image),
                             ),
                             const SizedBox(width: 16),
                             Text(e.name),

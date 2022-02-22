@@ -63,7 +63,7 @@ class ProductCard extends ConsumerWidget {
         child: ListTile(
           leading: Padding(
             padding: const EdgeInsets.all(4),
-            child: Image.network(product.image),
+            child: Image.asset(product.image),
           ),
           title: Text(product.name),
           subtitle: Text(

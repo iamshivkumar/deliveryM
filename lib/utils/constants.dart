@@ -30,4 +30,5 @@ class Constants {
   static const String orders = "orders";
 
   static const String updatedAt = "updatedAt";
+  static const String recure = "recure";
 }

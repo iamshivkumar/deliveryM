@@ -25,7 +25,7 @@ class AnaCard extends StatelessWidget {
             SizedBox(
               height: 28,
               width: 28,
-              child: Image.network(product.image),
+              child: Image.asset(product.image),
             ),
             const SizedBox(width: 8),
             Expanded(
