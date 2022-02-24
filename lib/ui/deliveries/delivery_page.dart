@@ -25,6 +25,7 @@ class DeliveryPage extends ConsumerWidget {
         title: Text(customer.name),
       ),
       body: ListView(
+        padding: const EdgeInsets.all(4),
         children: <Widget>[] +
             stat.subscriptions
                 .map(

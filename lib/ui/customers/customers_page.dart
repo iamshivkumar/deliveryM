@@ -31,6 +31,7 @@ class CustomersPage extends ConsumerWidget {
       ),
       body: customersStream.when(
         data: (customers) => ListView(
+          padding: const EdgeInsets.all(4),
           children: customers.map((e) => CustomerCard(customer: e)).toList(),
         ),
         error: (e, s) => DataError(e: e),

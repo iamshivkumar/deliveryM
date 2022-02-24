@@ -7,17 +7,19 @@ class CustomerCard extends StatelessWidget {
   final Customer customer;
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CustomerPage(cId: customer.id),
-          ),
-        );
-      },
-      title: Text(customer.name),
-      subtitle: Text(customer.address.formated),
+    return Card(
+      child: ListTile(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CustomerPage(cId: customer.id),
+            ),
+          );
+        },
+        title: Text(customer.name),
+        subtitle: Text(customer.address.formated),
+      ),
     );
   }
 }

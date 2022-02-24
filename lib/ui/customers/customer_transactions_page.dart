@@ -60,13 +60,16 @@ class CustomerTransactionsPage extends ConsumerWidget {
                 : model.transactions.isNotEmpty
                     ? CustomScrollView(
                         slivers: [
-                          SliverList(
-                            delegate: SliverChildListDelegate(
-                              model.transactions
-                                  .map(
-                                    (e) => TransactionCard(e: e),
-                                  )
-                                  .toList(),
+                          SliverPadding(
+                            padding: const EdgeInsets.all(4),
+                            sliver: SliverList(
+                              delegate: SliverChildListDelegate(
+                                model.transactions
+                                    .map(
+                                      (e) => TransactionCard(e: e),
+                                    )
+                                    .toList(),
+                              ),
                             ),
                           ),
                           SliverToBoxAdapter(

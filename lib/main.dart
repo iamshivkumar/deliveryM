@@ -1,6 +1,5 @@
 import 'package:delivery_m/ui/colors.dart';
 import 'package:flutter/services.dart';
-import 'package:share_plus/share_plus.dart';
 
 import 'root.dart';
 import 'package:firebase_core/firebase_core.dart';

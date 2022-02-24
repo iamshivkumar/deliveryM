@@ -29,29 +29,32 @@ class WriteProductSheet extends ConsumerWidget {
               style: style.headline6,
             ),
             const SizedBox(height: 16),
-            Row(
-              children: Assets.products
-                  .map(
-                    (e) => GestureDetector(
-                      onTap: () {
-                        model.image = e;
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 16),
-                        height: 64,
-                        width: 64,
-                        decoration: BoxDecoration(
-                          color: theme.cardColor,
-                          border: model.image == e ? Border.all() : null,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(e),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: Assets.products
+                    .map(
+                      (e) => GestureDetector(
+                        onTap: () {
+                          model.image = e;
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 16),
+                          height: 64,
+                          width: 64,
+                          decoration: BoxDecoration(
+                            color: theme.cardColor,
+                            border: model.image == e ? Border.all() : null,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(e),
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                  .toList(),
+                    )
+                    .toList(),
+              ),
             ),
             const SizedBox(height: 16),
             TextFormField(
