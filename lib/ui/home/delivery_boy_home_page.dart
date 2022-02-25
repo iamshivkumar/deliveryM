@@ -41,7 +41,7 @@ class DeliveryBoyHomePage extends ConsumerWidget {
         title: const Text('Shivkumar Konade'),
         shadowColor: theme.primaryColor.withOpacity(0.4),
         actions: [
-          IconButton(
+         profile.id!=profile.eId? IconButton(
             onPressed: () {
               Navigator.push(
                 context,
@@ -53,7 +53,7 @@ class DeliveryBoyHomePage extends ConsumerWidget {
             icon: const CircleAvatar(
               child: Icon(Icons.person_outline),
             ),
-          ),
+          ):const SizedBox(),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

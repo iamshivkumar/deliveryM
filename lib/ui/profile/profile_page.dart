@@ -80,9 +80,24 @@ class ProfilePage extends ConsumerWidget {
                     ),
                   )
                 : const SizedBox(),
+            profile.isAdmin
+                ? TextButton(
+                    onPressed: () {},
+                    child: const Text('Terms & Conditions'),
+                  )
+                : const SizedBox(),
+            profile.isAdmin
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text('Contact Support'),
+                    ),
+                  )
+                : const SizedBox(),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: OutlinedButton.icon(
+              child: TextButton.icon(
                 onPressed: () {
                   ref.read(authProvider).signOut();
                   Navigator.pop(context);
