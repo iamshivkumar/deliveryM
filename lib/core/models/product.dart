@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_m/utils/assets.dart';
 
 class Product {
   final String id;
@@ -84,7 +85,7 @@ class Product {
     return Product(
       id: '',
       eId: '',
-      image: '',
+      image: Assets.products.first,
       name: '',
       price: 0,
       returnKit: false

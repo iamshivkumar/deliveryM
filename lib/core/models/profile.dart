@@ -130,12 +130,4 @@ class Profile {
 }
 
 
-///name
-///role
-///phone?
 
-///business? name
-///business? address
-///delivery boys emails or phone numbers?
-
-///business ID? 

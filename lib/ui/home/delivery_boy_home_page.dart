@@ -29,8 +29,7 @@ class DeliveryBoyHomePage extends ConsumerWidget {
     final theme = Theme.of(context);
     // final style = theme.textTheme;
     final model = ref.watch(calendarViewModelProvider);
-    final dboyDay = 
-        DboyDay(dId: profile.id, date: model.selectedDate);
+    final dboyDay = DboyDay(dId: profile.id, date: model.selectedDate);
     final gaveStream = ref.watch(gaveProvider(model.selectedDate));
 
     final productsStream = ref.watch(productsProvider);
@@ -78,16 +77,16 @@ class DeliveryBoyHomePage extends ConsumerWidget {
             floating: true,
             pinned: false,
             forceElevated: true,
-            flexibleSpace: FlexibleSpaceBar(              
+            flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
               background: MyCalendar(),
             ),
             shape: const ContinuousRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(32),
-          bottomRight: Radius.circular(32),
-        ),
-      ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(32),
+                bottomRight: Radius.circular(32),
+              ),
+            ),
           ),
           SliverPadding(
             padding: const EdgeInsets.all(4),
@@ -106,11 +105,14 @@ class DeliveryBoyHomePage extends ConsumerWidget {
                               estimated: calc.estimatedByD(e.id, profile.id),
                               pending: calc.pendingByD(e.id, profile.id),
                               gave: gave.gaveToD(e.id, profile.id),
-                              onTap: () async {
+                              onTap: profile.isAdmin? () async {
                                 final int? quantity =
                                     await showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
+                                  shape: ContinuousRectangleBorder(
+                                    borderRadius: BorderRadius.circular(32),
+                                  ),
                                   builder: (context) => GiveSheet(
                                       initial: gave.gaveToD(e.id, profile.id),
                                       product: e),
@@ -118,18 +120,18 @@ class DeliveryBoyHomePage extends ConsumerWidget {
                                 if (quantity != null) {
                                   try {
                                     _repository.give(
-                                    id: gave.id,
-                                    dId: profile.id,
-                                    pId: e.id,
-                                    quantity: quantity,
-                                  );
+                                      id: gave.id,
+                                      dId: profile.id,
+                                      pId: e.id,
+                                      quantity: quantity,
+                                    );
                                   } catch (e) {
                                     if (kDebugMode) {
                                       print('$e');
                                     }
                                   }
                                 }
-                              },
+                              }:null,
                             ),
                           )
                           .toList();

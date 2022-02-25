@@ -31,7 +31,6 @@ class DeliveryProductWidget extends ConsumerWidget {
         .where((element) => element.id == subscription.id)
         .first;
 
- 
     final delivery = updated.getDelivery(date);
     final repository = ref.read(subscriptionRepositoryProvider);
     return Card(
@@ -44,14 +43,12 @@ class DeliveryProductWidget extends ConsumerWidget {
               child: SizedBox(
                 height: 32,
                 width: 32,
-                child:
-                    Image.asset(subscription.product.image),
+                child: Image.asset(subscription.product.image),
               ),
             ),
             title: Row(
               children: [
-                Flexible(
-                    child: Text(subscription.product.name)),
+                Flexible(child: Text(subscription.product.name)),
                 const SizedBox(width: 8),
                 Material(
                   color: theme.dividerColor,
@@ -80,6 +77,9 @@ class DeliveryProductWidget extends ConsumerWidget {
                   onPressed: () async {
                     final int? quantity = await showModalBottomSheet(
                       context: context,
+                       shape: ContinuousRectangleBorder(
+                            borderRadius: BorderRadius.circular(32),
+                          ),
                       builder: (context) => DeliverSheet(
                         initial: delivery.quantity,
                         name: subscription.product.name,
@@ -143,6 +143,9 @@ class DeliveryProductWidget extends ConsumerWidget {
                         final int? quantity = await showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
+                          shape: ContinuousRectangleBorder(
+                            borderRadius: BorderRadius.circular(32),
+                          ),
                           builder: (context) => AddReturnedKitsQuantitySheet(
                               available: updated.returnKitsQt!),
                         );

@@ -17,7 +17,7 @@ class BigAnaCard extends StatelessWidget {
   final int estimated;
   final int pending;
   final int gave;
-  final VoidCallback onTap; 
+  final VoidCallback? onTap; 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -54,10 +54,10 @@ class BigAnaCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                IconButton(
+               onTap!=null? IconButton(
                   onPressed:onTap,
                   icon: const Icon(Icons.add),
-                ),
+                ):const SizedBox(),
               ],
             ),
             Padding(

@@ -88,6 +88,9 @@ class SubscriptionPage extends ConsumerWidget {
           await showModalBottomSheet(
             isScrollControlled: true,
             context: context,
+            shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.circular(32),
+            ),
             builder: (context) => AddDeliverySheet(subscription: subscription),
           );
           ref.read(addDeliveryViewModelProvider).clear();

@@ -59,6 +59,13 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _recure = true;
+  bool get recure => _recure;
+  set recure(bool recure) {
+    _recure = recure;
+    notifyListeners();
+  }
+
   String? dId;
 
   int quantity = 1;
@@ -87,7 +94,7 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
       dId: dId!,
       eId: _profile.id,
       customerId: cId,
-      recure: true,
+      recure: recure,
       active: true,
       product: product!,
       quantity: quantity,

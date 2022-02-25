@@ -205,7 +205,16 @@ class CreateSubscriptionPage extends HookConsumerWidget {
                   },
                 ),
                 title: const Text('Manage return kits.'),
-              )
+              ),
+              ListTile(
+                leading: Checkbox(
+                  value: model.recure,
+                  onChanged: (v) {
+                    model.recure = v!;
+                  },
+                ),
+                title: const Text('Automatically create the same subscription after the end date.'),
+              ),
             ],
           ),
         ),

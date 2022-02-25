@@ -26,7 +26,7 @@ class WriteProductViewModel extends ChangeNotifier {
   bool get forEdit => initial.id.isNotEmpty;
 
   String? _image;
-  String? get image => _image??Assets.products.first;
+  String? get image => _image??initial.image;
   set image(String? image) {
     _image = image;
     notifyListeners();

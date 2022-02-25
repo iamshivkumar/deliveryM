@@ -8,6 +8,7 @@ import 'package:delivery_m/ui/profile/providers/create_deboy_profile_view_model.
 import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
 import 'package:delivery_m/ui/profile/providers/write_profile_view_model_provider.dart';
 import 'package:delivery_m/ui/profile/write_profile_page.dart';
+import 'package:delivery_m/utils/formats.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -70,10 +71,19 @@ class ProfilePage extends ConsumerWidget {
                 },
               ),
             ),
+            profile.end != null && profile.isAdmin
+                ? Card(
+                    child: ListTile(
+                      title: Text(
+                        "App subscription ends on ${Formats.monthDay(profile.end!)} at ${Formats.time(profile.end!)}",
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: OutlinedButton.icon(
-                onPressed: (){
+                onPressed: () {
                   ref.read(authProvider).signOut();
                   Navigator.pop(context);
                 },

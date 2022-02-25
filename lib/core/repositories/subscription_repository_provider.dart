@@ -120,7 +120,8 @@ class SubscriptionRepository {
           subscription.deliveries.map((e) => e.toMap()).toList(),
       Constants.returnKitsQt: subscription.returnKitsQt != null
           ? (initial.status != updated.status
-              ? (updated.status == DeliveryStatus.delivered
+              ? (updated.status == DeliveryStatus.delivered &&
+                      initial.status != DeliveryStatus.delivered
                   ? FieldValue.increment(updated.quantity)
                   : (initial.status == DeliveryStatus.delivered &&
                           updated.status == DeliveryStatus.canceled
