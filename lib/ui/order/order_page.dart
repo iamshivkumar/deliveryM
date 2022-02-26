@@ -1,5 +1,6 @@
 import 'package:delivery_m/core/enums/payment_status.dart';
 import 'package:delivery_m/core/models/order.dart';
+import 'package:delivery_m/core/providers/master_data_provider.dart';
 import 'package:delivery_m/ui/components/error.dart';
 import 'package:delivery_m/ui/components/launch.dart';
 import 'package:delivery_m/ui/components/loading.dart';
@@ -41,9 +42,14 @@ class OrderPage extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     onPressed: () {
-                      ref.read(checkoutViewModelProvider).checkout(
-                          amount: 1000,
-                          orderId: orders.isNotEmpty ? orders.first.id : null);
+                      final price = ref.read(masterDataProvider).value?.price;
+                      if (price != null) {
+                        ref.read(checkoutViewModelProvider).checkout(
+                              amount: price,
+                              orderId:
+                                  orders.isNotEmpty ? orders.first.id : null,
+                            );
+                      }
                     },
                     child: const Text('PAY'),
                   ),
@@ -58,52 +64,56 @@ class OrderPage extends ConsumerWidget {
   }
 }
 
-class CheckoutView extends StatelessWidget {
+class CheckoutView extends ConsumerWidget {
   const CheckoutView({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     // final scheme = theme.colorScheme;
     final style = theme.textTheme;
-    return ListView(
-      padding: const EdgeInsets.all(24),
-      children: [
-        const SizedBox(height: 24),
-        Text(
-          'Pay Subscription Charge',
-          style: style.headline6,
-        ),
-        const SizedBox(height: 16),
-        const Text(
-          'Pay subscription charge to avail app services for next 31 days.',
-        ),
-        const SizedBox(height: 48),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Amount'),
-            Text(
-              '${Labels.rupee} 1000',
-              style: style.headline6,
-            ),
-          ],
-        ),
-        const Divider(height: 24),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Duration'),
-            Text(
-              '31 Days',
-              style: style.subtitle1,
-            ),
-          ],
-        ),
-      ],
-    );
+    return ref.watch(masterDataProvider).when(
+          data: (data) => ListView(
+            padding: const EdgeInsets.all(24),
+            children: [
+              const SizedBox(height: 24),
+              Text(
+                'Pay Subscription Charge',
+                style: style.headline6,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Pay subscription charge to avail app services for next 31 days.',
+              ),
+              const SizedBox(height: 48),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Amount'),
+                  Text(
+                    '${Labels.rupee} ${data.price}',
+                    style: style.headline6,
+                  ),
+                ],
+              ),
+              const Divider(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Duration'),
+                  Text(
+                    '31 Days',
+                    style: style.subtitle1,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          error: (e, s) => const SizedBox(),
+          loading: () => const Loading(),
+        );
   }
 }
 

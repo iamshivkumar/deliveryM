@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-//TODO: add subscription price
 class MasterData {
-  final List<String> images;
+  final double price;
   MasterData({
-    required this.images,
+    required this.price,
   });
 
   factory MasterData.fromFirestore(DocumentSnapshot doc) {
     final Map<String, dynamic> map = doc.data() as Map<String, dynamic>;
     return MasterData(
-      images: List<String>.from(map['images']),
+      price: map['price'].toDouble(),
     );
   }
 }
