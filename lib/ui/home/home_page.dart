@@ -148,7 +148,7 @@ class HomePage extends ConsumerWidget {
                               error: (e, s) => [DataError(e: e)],
                               loading: () => [const Loading()])) +
                           [
-                           products.isNotEmpty&& subscriptions.isEmpty
+                            products.isNotEmpty && subscriptions.isEmpty
                                 ? ref.watch(isSubscriptionExistProvider).when(
                                       data: (value) => value
                                           ? const SizedBox()

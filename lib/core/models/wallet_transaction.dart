@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-class WalletTransaction extends Equatable{
+class WalletTransaction extends Equatable {
   final String id;
   final String cId;
   final String? sId;
@@ -14,19 +14,20 @@ class WalletTransaction extends Equatable{
   final double balance;
   final DateTime createdAt;
 
-  bool get isDeliveryTransaction => name!=null&&date!=null&&quantity!=null;
+  bool get isDeliveryTransaction =>
+      name != null && date != null && quantity != null;
 
-   const WalletTransaction({
+  const WalletTransaction({
     required this.id,
     required this.cId,
-     this.sId,
-     this.dId,
-     this.date,
-     this.quantity,
+    this.sId,
+    this.dId,
+    this.date,
+    this.quantity,
     required this.amount,
     required this.createdAt,
-     this.pId,
-     this.name,
+    this.pId,
+    this.name,
     required this.balance,
   });
 
@@ -44,18 +45,17 @@ class WalletTransaction extends Equatable{
     double? balance,
   }) {
     return WalletTransaction(
-      id: id ?? this.id,
-      cId: cId ?? this.cId,
-      sId: sId ?? this.sId,
-      dId: dId ?? this.dId,
-      pId: pId??this.pId,
-      date: date ?? this.date,
-      quantity: quantity ?? this.quantity,
-      amount: amount ?? this.amount,
-      createdAt: createdAt ?? this.createdAt,
-      name: name??this.name,
-      balance: balance??this.balance
-    );
+        id: id ?? this.id,
+        cId: cId ?? this.cId,
+        sId: sId ?? this.sId,
+        dId: dId ?? this.dId,
+        pId: pId ?? this.pId,
+        date: date ?? this.date,
+        quantity: quantity ?? this.quantity,
+        amount: amount ?? this.amount,
+        createdAt: createdAt ?? this.createdAt,
+        name: name ?? this.name,
+        balance: balance ?? this.balance);
   }
 
   Map<String, dynamic> toMap() {
@@ -63,12 +63,12 @@ class WalletTransaction extends Equatable{
       'cId': cId,
       'sId': sId,
       'dId': dId,
-      'pId':pId,
+      'pId': pId,
       'date': date,
       'quantity': quantity,
       'amount': amount,
       'createdAt': Timestamp.fromDate(createdAt),
-      'name':name,
+      'name': name,
       'balance': balance,
     };
   }
@@ -86,7 +86,7 @@ class WalletTransaction extends Equatable{
       amount: map['amount'].toDouble(),
       createdAt: map['createdAt'].toDate(),
       name: map['name'],
-      balance: map['balance'],
+      balance: map['balance'].toDouble(),
     );
   }
 

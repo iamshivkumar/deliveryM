@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final base = ThemeData.light();
+    // final base = ThemeData.light();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.white,
         systemNavigationBarDividerColor: Colors.blueGrey.shade100));
@@ -37,9 +37,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         inputDecorationTheme: const InputDecorationTheme(
-          filled: true,
-          border: OutlineInputBorder()
-        ),
+            filled: true, border: OutlineInputBorder()),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             foregroundColor: MaterialStateProperty.all(Palette.secondary),
@@ -58,7 +56,7 @@ class MyApp extends StatelessWidget {
           onSecondary: Palette.primaryDark,
         ),
       ),
-      home: Root(),
+      home: const Root(),
     );
   }
 }

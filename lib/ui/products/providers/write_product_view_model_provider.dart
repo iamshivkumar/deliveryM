@@ -1,8 +1,5 @@
-import 'package:delivery_m/utils/assets.dart';
-
 import '../../../core/models/product.dart';
 import '../../../core/models/profile.dart';
-import '../../../core/providers/master_data_provider.dart';
 import '../../../core/repositories/products_repository_provider.dart';
 import '../../profile/providers/profile_provider.dart';
 import 'package:flutter/foundation.dart';
@@ -21,12 +18,10 @@ class WriteProductViewModel extends ChangeNotifier {
 
   Product initial = Product.empty();
 
-  
-
   bool get forEdit => initial.id.isNotEmpty;
 
   String? _image;
-  String? get image => _image??initial.image;
+  String? get image => _image ?? initial.image;
   set image(String? image) {
     _image = image;
     notifyListeners();
@@ -45,7 +40,7 @@ class WriteProductViewModel extends ChangeNotifier {
   }
 
   bool? _returnKit;
-  bool get returnKit => _returnKit??initial.returnKit;
+  bool get returnKit => _returnKit ?? initial.returnKit;
   set returnKit(bool returnKit) {
     _returnKit = returnKit;
     notifyListeners();
@@ -68,7 +63,7 @@ class WriteProductViewModel extends ChangeNotifier {
     }
   }
 
-  void clear(){
+  void clear() {
     _name = null;
     _image = null;
     _price = null;

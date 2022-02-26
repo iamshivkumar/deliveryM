@@ -77,9 +77,9 @@ class DeliveryProductWidget extends ConsumerWidget {
                   onPressed: () async {
                     final int? quantity = await showModalBottomSheet(
                       context: context,
-                       shape: ContinuousRectangleBorder(
-                            borderRadius: BorderRadius.circular(32),
-                          ),
+                      shape: ContinuousRectangleBorder(
+                        borderRadius: BorderRadius.circular(32),
+                      ),
                       builder: (context) => DeliverSheet(
                         initial: delivery.quantity,
                         name: subscription.product.name,

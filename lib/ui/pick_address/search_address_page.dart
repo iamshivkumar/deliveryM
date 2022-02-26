@@ -33,20 +33,22 @@ class SearchPage extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return SearchView(onDone: ()=>close(context, null),);
+    return SearchView(
+      onDone: () => close(context, null),
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Consumer(
-      builder: (context, ref, child) {
-        final model = ref.read(searchViewModelProvider);
-        if(model.debouncer.value!=query){
-          model.debouncer.value = query;
-        }
-        return SearchView(onDone: ()=>close(context, null),);
+    return Consumer(builder: (context, ref, child) {
+      final model = ref.read(searchViewModelProvider);
+      if (model.debouncer.value != query) {
+        model.debouncer.value = query;
       }
-    );
+      return SearchView(
+        onDone: () => close(context, null),
+      );
+    });
   }
 }
 

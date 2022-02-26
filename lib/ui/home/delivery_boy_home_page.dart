@@ -1,5 +1,6 @@
 import 'package:delivery_m/core/models/dboy_day.dart';
 import 'package:delivery_m/ui/profile/profile_page.dart';
+import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../core/models/profile.dart';
@@ -31,7 +32,7 @@ class DeliveryBoyHomePage extends ConsumerWidget {
     final model = ref.watch(calendarViewModelProvider);
     final dboyDay = DboyDay(dId: profile.id, date: model.selectedDate);
     final gaveStream = ref.watch(gaveProvider(model.selectedDate));
-
+    final myProfile = ref.read(profileProvider).value!;
     final productsStream = ref.watch(productsProvider);
     final subscriptionStream = ref.watch(dboyDaySubscriptionsProvider(dboyDay));
     final _repository = ref.read(gaveRepositoryProvider);
@@ -41,19 +42,21 @@ class DeliveryBoyHomePage extends ConsumerWidget {
         title: const Text('Shivkumar Konade'),
         shadowColor: theme.primaryColor.withOpacity(0.4),
         actions: [
-         profile.id!=profile.eId? IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ProfilePage(),
-                ),
-              );
-            },
-            icon: const CircleAvatar(
-              child: Icon(Icons.person_outline),
-            ),
-          ):const SizedBox(),
+          !myProfile.isAdmin
+              ? IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfilePage(),
+                      ),
+                    );
+                  },
+                  icon: const CircleAvatar(
+                    child: Icon(Icons.person_outline),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -105,33 +108,37 @@ class DeliveryBoyHomePage extends ConsumerWidget {
                               estimated: calc.estimatedByD(e.id, profile.id),
                               pending: calc.pendingByD(e.id, profile.id),
                               gave: gave.gaveToD(e.id, profile.id),
-                              onTap: profile.isAdmin? () async {
-                                final int? quantity =
-                                    await showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  shape: ContinuousRectangleBorder(
-                                    borderRadius: BorderRadius.circular(32),
-                                  ),
-                                  builder: (context) => GiveSheet(
-                                      initial: gave.gaveToD(e.id, profile.id),
-                                      product: e),
-                                );
-                                if (quantity != null) {
-                                  try {
-                                    _repository.give(
-                                      id: gave.id,
-                                      dId: profile.id,
-                                      pId: e.id,
-                                      quantity: quantity,
-                                    );
-                                  } catch (e) {
-                                    if (kDebugMode) {
-                                      print('$e');
+                              onTap: myProfile.isAdmin
+                                  ? () async {
+                                      final int? quantity =
+                                          await showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        shape: ContinuousRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(32),
+                                        ),
+                                        builder: (context) => GiveSheet(
+                                            initial:
+                                                gave.gaveToD(e.id, profile.id),
+                                            product: e),
+                                      );
+                                      if (quantity != null) {
+                                        try {
+                                          _repository.give(
+                                            id: gave.id,
+                                            dId: profile.id,
+                                            pId: e.id,
+                                            quantity: quantity,
+                                          );
+                                        } catch (e) {
+                                          if (kDebugMode) {
+                                            print('$e');
+                                          }
+                                        }
+                                      }
                                     }
-                                  }
-                                }
-                              }:null,
+                                  : null,
                             ),
                           )
                           .toList();

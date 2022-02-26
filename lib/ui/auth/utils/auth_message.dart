@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 class AuthMessage {
   String text;

@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'providers/auth_provider.dart';
 
 class AuthPage extends HookConsumerWidget {
- const AuthPage({Key? key}) : super(key: key);
+  const AuthPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,7 +73,9 @@ class AuthPage extends HookConsumerWidget {
                       onPressed: model.phoneLoading
                           ? null
                           : () {
-                              model.sendOTP();
+                              model.sendOTP(
+                                ScaffoldMessenger.of(context),
+                              );
                             },
                       child: model.phoneLoading
                           ? const SizedBox(
@@ -81,7 +83,9 @@ class AuthPage extends HookConsumerWidget {
                               height: 24,
                               width: 24,
                             )
-                          :  Text(model.resendToken!=null?"RESEND":'SEND OTP'),
+                          : Text(model.resendToken != null
+                              ? "RESEND"
+                              : 'SEND OTP'),
                     ),
                   ),
                 ],
@@ -89,7 +93,7 @@ class AuthPage extends HookConsumerWidget {
               const SizedBox(height: 16),
               TextFormField(
                 controller: controller,
-                enabled: !model.loading&& model.verificationId != null,
+                enabled: !model.loading && model.verificationId != null,
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
                 decoration: const InputDecoration(
@@ -98,23 +102,26 @@ class AuthPage extends HookConsumerWidget {
                 onChanged: (v) {
                   model.code = v.split(' ').join();
                 },
-                inputFormatters: [
-                  model.otpformater
-                ],
+                inputFormatters: [model.otpformater],
               ),
               const SizedBox(height: 32),
-             model.loading?const Loading(): ElevatedButton(
-                onPressed:
-                    model.verificationId != null && model.code.length == 6
-                        ? () {
-                          model.verifyOTP(clear: controller.clear);
-                        }
-                        : null,
-                child: Text(
-                  'VERIFY',
-                  style: style.button,
-                ),
-              )
+              model.loading
+                  ? const Loading()
+                  : ElevatedButton(
+                      onPressed:
+                          model.verificationId != null && model.code.length == 6
+                              ? () {
+                                  model.verifyOTP(
+                                    clear: controller.clear,
+                                    state: ScaffoldMessenger.of(context),
+                                  );
+                                }
+                              : null,
+                      child: Text(
+                        'VERIFY',
+                        style: style.button,
+                      ),
+                    )
             ],
           ),
         ),

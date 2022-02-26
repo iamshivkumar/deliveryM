@@ -453,9 +453,8 @@ class GeneratePdf {
       }
     }
 
-    final file =
-        await File('${tempDir.path}/${Formats.date(Dates.today)}.pdf')
-            .writeAsBytes(await pdf.save());
+    final file = await File('${tempDir.path}/${Formats.date(Dates.today)}.pdf')
+        .writeAsBytes(await pdf.save());
     return file;
   }
 }

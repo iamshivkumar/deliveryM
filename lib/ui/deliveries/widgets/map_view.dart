@@ -70,7 +70,8 @@ class MapView extends ConsumerWidget {
                           infoWindow: InfoWindow(
                               title: customer.name,
                               snippet: e.subscriptions
-                                  .map((s) =>"${s.product.name} ${s.getDelivery(date).quantity}")
+                                  .map((s) =>
+                                      "${s.product.name} ${s.getDelivery(date).quantity}")
                                   .toList()
                                   .join(', '))),
                       error: (err, s) => Marker(

@@ -1,6 +1,4 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 
 class Gave {
   final String id;
@@ -39,10 +37,12 @@ class Gave {
   factory Gave.fromFirestore(DocumentSnapshot doc) {
     final Map<String, dynamic> map = doc.data() as Map<String, dynamic>;
     return Gave(
-        id: doc.id, eId: map['eId'], data: map, createdAt: map['createdAt'].toDate());
+        id: doc.id,
+        eId: map['eId'],
+        data: map,
+        createdAt: map['createdAt'].toDate());
   }
 
   int gave(String pId) => (data[pId] as int?) ?? 0;
   int gaveToD(String pId, String dId) => (data["${pId}_$dId"] as int?) ?? 0;
-
 }

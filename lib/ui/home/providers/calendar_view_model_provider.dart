@@ -2,7 +2,9 @@ import '../../../utils/dates.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final calendarViewModelProvider = ChangeNotifierProvider((ref)=>CalendarViewModel(),);
+final calendarViewModelProvider = ChangeNotifierProvider(
+  (ref) => CalendarViewModel(),
+);
 
 class CalendarViewModel extends ChangeNotifier {
   DateTime _selectedDate = Dates.today;

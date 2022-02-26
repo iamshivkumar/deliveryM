@@ -21,24 +21,21 @@ class WriteCustomerViewModel extends ChangeNotifier {
 
   Customer initial = Customer.empty();
 
-
-  
-
   bool get forEdit => initial.id.isNotEmpty;
 
-  void removeDoc(String doc){
+  void removeDoc(String doc) {
     initial.documents.remove(doc);
     notifyListeners();
   }
 
   List<File> files = [];
 
-  void addFile(File file){
+  void addFile(File file) {
     files.add(file);
     notifyListeners();
   }
 
-  void removeFile(File file){
+  void removeFile(File file) {
     files.remove(file);
     notifyListeners();
   }
@@ -50,13 +47,14 @@ class WriteCustomerViewModel extends ChangeNotifier {
   }
 
   String? _mobile;
-  String get mobile => _mobile??initial.mobile;
+  String get mobile => _mobile ?? initial.mobile;
   set mobile(String mobile) {
     _mobile = mobile;
   }
 
   Address? _address;
-  Address? get address => _address??(initial.address.isEmpty?null:initial.address);
+  Address? get address =>
+      _address ?? (initial.address.isEmpty ? null : initial.address);
   set address(Address? address) {
     _address = address;
     notifyListeners();
@@ -69,17 +67,13 @@ class WriteCustomerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void write({required VoidCallback onDone})async {
+  void write({required VoidCallback onDone}) async {
     loading = true;
     final updated = initial.copyWith(
-      name: name,
-      eId: _profile.id,
-      address: address,
-      mobile: mobile
-    );
+        name: name, eId: _profile.id, address: address, mobile: mobile);
     try {
-     await _repository.write(updated,files: files);
-     onDone();
+      await _repository.write(updated, files: files);
+      onDone();
     } catch (e) {
       if (kDebugMode) {
         print('$e');
@@ -88,7 +82,7 @@ class WriteCustomerViewModel extends ChangeNotifier {
     }
   }
 
-  void clear(){
+  void clear() {
     _name = null;
     _mobile = null;
     _address = null;

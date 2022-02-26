@@ -14,7 +14,6 @@ class RegisterViewModel extends ChangeNotifier {
 
   ProfileRepository get _repository => _ref.read(profileRepositoryProvider);
 
-
   Profile initial = Profile.empty();
 
   String? _firstname;
@@ -29,16 +28,15 @@ class RegisterViewModel extends ChangeNotifier {
     _lastname = lastname;
   }
 
-
-
   Address? _address;
-  Address? get address => _address??(initial.address.isEmpty?null:initial.address);
+  Address? get address =>
+      _address ?? (initial.address.isEmpty ? null : initial.address);
   set address(Address? address) {
     _address = address;
     notifyListeners();
   }
-  
-  void clear(){
+
+  void clear() {
     _address = null;
     _lastname = null;
     _firstname = null;

@@ -58,7 +58,7 @@ class Profile {
       end: end ?? this.end,
       createdAt: createdAt ?? this.createdAt,
       deboys: deboys ?? this.deboys,
-      active: active??this.active,
+      active: active ?? this.active,
     );
   }
 
@@ -92,7 +92,7 @@ class Profile {
       createdAt: map['createdAt'].toDate(),
       isAdmin: map['isAdmin'],
       deboys: map['deboys'] != null ? List<String>.from(map['deboys']) : null,
-      active: map['active']??true,
+      active: map['active'] ?? true,
     );
   }
 
@@ -128,6 +128,3 @@ class Profile {
 
   bool get expired => end!.isBefore(DateTime.now());
 }
-
-
-

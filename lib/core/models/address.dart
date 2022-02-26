@@ -50,13 +50,12 @@ class Address {
     );
   }
 
-  bool get isEmpty => area.isEmpty&&city.isEmpty&&number.isEmpty;
+  bool get isEmpty => area.isEmpty && city.isEmpty && number.isEmpty;
 
   static Address empty() => Address(
-        area: '',
-        city: '',
-        number: '',
-        point: const GeoPoint(0, 0),
-        formated: ''
-      );
+      area: '',
+      city: '',
+      number: '',
+      point: const GeoPoint(0, 0),
+      formated: '');
 }

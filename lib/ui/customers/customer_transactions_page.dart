@@ -6,11 +6,11 @@ import 'package:delivery_m/utils/labels.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'providers/customer_provider.dart';
 import 'providers/customer_transactions_view_model_provider.dart';
 
 class CustomerTransactionsPage extends ConsumerWidget {
-  const CustomerTransactionsPage({Key? key, required this.cId, required this.mobile})
+  const CustomerTransactionsPage(
+      {Key? key, required this.cId, required this.mobile})
       : super(key: key);
 
   final String cId;

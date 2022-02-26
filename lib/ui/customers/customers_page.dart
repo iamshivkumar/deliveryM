@@ -18,8 +18,8 @@ class CustomersPage extends ConsumerWidget {
         title: const Text('Customers'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: ()async  {
-         await Navigator.push(
+        onPressed: () async {
+          await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => WriteCustomerPage(),

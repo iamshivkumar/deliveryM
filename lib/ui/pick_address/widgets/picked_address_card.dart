@@ -6,16 +6,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../pick_address_page.dart';
 
-final controllerProvider = StateProvider<GoogleMapController?>((ref)=>null);
+final controllerProvider = StateProvider<GoogleMapController?>((ref) => null);
+
 // ignore: must_be_immutable
 class PickedAddressCard extends ConsumerWidget {
-  const PickedAddressCard({Key? key, required this.address, required this.onChanged, this.showOnly= false})
+  const PickedAddressCard(
+      {Key? key,
+      required this.address,
+      required this.onChanged,
+      this.showOnly = false})
       : super(key: key);
 
   final Address address;
   final bool showOnly;
   final ValueChanged<Address> onChanged;
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,7 +46,7 @@ class PickedAddressCard extends ConsumerWidget {
                       address.point.longitude,
                     ))
               },
-              onMapCreated: (v){
+              onMapCreated: (v) {
                 controller.state = v;
               },
             ),
@@ -52,35 +56,36 @@ class PickedAddressCard extends ConsumerWidget {
             title: Text(
               '${address.number}, ${address.area}, ${address.city}',
             ),
-            trailing: showOnly? null:IconButton(
-              onPressed: () async {
-                ref.read(pickAddressViewModelProvider).address = address;
-                final Address? picked = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const PickAddressPage(),
-                  ),
-                );
-                if (picked != null) {
-                  onChanged(picked);
-                  if (controller.state != null) {
-                    controller.state!
-                        .animateCamera(
-                          CameraUpdate.newCameraPosition(
-                            CameraPosition(
-                              target: LatLng(
-                                picked.point.latitude,
-                                picked.point.longitude,
+            trailing: showOnly
+                ? null
+                : IconButton(
+                    onPressed: () async {
+                      ref.read(pickAddressViewModelProvider).address = address;
+                      final Address? picked = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PickAddressPage(),
+                        ),
+                      );
+                      if (picked != null) {
+                        onChanged(picked);
+                        if (controller.state != null) {
+                          controller.state!.animateCamera(
+                            CameraUpdate.newCameraPosition(
+                              CameraPosition(
+                                target: LatLng(
+                                  picked.point.latitude,
+                                  picked.point.longitude,
+                                ),
+                                zoom: 14,
                               ),
-                              zoom: 14,
                             ),
-                          ),
-                        );
-                  }
-                }
-              },
-              icon: const Icon(Icons.edit),
-            ),
+                          );
+                        }
+                      }
+                    },
+                    icon: const Icon(Icons.edit),
+                  ),
           )
         ],
       ),

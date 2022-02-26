@@ -53,7 +53,7 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
   }
 
   bool? _manage;
-  bool get manage => _manage??_product?.returnKit??false;
+  bool get manage => _manage ?? _product?.returnKit ?? false;
   set manage(bool manage) {
     _manage = manage;
     notifyListeners();

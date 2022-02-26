@@ -9,7 +9,7 @@ class SchedulePreview extends StatelessWidget {
   const SchedulePreview({Key? key, required this.dates}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    const calenderStyle =  CalendarStyle();
+    const calenderStyle = CalendarStyle();
 
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
@@ -27,7 +27,8 @@ class SchedulePreview extends StatelessWidget {
           shape: BoxShape.circle,
         ),
       ),
-      selectedDayPredicate: (d) => dates.where((element) => isSameDay(element, d)).isNotEmpty,
+      selectedDayPredicate: (d) =>
+          dates.where((element) => isSameDay(element, d)).isNotEmpty,
       daysOfWeekStyle: DaysOfWeekStyle(
         dowTextFormatter: (d, e) => Formats.weekD(d),
       ),

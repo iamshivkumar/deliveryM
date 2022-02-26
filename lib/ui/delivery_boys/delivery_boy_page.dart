@@ -1,5 +1,6 @@
 import 'package:delivery_m/core/repositories/profile_repository_provider.dart';
 import 'package:delivery_m/ui/components/error.dart';
+import 'package:delivery_m/ui/components/launch.dart';
 import 'package:delivery_m/ui/components/loading.dart';
 import 'package:delivery_m/ui/delivery_boys/providers/delivery_boys_provider.dart';
 import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
@@ -34,23 +35,25 @@ class DeliveryBoyPage extends ConsumerWidget {
                           ),
                           backgroundColor: Colors.red,
                         ),
-                 dboy.isAdmin?const SizedBox(): PopupMenuButton<String>(
-                      itemBuilder: (context) => [
-                            dboy.active ? Labels.disable : Labels.enable,
-                          ]
-                              .map(
-                                (e) => PopupMenuItem(
-                                  child: Text(e),
-                                  value: e,
-                                ),
-                              )
-                              .toList(),
-                      onSelected: (v) {
-                        repository.updateDeliveryBoyStatus(
-                          dId: dId,
-                          value: v == Labels.enable,
-                        );
-                      })
+                  dboy.isAdmin
+                      ? const SizedBox()
+                      : PopupMenuButton<String>(
+                          itemBuilder: (context) => [
+                                dboy.active ? Labels.disable : Labels.enable,
+                              ]
+                                  .map(
+                                    (e) => PopupMenuItem(
+                                      child: Text(e),
+                                      value: e,
+                                    ),
+                                  )
+                                  .toList(),
+                          onSelected: (v) {
+                            repository.updateDeliveryBoyStatus(
+                              dId: dId,
+                              value: v == Labels.enable,
+                            );
+                          })
                 ],
               ),
               body: ListView(
@@ -77,6 +80,9 @@ class DeliveryBoyPage extends ConsumerWidget {
                       title: Text(dboy.mobile),
                       leading: const Icon(Icons.call),
                       trailing: const Icon(Icons.keyboard_arrow_right),
+                      onTap: () {
+                        Launch.call(dboy.mobile);
+                      },
                     ),
                   ),
                   Padding(

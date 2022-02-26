@@ -55,7 +55,6 @@ class CreateDboyProfilePage extends ConsumerWidget {
                     labelText: 'Last Name',
                   ),
                 ),
-               
                 const SizedBox(height: 16),
                 model.address != null
                     ? PickedAddressCard(

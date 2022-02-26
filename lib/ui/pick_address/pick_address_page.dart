@@ -56,7 +56,8 @@ class PickAddressPage extends ConsumerWidget {
                                 showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
-                                  builder: (context) => const UpdateAddressSheet(),
+                                  builder: (context) =>
+                                      const UpdateAddressSheet(),
                                 );
                               },
                               child: const Text('CONTINUE'),
@@ -97,8 +98,7 @@ class PickAddressPage extends ConsumerWidget {
                             child: Row(
                               children: const [
                                 Padding(
-                                  padding:  EdgeInsets.symmetric(
-                                      horizontal: 16),
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
                                   child: Text('Search Your Location'),
                                 ),
                               ],

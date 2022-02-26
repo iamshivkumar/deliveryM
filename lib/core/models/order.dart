@@ -55,7 +55,8 @@ class Order {
       'updatedAt': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
     };
   }
-    bool get fair =>
+
+  bool get fair =>
       paymentStatus == PaymentStatus.success &&
       createdAt
           .add(
@@ -80,7 +81,7 @@ class Order {
     return Order(
       id: doc.id,
       uid: map['uid'],
-      amount: map['amount'],
+      amount: map['amount'].toDouble(),
       paymentStatus: map['paymentStatus'],
       createdAt: map['createdAt'].toDate(),
       paymentId: map['paymentId'],

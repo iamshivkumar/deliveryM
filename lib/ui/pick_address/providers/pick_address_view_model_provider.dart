@@ -6,7 +6,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-
 final pickAddressViewModelProvider =
     ChangeNotifierProvider((ref) => WriteAddressModel(ref));
 
@@ -17,12 +16,11 @@ class WriteAddressModel extends ChangeNotifier {
   GoogleMapController? mapController;
 
   GeoRepository get _geo => ref.read(geoReposioryProvider);
-  
 
   MapType type = MapType.normal;
-  
-  void toggleMapType(){
-    if(type==MapType.normal){
+
+  void toggleMapType() {
+    if (type == MapType.normal) {
       type = MapType.hybrid;
     } else {
       type = MapType.normal;
@@ -53,65 +51,59 @@ class WriteAddressModel extends ChangeNotifier {
     latLng = markerPosition!;
     notifyListeners();
   }
-  
 
- Set<Marker> get markers => _markerPosition!=null?{
-   Marker(
-        draggable: true,
-        markerId: const MarkerId('Marker'),
-        position: LatLng(_markerPosition!.latitude, _markerPosition!.longitude),
-        onDragEnd: ((newPosition) {
-          latLng = newPosition;
-          markerPosition = newPosition;
-        }),
-      )
- }:{};
-
-
-
-
-
-
+  Set<Marker> get markers => _markerPosition != null
+      ? {
+          Marker(
+            draggable: true,
+            markerId: const MarkerId('Marker'),
+            position:
+                LatLng(_markerPosition!.latitude, _markerPosition!.longitude),
+            onDragEnd: ((newPosition) {
+              latLng = newPosition;
+              markerPosition = newPosition;
+            }),
+          )
+        }
+      : {};
 
   Address? _address;
   Address? get address => _address;
   set address(Address? address) {
     _address = address;
     _latLng = LatLng(address!.point.latitude, address.point.longitude);
-    _markerPosition  = _latLng;
+    _markerPosition = _latLng;
     if (mapController != null) {
       mapController!.animateCamera(CameraUpdate.newLatLng(latLng));
     }
     notifyListeners();
   }
 
-  
   String? _number;
-  String get number => _number??address!.number;
+  String get number => _number ?? address!.number;
   set number(String number) {
     _number = number;
   }
 
   String? _area;
-  String get area => _area??address!.area;
+  String get area => _area ?? address!.area;
   set area(String area) {
     _area = area;
   }
 
   String? _city;
-  String get city => _city??address!.city;
+  String get city => _city ?? address!.city;
   set city(String city) {
     _city = city;
   }
 
-
   Future<void> pickAddress(Function(Address) onPick) async {
-     final updated = address!.copyWith(
-       number: number,
-       area: area,
-       city: city,
-     );
-     onPick(updated);
+    final updated = address!.copyWith(
+      number: number,
+      area: area,
+      city: city,
+    );
+    onPick(updated);
   }
 
   void handleLocateMe(bool enabled) async {
@@ -127,10 +119,10 @@ class WriteAddressModel extends ChangeNotifier {
         }
       }
       if (permission == LocationPermission.deniedForever) {
-         if (kDebugMode) {
-           print(
-            'Location permissions are permanently denied, we cannot request permissions.');
-         }
+        if (kDebugMode) {
+          print(
+              'Location permissions are permanently denied, we cannot request permissions.');
+        }
       }
       final Position position = await Geolocator.getCurrentPosition();
       latLng = LatLng(position.latitude, position.longitude);
@@ -141,7 +133,7 @@ class WriteAddressModel extends ChangeNotifier {
         );
       }
     } else {
-      const intent =  AndroidIntent(
+      const intent = AndroidIntent(
         action: 'android.settings.LOCATION_SOURCE_SETTINGS',
       );
       await intent.launch();

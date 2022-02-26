@@ -14,10 +14,10 @@ final customerSubscriptionsProvider =
 
 final customerInactiveSubscriptionsProvider =
     StreamProvider.family<List<Subscription>, String>(
-  (ref, cId) =>
-      ref.read(subscriptionRepositoryProvider).customerInactiveSubscriptionsStream(
-            cId: cId,
-            eId: ref.read(profileProvider).value!.id,
-          ),
+  (ref, cId) => ref
+      .read(subscriptionRepositoryProvider)
+      .customerInactiveSubscriptionsStream(
+        cId: cId,
+        eId: ref.read(profileProvider).value!.id,
+      ),
 );
-

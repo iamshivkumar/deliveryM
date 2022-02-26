@@ -24,9 +24,7 @@ class AddBalanceSheet extends ConsumerWidget {
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 autofocus: true,
-                decoration: const InputDecoration(
-                  prefixText: Labels.rupee
-                ),
+                decoration: const InputDecoration(prefixText: Labels.rupee),
                 keyboardType: TextInputType.number,
                 validator: (v) => v!.isEmpty
                     ? "Enter amount"

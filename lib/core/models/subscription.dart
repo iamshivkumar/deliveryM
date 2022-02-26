@@ -12,7 +12,7 @@ class Subscription {
   final bool active;
 
   final int quantity;
-  
+
   final Product product;
   final int? returnKitsQt;
   final DateTime startDate;
@@ -22,15 +22,12 @@ class Subscription {
   final int diff;
   final String dId;
 
- 
-
   Subscription({
     required this.id,
     required this.eId,
     required this.customerId,
     required this.recure,
     required this.active,
-
     required this.startDate,
     required this.endDate,
     required this.deliveries,
@@ -72,7 +69,7 @@ class Subscription {
       returnKitsQt: returnKitsQt,
       diff: diff ?? this.diff,
       quantity: quantity ?? this.quantity,
-      product: product??this.product,
+      product: product ?? this.product,
     );
   }
 
@@ -82,7 +79,7 @@ class Subscription {
       'customerId': customerId,
       'recure': recure,
       'active': active,
-      'product':product.toMap(),
+      'product': product.toMap(),
       'startDate': Timestamp.fromDate(startDate),
       'endDate': Timestamp.fromDate(endDate),
       'deliveries': deliveries.map((x) => x.toMap()).toList(),

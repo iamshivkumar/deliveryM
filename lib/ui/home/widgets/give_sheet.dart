@@ -65,9 +65,13 @@ class GiveSheet extends ConsumerWidget {
                     child: TextFormField(
                       autofocus: true,
                       keyboardType: TextInputType.number,
-                      validator: (v)=>v!.isEmpty?"Enter quantity":(int.tryParse(v)==null?"Enter valid quantity":null),
-                      onSaved: (v){
-                         Navigator.pop(context,int.parse(v!));
+                      validator: (v) => v!.isEmpty
+                          ? "Enter quantity"
+                          : (int.tryParse(v) == null
+                              ? "Enter valid quantity"
+                              : null),
+                      onSaved: (v) {
+                        Navigator.pop(context, int.parse(v!));
                       },
                     ),
                   )
@@ -78,7 +82,7 @@ class GiveSheet extends ConsumerWidget {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () {
-                  if(_formKey.currentState!.validate()){
+                  if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                   }
                 },

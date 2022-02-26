@@ -54,7 +54,7 @@ class DeliveryBoysPage extends ConsumerWidget {
                                   ),
                                 ),
                               )
-                            : SizedBox()
+                            : const SizedBox()
                       ],
                     ),
                     subtitle: Text(e.address.formated),

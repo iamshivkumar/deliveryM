@@ -12,7 +12,7 @@ class ProgressLoader extends StatelessWidget {
         child,
         isLoading
             ? Container(
-              color: const Color(0xFFa7a7a7).withOpacity(0.2),
+                color: const Color(0xFFa7a7a7).withOpacity(0.2),
                 child: const Center(
                   child: CircularProgressIndicator(),
                 ),

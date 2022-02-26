@@ -20,12 +20,15 @@ class ProductsRepository {
     }
   }
 
-  Stream<List<Product>> productsStream(String eid) =>
-      _firestore.collection(Constants.products).where(Constants.eId,isEqualTo: eid).snapshots().map(
-            (event) => event.docs.map((e) => Product.fromFirestore(e)).toList(),
-          );
+  Stream<List<Product>> productsStream(String eid) => _firestore
+      .collection(Constants.products)
+      .where(Constants.eId, isEqualTo: eid)
+      .snapshots()
+      .map(
+        (event) => event.docs.map((e) => Product.fromFirestore(e)).toList(),
+      );
 
-  void delete(String id){
+  void delete(String id) {
     _firestore.collection(Constants.products).doc(id).delete();
   }
 }

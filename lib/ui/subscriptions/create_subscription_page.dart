@@ -213,7 +213,8 @@ class CreateSubscriptionPage extends HookConsumerWidget {
                     model.recure = v!;
                   },
                 ),
-                title: const Text('Automatically create the same subscription after the end date.'),
+                title: const Text(
+                    'Automatically create the same subscription after the end date.'),
               ),
             ],
           ),

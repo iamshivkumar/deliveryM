@@ -1,3 +1,4 @@
+import 'package:delivery_m/ui/components/launch.dart';
 import 'package:delivery_m/utils/labels.dart';
 
 import '../../core/models/customer.dart';
@@ -36,10 +37,11 @@ class DeliveryPage extends ConsumerWidget {
                 )
                 .toList() +
             [
-               
               Card(
                 child: ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Launch.call(customer.mobile);
+                  },
                   title: Text(customer.mobile),
                   leading: const Icon(Icons.call),
                   trailing: const Icon(Icons.keyboard_arrow_right),
@@ -47,10 +49,8 @@ class DeliveryPage extends ConsumerWidget {
               ),
               Card(
                 child: ListTile(
-                  // onTap: () {},
                   title: Text("${Labels.rupee}${customer.balance}"),
                   leading: const Icon(Icons.account_balance_wallet),
-                  // trailing: const Icon(Icons.keyboard_arrow_right),
                 ),
               ),
               Card(
@@ -79,6 +79,9 @@ class DeliveryPage extends ConsumerWidget {
                       ),
                     ),
                     ListTile(
+                      onTap: () {
+                        Launch.openInMap(customer.address.point);
+                      },
                       title: Text(customer.address.formated),
                       trailing: const Icon(Icons.open_in_new),
                     ),

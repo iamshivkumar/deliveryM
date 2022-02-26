@@ -1,3 +1,4 @@
+import 'package:delivery_m/ui/components/launch.dart';
 import 'package:delivery_m/ui/customers/customer_transactions_page.dart';
 import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
 import 'package:delivery_m/ui/subscriptions/customer_subscriptions_page.dart';
@@ -46,8 +47,8 @@ class CustomerPage extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(4),
         children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(12, 12, 12, 4),
                 child: Text('Active Subscriptions'),
               ),
             ] +
@@ -128,7 +129,9 @@ class CustomerPage extends ConsumerWidget {
                   title: Text('+91${customer.mobile}'),
                   leading: const Icon(Icons.call),
                   trailing: const Icon(Icons.keyboard_arrow_right),
-                  onTap: () {},
+                  onTap: () {
+                    Launch.call(customer.mobile);
+                  },
                 ),
               ),
               Padding(

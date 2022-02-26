@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//TODO: add subscription price
 class MasterData {
   final List<String> images;
   MasterData({

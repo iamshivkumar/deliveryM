@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-
 class MyCircleButton extends StatelessWidget {
   const MyCircleButton({
     Key? key,
-     this.onTap,
+    this.onTap,
     required this.icon,
   }) : super(key: key);
 

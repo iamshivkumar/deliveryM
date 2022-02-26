@@ -21,7 +21,7 @@ class DocViewerPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Clipboard.setData(ClipboardData(text: mobile)).then((_) {
-             Fluttertoast.showToast(msg: 'Customer mobile number copied.');
+            Fluttertoast.showToast(msg: 'Customer mobile number copied.');
           });
           Share.shareFiles([file.path]);
         },

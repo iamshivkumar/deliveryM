@@ -9,9 +9,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AddDeliverySheet extends HookConsumerWidget {
-  const AddDeliverySheet({Key? key, required this.subscription}) : super(key: key);
+  const AddDeliverySheet({Key? key, required this.subscription})
+      : super(key: key);
   final Subscription subscription;
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,8 +47,8 @@ class AddDeliverySheet extends HookConsumerWidget {
                 onTap: () async {
                   final picked = await showDatePicker(
                     context: context,
-                    initialDate:
-                        model.date ?? Formats.dateTime(subscription.dates.first),
+                    initialDate: model.date ??
+                        Formats.dateTime(subscription.dates.first),
                     firstDate: Formats.dateTime(subscription.dates.first),
                     lastDate: Formats.dateTime(subscription.dates.last),
                   );

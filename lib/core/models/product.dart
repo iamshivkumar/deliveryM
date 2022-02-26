@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_m/utils/assets.dart';
 
@@ -28,13 +27,12 @@ class Product {
     bool? returnKit,
   }) {
     return Product(
-      id: id ?? this.id,
-      eId: eId ?? this.eId,
-      image: image ?? this.image,
-      name: name ?? this.name,
-      price: price ?? this.price,
-      returnKit: returnKit??this.returnKit
-    );
+        id: id ?? this.id,
+        eId: eId ?? this.eId,
+        image: image ?? this.image,
+        name: name ?? this.name,
+        price: price ?? this.price,
+        returnKit: returnKit ?? this.returnKit);
   }
 
   Map<String, dynamic> toFireMap() {
@@ -43,18 +41,18 @@ class Product {
       'image': image,
       'name': name,
       'price': price,
-      'returnKit':returnKit,
+      'returnKit': returnKit,
     };
   }
 
-    Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'id':id,
+      'id': id,
       'eId': eId,
       'image': image,
       'name': name,
       'price': price,
-      'returnKit':returnKit,
+      'returnKit': returnKit,
     };
   }
 
@@ -66,32 +64,30 @@ class Product {
       image: map['image'],
       name: map['name'],
       price: map['price'].toDouble(),
-      returnKit: map['returnKit']??false,
+      returnKit: map['returnKit'] ?? false,
     );
   }
 
-    factory Product.fromMap(Map<String, dynamic> map) {
+  factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
       id: map['id'],
       eId: map['eId'],
       image: map['image'],
       name: map['name'],
       price: map['price'].toDouble(),
-      returnKit: map['returnKit']??false,
+      returnKit: map['returnKit'] ?? false,
     );
   }
 
   factory Product.empty() {
     return Product(
-      id: '',
-      eId: '',
-      image: Assets.products.first,
-      name: '',
-      price: 0,
-      returnKit: false
-    );
+        id: '',
+        eId: '',
+        image: Assets.products.first,
+        name: '',
+        price: 0,
+        returnKit: false);
   }
-
 
   @override
   bool operator ==(Object other) {

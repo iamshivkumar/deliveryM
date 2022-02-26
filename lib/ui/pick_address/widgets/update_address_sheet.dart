@@ -51,7 +51,7 @@ class UpdateAddressSheet extends ConsumerWidget {
             onPressed: () {
               model.pickAddress((p0) {
                 Navigator.pop(context);
-                Navigator.pop(context,p0);
+                Navigator.pop(context, p0);
               });
             },
             child: const Text('Select Address'),

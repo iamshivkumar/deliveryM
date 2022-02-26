@@ -1,6 +1,7 @@
 import 'package:delivery_m/core/enums/payment_status.dart';
 import 'package:delivery_m/core/models/order.dart';
 import 'package:delivery_m/ui/components/error.dart';
+import 'package:delivery_m/ui/components/launch.dart';
 import 'package:delivery_m/ui/components/loading.dart';
 import 'package:delivery_m/ui/order/providers/checkout_view_model_provider.dart';
 import 'package:delivery_m/ui/order/providers/orders_provider.dart';
@@ -25,7 +26,8 @@ class OrderPage extends ConsumerWidget {
           appBar: AppBar(
             title: const Text('Delivery M'),
             actions: [
-              TextButton(onPressed: () {}, child: const Text('Skip to my deliveries'))
+              TextButton(
+                  onPressed: () {}, child: const Text('Skip to my deliveries'))
             ],
           ),
           bottomNavigationBar: payable ||
@@ -223,16 +225,25 @@ class OrderView extends StatelessWidget {
                 : const SizedBox(),
             const SizedBox(
               height: 32,
-            ),
-            TextButton(
-              onPressed: () {},
-              child: const Text('Need Help?'),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: const Text('Contact Support'),
-            ),
-          ],
+            )
+          ] +
+          ['Need Help?', 'Contact Support']
+              .map(
+                (e) => TextButton(
+                  onPressed: () {
+                    var message = "I need help with order: ${order.id}";
+                    if (order.paymentId != null) {
+                      message = message + ", payment Id: ${order.paymentId}";
+                    }
+                    Launch.whatsappSupport(
+                      message: message,
+                    );
+                  },
+                  child: Text(e),
+                ),
+              )
+              .toList() +
+          [],
     );
   }
 }

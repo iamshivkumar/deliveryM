@@ -60,6 +60,6 @@ class DeliveryType {
     DeliveryType('Weekly', 7),
   ];
 
-
-  static String getName(int d)=> values.where((element) => element.diff==d).first.name; 
+  static String getName(int d) =>
+      values.where((element) => element.diff == d).first.name;
 }

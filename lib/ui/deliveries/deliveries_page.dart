@@ -47,7 +47,7 @@ class DeliveriesPage extends ConsumerWidget {
               },
             ),
           ],
-          bottom:  TabBar(
+          bottom: TabBar(
             indicatorColor: scheme.secondary,
             tabs: const [
               Tab(

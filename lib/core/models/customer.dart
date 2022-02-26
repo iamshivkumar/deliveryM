@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'address.dart';
 
@@ -36,8 +35,8 @@ class Customer {
       name: name ?? this.name,
       mobile: mobile ?? this.mobile,
       address: address ?? this.address,
-      balance: balance??this.balance,
-      documents: documents??this.documents,
+      balance: balance ?? this.balance,
+      documents: documents ?? this.documents,
     );
   }
 
@@ -60,20 +59,19 @@ class Customer {
       name: map['name'],
       mobile: map['mobile'],
       address: Address.fromMap(map['address']),
-      balance: map['balance'],
+      balance: map['balance'].toDouble(),
       documents: List<String>.from(map['documents']),
     );
   }
 
-    factory Customer.empty() {
+  factory Customer.empty() {
     return Customer(
-      id: '',
-      eId: '',
-      name: '',
-      mobile: '',
-      address: Address.empty(),
-      balance: 0,
-      documents: []
-    );
+        id: '',
+        eId: '',
+        name: '',
+        mobile: '',
+        address: Address.empty(),
+        balance: 0,
+        documents: []);
   }
 }

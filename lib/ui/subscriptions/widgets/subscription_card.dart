@@ -108,7 +108,9 @@ class SubscriptionCard extends ConsumerWidget {
                           .length,
                       child: Container(
                         height: 4,
-                        color: subscription.active? theme.dividerColor:theme.errorColor,
+                        color: subscription.active
+                            ? theme.dividerColor
+                            : theme.errorColor,
                       ),
                     ),
                   ],

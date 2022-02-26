@@ -1,3 +1,5 @@
+import 'package:delivery_m/ui/components/launch.dart';
+import 'package:delivery_m/ui/tc/tc_page.dart';
 import 'package:delivery_m/utils/labels.dart';
 
 import '../components/error.dart';
@@ -18,11 +20,11 @@ class StartPage extends ConsumerWidget {
     final businessesFuture = ref.watch(bussinessesProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Delyman'),
+        title: const Text('Delyman'),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: CircleAvatar(
+            icon: const CircleAvatar(
               child: Icon(Icons.person_outline_rounded),
             ),
           ),
@@ -102,7 +104,7 @@ class StartPage extends ConsumerWidget {
                               ),
                             );
                           },
-                          child: Text('Get started'),
+                          child: const Text('Get started'),
                         ),
                       ),
                     ],
@@ -165,15 +167,26 @@ class StartPage extends ConsumerWidget {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TCPage(),
+                    ),
+                  );
+                },
                 child: const Text('Terms & Conditions'),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Launch.whatsappSupport();
+                },
                 child: const Text('Need Help?'),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Launch.whatsappSupport();
+                },
                 child: const Text('Contact Support'),
               ),
             ],

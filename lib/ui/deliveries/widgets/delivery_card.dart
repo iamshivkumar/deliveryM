@@ -20,7 +20,7 @@ class DeliveryCard extends ConsumerWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  DeliveryPage(
+                  builder: (context) => DeliveryPage(
                     c: customer,
                     stat: deliveryStat,
                   ),
@@ -43,7 +43,6 @@ class DeliveryCard extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Row(
                           children: deliveryStat.subscriptions.map((e) {
-                           
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 4),

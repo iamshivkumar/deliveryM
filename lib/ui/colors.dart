@@ -17,7 +17,7 @@ class AppColors {
 class Palette {
   static const Color secondary = Color(0xFFC5FDED);
   static const Color background = Color(0xFFF3F6F8);
-    static const Color primaryDark = Color(0xFF1B2A51);
+  static const Color primaryDark = Color(0xFF1B2A51);
 
   static const MaterialColor swatch = MaterialColor(
     0xff273969,

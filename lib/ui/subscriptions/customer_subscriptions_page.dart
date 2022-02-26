@@ -48,7 +48,10 @@ class CustomerSubscriptionsPage extends ConsumerWidget {
                           ),
                         );
                       },
-                      child: CustSubscriptionCard(subscription: e,enabled: false,),
+                      child: CustSubscriptionCard(
+                        subscription: e,
+                        enabled: false,
+                      ),
                     ),
                   )
                   .toList(),

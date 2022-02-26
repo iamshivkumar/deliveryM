@@ -4,9 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../core/models/subscription.dart';
 import '../../../core/repositories/subscription_repository_provider.dart';
 
-
-
-
 final dboyDaySubscriptionsProvider =
     StreamProvider.family<List<Subscription>, DboyDay>(
   (ref, dboyDay) =>

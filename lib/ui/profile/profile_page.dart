@@ -1,6 +1,7 @@
 import 'package:delivery_m/core/repositories/profile_repository_provider.dart';
 import 'package:delivery_m/ui/auth/providers/auth_provider.dart';
 import 'package:delivery_m/ui/components/error.dart';
+import 'package:delivery_m/ui/components/launch.dart';
 import 'package:delivery_m/ui/components/loading.dart';
 import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
 import 'package:delivery_m/ui/profile/create_dboy_profile_page.dart';
@@ -8,6 +9,7 @@ import 'package:delivery_m/ui/profile/providers/create_deboy_profile_view_model.
 import 'package:delivery_m/ui/profile/providers/profile_provider.dart';
 import 'package:delivery_m/ui/profile/providers/write_profile_view_model_provider.dart';
 import 'package:delivery_m/ui/profile/write_profile_page.dart';
+import 'package:delivery_m/ui/tc/tc_page.dart';
 import 'package:delivery_m/utils/formats.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -82,7 +84,14 @@ class ProfilePage extends ConsumerWidget {
                 : const SizedBox(),
             profile.isAdmin
                 ? TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TCPage(),
+                        ),
+                      );
+                    },
                     child: const Text('Terms & Conditions'),
                   )
                 : const SizedBox(),
@@ -90,7 +99,9 @@ class ProfilePage extends ConsumerWidget {
                 ? Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Launch.whatsappSupport();
+                      },
                       child: const Text('Contact Support'),
                     ),
                   )

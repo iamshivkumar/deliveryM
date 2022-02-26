@@ -108,7 +108,7 @@ class WriteCustomerPage extends ConsumerWidget {
                               right: 0,
                               child: MyCircleButton(
                                 icon: const Icon(Icons.delete),
-                                onTap: (){
+                                onTap: () {
                                   model.removeDoc(e);
                                 },
                               ),
@@ -133,7 +133,7 @@ class WriteCustomerPage extends ConsumerWidget {
                             Positioned(
                               child: MyCircleButton(
                                 icon: const Icon(Icons.delete),
-                                onTap: (){
+                                onTap: () {
                                   model.removeFile(e);
                                 },
                               ),

@@ -1,6 +1,7 @@
+import 'package:delivery_m/ui/components/toast.dart';
+import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import '../utils/auth_message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -30,15 +31,6 @@ class Auth extends ChangeNotifier {
     notifyListeners();
   }
 
-  AuthMessage _authMessage = AuthMessage.empty();
-
-  AuthMessage get authMessage => _authMessage;
-
-  set authMessage(AuthMessage authMessage) {
-    _authMessage = authMessage;
-    notifyListeners();
-  }
-
   String _code = '';
   String get code => _code;
   set code(String code) {
@@ -55,7 +47,7 @@ class Auth extends ChangeNotifier {
     notifyListeners();
   }
 
-    bool _phoneLoading = false;
+  bool _phoneLoading = false;
   bool get phoneLoading => _phoneLoading;
   set phoneLoading(bool value) {
     _phoneLoading = value;
@@ -67,7 +59,7 @@ class Auth extends ChangeNotifier {
   Stream<int> get _stream =>
       Stream.periodic(const Duration(seconds: 1), (v) => 30 - v);
 
-  void sendOTP() async {
+  void sendOTP(ScaffoldMessengerState state) async {
     phoneLoading = true;
     try {
       await _auth.verifyPhoneNumber(
@@ -82,7 +74,9 @@ class Auth extends ChangeNotifier {
         verificationFailed: (FirebaseAuthException e) {
           if (e.code == 'invalid-phone-number') {
             if (kDebugMode) {
-              print("The provided phone number is not valid.");
+              Toast.showWhite(state, "The provided phone number is not valid.");
+            } else {
+              Toast.showWhite(state, e.code);
             }
           }
           phoneLoading = false;
@@ -92,7 +86,7 @@ class Auth extends ChangeNotifier {
         codeSent: (String id, int? forceResendingToken) {
           verificationId = id;
           if (resendToken != null) {
-            authMessage = AuthMessage.otpResent();
+            Toast.showWhite(state, "Resent OTP!");
           }
           resendToken = forceResendingToken;
           stream = _stream;
@@ -108,7 +102,8 @@ class Auth extends ChangeNotifier {
   }
 
   Future<void> verifyOTP(
-      {required VoidCallback clear}) async {
+      {required VoidCallback clear,
+      required ScaffoldMessengerState state}) async {
     loading = true;
     try {
       final AuthCredential credential = PhoneAuthProvider.credential(
@@ -120,7 +115,9 @@ class Auth extends ChangeNotifier {
       verificationId = null;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-verification-code') {
-        _authMessage = AuthMessage.incorrectOtp();
+        Toast.showWhite(state, "Invalid OTP!");
+      } else {
+        Toast.showWhite(state, e.code);
       }
       clear();
     } catch (e) {
@@ -136,17 +133,16 @@ class Auth extends ChangeNotifier {
     // user = null;
   }
 
-
-    final formater = MaskTextInputFormatter(
+  final formater = MaskTextInputFormatter(
     mask: '##########',
     filter: {"#": RegExp(r'[0-9]')},
     type: MaskAutoCompletionType.eager,
   );
   final otpformater = MaskTextInputFormatter(
-                    mask: '#   #   #   #   #   #',
-                    filter: {"#": RegExp(r'[0-9]')},
-                    type: MaskAutoCompletionType.lazy,
-                  );
+    mask: '#   #   #   #   #   #',
+    filter: {"#": RegExp(r'[0-9]')},
+    type: MaskAutoCompletionType.lazy,
+  );
 
   // void update() async {
   //   if (_auth.currentUser == null) {

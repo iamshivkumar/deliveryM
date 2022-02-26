@@ -43,4 +43,3 @@ class Root extends ConsumerWidget {
     );
   }
 }
-
