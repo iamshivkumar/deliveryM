@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "187205399827",
-    "project_id": "delivery-m-847ae",
-    "storage_bucket": "delivery-m-847ae.appspot.com"
+    "project_number": "108108446891",
+    "project_id": "delyman-f0ada",
+    "storage_bucket": "delyman-f0ada.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:187205399827:android:39dd46c925f31e17fed6e6",
+        "mobilesdk_app_id": "1:108108446891:android:b8071f4d6afc0de6168bee",
         "android_client_info": {
-          "package_name": "com.example.delivery_m"
+          "package_name": "com.delyman.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "187205399827-pjiqnj3ijlqvkrv7dkaafm8n9c6urqvb.apps.googleusercontent.com",
+          "client_id": "108108446891-cm82sjhk30nuolnj32jpctfhaf2ao76j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.delivery_m",
+            "package_name": "com.delyman.app",
             "certificate_hash": "e9c6272c0207009a287213dc28dc2cf6c3101e9c"
           }
         },
         {
-          "client_id": "187205399827-40h3hoo40bohjqju0en29la23ci5bb8q.apps.googleusercontent.com",
+          "client_id": "108108446891-6smkpr2vimb5u4svv6c6f087dsl01fp7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDZp8QTID8ZnySoihZu6Y3Bf47Bx5k4n7o"
+          "current_key": "AIzaSyCfSC2d4CX3-ObhbveY0SQlPyau_2s6w3Y"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "187205399827-40h3hoo40bohjqju0en29la23ci5bb8q.apps.googleusercontent.com",
+              "client_id": "108108446891-6smkpr2vimb5u4svv6c6f087dsl01fp7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
