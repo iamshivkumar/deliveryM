@@ -1,4 +1,5 @@
 import 'package:delivery_m/ui/colors.dart';
+import 'package:delivery_m/ui/order/waiting_page.dart';
 import 'package:flutter/services.dart';
 
 import 'root.dart';
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
           onSecondary: Palette.primaryDark,
         ),
       ),
-      home: const Root(),
+      home: const WaitingPage(),
     );
   }
 }

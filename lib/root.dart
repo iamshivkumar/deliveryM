@@ -1,12 +1,12 @@
 import 'package:delivery_m/core/providers/root_view_model_provider.dart';
 import 'package:delivery_m/ui/auth/auth_page.dart';
 import 'package:delivery_m/ui/disabled/disabled_page.dart';
+import 'package:delivery_m/ui/order/waiting_page.dart';
 
 import 'ui/auth/providers/user_provider.dart';
 import 'ui/components/loading.dart';
 import 'ui/home/delivery_boy_home_page.dart';
 import 'ui/home/home_page.dart';
-import 'ui/order/order_page.dart';
 import 'ui/profile/providers/profile_provider.dart';
 import 'ui/start/start_page.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class Root extends ConsumerWidget {
                           ? DisabledPage(profile: profile)
                           : profile.isAdmin
                               ? profile.expired
-                                  ? const OrderPage()
+                                  ? const WaitingPage()
                                   : const HomePage()
                               : DeliveryBoyHomePage(
                                   profile: profile,
