@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
           onSecondary: Palette.primaryDark,
         ),
       ),
-      home: const WaitingPage(),
+      home: const Root(),
     );
   }
 }
