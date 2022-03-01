@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import '../../core/models/address.dart';
 import '../components/progress_loader.dart';
 import 'providers/write_customer_view_model.dart';
@@ -8,7 +6,6 @@ import '../pick_address/pick_address_page.dart';
 import '../pick_address/widgets/picked_address_card.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
 class WriteCustomerPage extends ConsumerWidget {
   WriteCustomerPage({Key? key}) : super(key: key);
@@ -23,7 +20,7 @@ class WriteCustomerPage extends ConsumerWidget {
       isLoading: model.loading,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Add Customer'),
+          title: Text(model.forEdit ? "Edit Customer" : 'Add Customer'),
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(
@@ -40,7 +37,7 @@ class WriteCustomerPage extends ConsumerWidget {
                 });
               }
             },
-            child: const Text('ADD'),
+            child:  Text(model.forEdit?'SAVE':'ADD'),
           ),
         ),
         body: Form(
@@ -144,17 +141,17 @@ class WriteCustomerPage extends ConsumerWidget {
                     )
                     .toList(),
               ),
-              const SizedBox(height: 16),
-              OutlinedButton(
-                onPressed: () async {
-                  final picked = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
-                  if (picked != null) {
-                    model.addFile(File(picked.path));
-                  }
-                },
-                child: const Text('ADD DOCUMENT'),
-              ),
+              // const SizedBox(height: 16),
+              // OutlinedButton(
+              //   onPressed: () async {
+              //     final picked = await ImagePicker()
+              //         .pickImage(source: ImageSource.gallery);
+              //     if (picked != null) {
+              //       model.addFile(File(picked.path));
+              //     }
+              //   },
+              //   child: const Text('ADD DOCUMENT'),
+              // ),
             ],
           ),
         ),

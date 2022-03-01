@@ -1,5 +1,7 @@
 import 'package:delivery_m/ui/components/launch.dart';
 import 'package:delivery_m/ui/customers/customer_transactions_page.dart';
+import 'package:delivery_m/ui/customers/providers/write_customer_view_model.dart';
+import 'package:delivery_m/ui/customers/write_customer_page.dart';
 import 'package:delivery_m/ui/pick_address/widgets/picked_address_card.dart';
 import 'package:delivery_m/ui/subscriptions/customer_subscriptions_page.dart';
 
@@ -29,6 +31,22 @@ class CustomerPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(customer.name),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final writer = ref.read(writeCustomerViewModelProvider);
+              writer.initial = customer;
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WriteCustomerPage(),
+                ),
+              );
+              writer.clear();
+            },
+            icon: const Icon(Icons.edit),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -143,7 +161,8 @@ class CustomerPage extends ConsumerWidget {
                   },
                 ),
               ),
-            ],
+            ] +
+            [],
       ),
     );
   }

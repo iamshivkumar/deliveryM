@@ -1,3 +1,4 @@
+import 'package:delivery_m/core/providers/root_view_model_provider.dart';
 import 'package:delivery_m/ui/auth/auth_page.dart';
 import 'package:delivery_m/ui/disabled/disabled_page.dart';
 
@@ -19,6 +20,7 @@ class Root extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    ref.watch(rootViewModelProvider(context));
     final userStream = ref.watch(userProvider);
     return Material(
       color: theme.scaffoldBackgroundColor,

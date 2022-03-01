@@ -179,7 +179,7 @@ class CreateSubscriptionPage extends HookConsumerWidget {
                     return Text(e.name);
                   }).toList();
                 },
-                validator: (v) => v!.isEmpty ? "Select delivery boy" : null,
+                validator: (v) => v==null ? "Select delivery boy" : null,
                 items: dboys
                     .map(
                       (e) => DropdownMenuItem<String>(
