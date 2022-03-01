@@ -31,8 +31,9 @@ class ProfileRepository {
           profile
               .copyWith(
                 mobile: _user.phoneNumber,
+                eId: profile.isAdmin? _user.uid: null,
               )
-              .toMap());
+              .toMap(),SetOptions(merge: true));
       if (!profile.isAdmin) {
         _batch.update(_firestore.collection(Constants.users).doc(profile.eId), {
           Constants.deboys: FieldValue.arrayRemove([profile.mobile])

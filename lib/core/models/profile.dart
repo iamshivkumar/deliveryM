@@ -70,12 +70,12 @@ class Profile {
       'isAdmin': isAdmin,
       'businessName': businessName,
       'address': address.toMap(),
-      'eId': isAdmin ? id : eId,
+      'eId':  eId,
       'createdAt': Timestamp.fromDate(createdAt),
       'end': end != null ? Timestamp.fromDate(end!) : null,
       'deboys': deboys,
       'active': active,
-    };
+    }; 
   }
 
   factory Profile.fromFirestore(DocumentSnapshot doc) {

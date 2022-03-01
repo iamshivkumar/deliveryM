@@ -40,11 +40,22 @@ class AnaCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Wrap(
                     children: [
-                      Text('$delivered'),
+                      Text(
+                        '$delivered',
+                        style: const TextStyle(color: Colors.green),
+                      ),
                       const Text('/'),
-                      Text('$gave'),
-                      const Text('/'),
-                      Text('$estimated'),
+                      Text(
+                        '$gave',
+                        style: const TextStyle(color: Colors.orange),
+                      ),
+                      const Text(
+                        '/',
+                      ),
+                      Text(
+                        '$estimated',
+                        style: const TextStyle(color: Colors.blue),
+                      ),
                     ],
                   )
                 ],

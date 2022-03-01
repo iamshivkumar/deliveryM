@@ -1,3 +1,5 @@
+import 'package:delivery_m/ui/pick_address/providers/location_service_status_provider.dart';
+
 import 'providers/pick_address_view_model_provider.dart';
 import 'search_address_page.dart';
 import 'widgets/update_address_sheet.dart';
@@ -23,16 +25,37 @@ class PickAddressPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: GoogleMap(
-                  mapType: model.type,
-                  onMapCreated: (controller) =>
-                      model.mapController = controller,
-                  initialCameraPosition: CameraPosition(
-                    target: model.latLng,
-                    zoom: 14,
-                  ),
-                  markers: model.markers,
-                  onTap: (point) => model.markerPosition = point,
+                child: Stack(
+                  children: [
+                    GoogleMap(
+                      mapType: model.type,
+                      onMapCreated: (controller) =>
+                          model.mapController = controller,
+                      initialCameraPosition: CameraPosition(
+                        target: model.latLng,
+                        zoom: 14,
+                      ),
+                      markers: model.markers,
+                      onTap: (point) => model.markerPosition = point,
+                    ),
+                    Positioned(
+                      right: 12,
+                      bottom: 108,
+                      child: Consumer(
+                        builder: (context, ref, child) {
+                          final status = ref.watch(locationStatusProvider);
+                          return MyCircleButton(
+                            icon: Icon(status.asData == null || !status.value!
+                                ? Icons.gps_off
+                                :  Icons.gps_not_fixed),
+                            onTap: () {
+                              model.handleLocateMe(status.value!);
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
               model.address != null

@@ -37,7 +37,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         inputDecorationTheme: const InputDecorationTheme(
-            filled: true, border: OutlineInputBorder()),
+          filled: true,
+          border: OutlineInputBorder(),
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             foregroundColor: MaterialStateProperty.all(Palette.secondary),

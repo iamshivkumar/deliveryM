@@ -20,6 +20,8 @@ class Customer {
     required this.balance,
   });
 
+  String get searchKey => "${name.split('').join()}$mobile${address.formated.split('').join()}".toLowerCase();
+
   Customer copyWith({
     String? id,
     String? eId,

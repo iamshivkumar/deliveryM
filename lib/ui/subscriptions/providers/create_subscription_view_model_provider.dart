@@ -1,3 +1,5 @@
+import 'package:delivery_m/ui/customers/providers/customers_provider.dart';
+
 import '../../../core/enums/delivery_status.dart';
 import '../../../core/models/delivery.dart';
 import '../../../core/models/product.dart';
@@ -92,6 +94,14 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
     final subscription = Subscription(
       id: '',
       dId: dId!,
+      key: _ref
+          .read(customersProvider)
+          .value!
+          .where((element) => element.id == cId)
+          .first
+          .name
+          .substring(0, 2)
+          .toLowerCase(),
       eId: _profile.id,
       customerId: cId,
       recure: recure,

@@ -72,9 +72,14 @@ class BigAnaCard extends StatelessWidget {
                       children: [
                         Text(
                           'Delivered',
-                          style: style.caption,
+                          style: style.caption!.copyWith(
+                            color: Colors.green,
+                          ),
                         ),
-                        Text('$delivered'),
+                        Text(
+                          '$delivered',
+                          style: const TextStyle(color: Colors.green),
+                        ),
                       ],
                     ),
                   ),
@@ -84,9 +89,14 @@ class BigAnaCard extends StatelessWidget {
                       children: [
                         Text(
                           'Gave',
-                          style: style.caption,
+                          style: style.caption!.copyWith(
+                            color: Colors.orange,
+                          ),
                         ),
-                        Text('$gave'),
+                        Text(
+                          '$gave',
+                          style: const TextStyle(color: Colors.orange),
+                        ),
                       ],
                     ),
                   ),
@@ -96,9 +106,14 @@ class BigAnaCard extends StatelessWidget {
                       children: [
                         Text(
                           'Estimated',
-                          style: style.caption,
+                          style: style.caption!.copyWith(
+                            color: Colors.blue,
+                          ),
                         ),
-                        Text('$estimated'),
+                        Text(
+                          '$estimated',
+                          style: const TextStyle(color: Colors.blue),
+                        ),
                       ],
                     ),
                   ),

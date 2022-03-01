@@ -21,6 +21,7 @@ class Subscription {
   final List<String> dates;
   final int diff;
   final String dId;
+  final String key;
 
   Subscription({
     required this.id,
@@ -36,6 +37,7 @@ class Subscription {
     required this.diff,
     required this.quantity,
     required this.product,
+    required this.key,
     this.returnKitsQt,
   });
 
@@ -70,6 +72,7 @@ class Subscription {
       diff: diff ?? this.diff,
       quantity: quantity ?? this.quantity,
       product: product ?? this.product,
+      key: key,
     );
   }
 
@@ -88,6 +91,7 @@ class Subscription {
       'returnKitsQt': returnKitsQt,
       'diff': diff,
       'quantity': quantity,
+      'key':key,
     };
   }
 
@@ -112,6 +116,7 @@ class Subscription {
       returnKitsQt: map['returnKitsQt'],
       diff: map['diff'],
       quantity: map['quantity'],
+      key: map['key'],
     );
   }
 

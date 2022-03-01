@@ -1,4 +1,5 @@
 import 'package:delivery_m/ui/auth/auth_page.dart';
+import 'package:delivery_m/ui/disabled/disabled_page.dart';
 
 import 'ui/auth/providers/user_provider.dart';
 import 'ui/components/loading.dart';
@@ -26,13 +27,15 @@ class Root extends ConsumerWidget {
             ? const AuthPage()
             : ref.watch(profileProvider).when(
                   data: (profile) => profile != null
-                      ? profile.isAdmin
-                          ? profile.expired
-                              ? const OrderPage()
-                              : const HomePage()
-                          : DeliveryBoyHomePage(
-                              profile: profile,
-                            )
+                      ? !profile.active
+                          ? DisabledPage(profile: profile)
+                          : profile.isAdmin
+                              ? profile.expired
+                                  ? const OrderPage()
+                                  : const HomePage()
+                              : DeliveryBoyHomePage(
+                                  profile: profile,
+                                )
                       : const StartPage(),
                   error: (e, s) => DataError(e: e),
                   loading: () => const Loading(),

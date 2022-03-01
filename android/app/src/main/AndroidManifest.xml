@@ -1,12 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.delivery_m">
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
    <application
         android:label="delivery_m"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <meta-data 
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA2KwctHOaF0styLEowjV9cZMJf_gxaC2g"/>
+            android:value="AIzaSyBjX5-R86SaWpsUsYToa2W93OXB4QDOcOM"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -4,6 +4,7 @@ import 'package:delivery_m/ui/products/products_page.dart';
 import 'package:delivery_m/ui/profile/profile_page.dart';
 
 import '../../core/models/product.dart';
+import '../../utils/labels.dart';
 import '../components/error.dart';
 import '../components/loading.dart';
 import 'delivery_boy_home_page.dart';
@@ -121,9 +122,38 @@ class HomePage extends ConsumerWidget {
                                               Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  e.name,
-                                                  style: style.subtitle2,
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        e.name,
+                                                        style: style.subtitle2,
+                                                      ),
+                                                    ),
+                                                    !e.active
+                                                        ? Material(
+                                                            color: Colors.red,
+                                                            shape:
+                                                                const StadiumBorder(),
+                                                            child: Padding(
+                                                              padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal: 8,
+                                                                  vertical: 2),
+                                                              child: Text(
+                                                                Labels.disabled
+                                                                    .toUpperCase(),
+                                                                style: style
+                                                                    .overline!
+                                                                    .copyWith(
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : const SizedBox()
+                                                  ],
                                                 ),
                                               ),
                                               MyGrid<Product>(

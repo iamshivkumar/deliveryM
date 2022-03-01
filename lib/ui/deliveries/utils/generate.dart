@@ -72,6 +72,9 @@ class Generate {
         );
       }
     }
+    list.sort(
+      (a, b) => a.subscriptions.first.key.compareTo(b.subscriptions.first.key),
+    );
     return list;
   }
 
