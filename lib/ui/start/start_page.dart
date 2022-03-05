@@ -1,4 +1,5 @@
 import 'package:delivery_m/ui/components/launch.dart';
+import 'package:delivery_m/ui/components/logo_title.dart';
 import 'package:delivery_m/ui/start/widgets/account_dialog.dart';
 import 'package:delivery_m/ui/tc/tc_page.dart';
 import 'package:delivery_m/utils/labels.dart';
@@ -21,7 +22,8 @@ class StartPage extends ConsumerWidget {
     final businessesFuture = ref.watch(bussinessesProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Delyman'),
+        centerTitle: true,
+        title: const LogoTitle(),
         actions: [
           IconButton(
             onPressed: () {
@@ -30,8 +32,11 @@ class StartPage extends ConsumerWidget {
                 builder: (context) => const AccountDialog(),
               );
             },
-            icon: const CircleAvatar(
-              child: Icon(Icons.person_outline_rounded),
+            icon: CircleAvatar(
+              child: Icon(
+                Icons.person_outline_rounded,
+                color: theme.colorScheme.secondary,
+              ),
             ),
           ),
         ],

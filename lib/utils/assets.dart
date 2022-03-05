@@ -1,6 +1,9 @@
 class Assets {
   static const String googleMap = 'assets/google_map.png';
 
+
+  static const String logo = 'assets/svg.png';
+
   static const List<String> products = [
     "assets/products/water-big.png",
     "assets/products/water-jar.png",

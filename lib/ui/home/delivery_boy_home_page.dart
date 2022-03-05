@@ -7,6 +7,7 @@ import '../../core/models/profile.dart';
 import '../../core/repositories/gave_repository_provider.dart';
 import '../components/error.dart';
 import '../components/loading.dart';
+import '../components/logo_title.dart';
 import '../deliveries/deliveries_page.dart';
 import 'providers/calendar_view_model_provider.dart';
 import 'providers/dboy_day_subscriptions_provider.dart';
@@ -39,7 +40,8 @@ class DeliveryBoyHomePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         // elevation: 0,
-        title: const Text('Shivkumar Konade'),
+        centerTitle: true,
+        title: myProfile.isAdmin ? Text(profile.name) : const LogoTitle(),
         shadowColor: theme.primaryColor.withOpacity(0.4),
         actions: [
           !myProfile.isAdmin
@@ -52,8 +54,11 @@ class DeliveryBoyHomePage extends ConsumerWidget {
                       ),
                     );
                   },
-                  icon: const CircleAvatar(
-                    child: Icon(Icons.person_outline),
+                  icon: CircleAvatar(
+                    child: Icon(
+                      Icons.person_outline,
+                      color: theme.colorScheme.secondary,
+                    ),
                   ),
                 )
               : const SizedBox(),

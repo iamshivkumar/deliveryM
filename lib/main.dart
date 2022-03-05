@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
         colorScheme:
             ColorScheme.fromSwatch(primarySwatch: Palette.swatch).copyWith(
           secondary: Palette.secondary,
+          onPrimary: Palette.secondary,
           secondaryContainer: Palette.secondary,
           onSecondary: Palette.primaryDark,
         ),

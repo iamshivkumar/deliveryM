@@ -2,11 +2,13 @@ import 'package:delivery_m/ui/customers/customers_page.dart';
 import 'package:delivery_m/ui/home/providers/single_subscription_provider.dart';
 import 'package:delivery_m/ui/products/products_page.dart';
 import 'package:delivery_m/ui/profile/profile_page.dart';
+import 'package:delivery_m/utils/assets.dart';
 
 import '../../core/models/product.dart';
 import '../../utils/labels.dart';
 import '../components/error.dart';
 import '../components/loading.dart';
+import '../components/logo_title.dart';
 import 'delivery_boy_home_page.dart';
 import 'providers/calendar_view_model_provider.dart';
 import 'providers/gave_provider.dart';
@@ -38,7 +40,8 @@ class HomePage extends ConsumerWidget {
       drawer: MyDrawer(),
       appBar: AppBar(
         elevation: 0,
-        title: const Text('Home'),
+        centerTitle: true,
+        title: LogoTitle(),
         actions: [
           IconButton(
             onPressed: () {
@@ -49,8 +52,11 @@ class HomePage extends ConsumerWidget {
                 ),
               );
             },
-            icon: const CircleAvatar(
-              child: Icon(Icons.person_outline),
+            icon: CircleAvatar(
+              child: Icon(
+                Icons.person_outline,
+                color: theme.colorScheme.secondary,
+              ),
             ),
           ),
         ],
