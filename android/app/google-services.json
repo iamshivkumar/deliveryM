@@ -22,6 +22,22 @@
           }
         },
         {
+          "client_id": "108108446891-jugjbkt9bp8hrj51fdqr10d7cjp18mkr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delyman.app",
+            "certificate_hash": "d5e1d6c5bc884ca56ad5e02dc8c3485f75657152"
+          }
+        },
+        {
+          "client_id": "108108446891-su31odqehumf9bjrumn8doutbjecm068.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delyman.app",
+            "certificate_hash": "c6a72cfc21ba0aeb556b52b3086e61cbac383c34"
+          }
+        },
+        {
           "client_id": "108108446891-6smkpr2vimb5u4svv6c6f087dsl01fp7.apps.googleusercontent.com",
           "client_type": 3
         }
