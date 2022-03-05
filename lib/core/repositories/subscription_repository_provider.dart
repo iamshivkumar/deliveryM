@@ -217,18 +217,15 @@ class SubscriptionRepository {
     }
     _batch.commit();
     if (isLast) {
-      final List<DateTime> dates = [];
       final duration = subscription.endDate.difference(subscription.startDate);
-      var start = subscription.endDate.add(Duration(days: subscription.diff));
+      var start = subscription.endDate
+          .add(Duration(days: DeliveryType.getDiff(subscription.type)));
       final end = start.add(duration);
-      while (start.isBefore(end)) {
-        dates.add(start);
-        start = start.add(
-          Duration(
-            days: subscription.diff,
-          ),
-        );
-      }
+      final dates = Dates.generate(
+        startDate: start,
+        endDate: end,
+        type: subscription.type,
+      );
 
       final updated = subscription.copyWith(
         returnKitsQt: subscription.returnKitsQt == null ? null : 0,

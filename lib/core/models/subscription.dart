@@ -5,6 +5,7 @@ import 'delivery.dart';
 import '../../utils/formats.dart';
 
 class Subscription {
+  // final int version;
   final String id;
   final String eId;
   final String customerId;
@@ -19,7 +20,7 @@ class Subscription {
   final DateTime endDate;
   final List<Delivery> deliveries;
   final List<String> dates;
-  final int diff;
+  final String type;
   final String dId;
   final String key;
 
@@ -34,10 +35,11 @@ class Subscription {
     required this.deliveries,
     required this.dates,
     required this.dId,
-    required this.diff,
+    required this.type,
     required this.quantity,
     required this.product,
     required this.key,
+    // required this.version,
     this.returnKitsQt,
   });
 
@@ -53,7 +55,7 @@ class Subscription {
     List<String>? dates,
     String? dId,
     int? returnKitsQt,
-    int? diff,
+    String? type,
     int? quantity,
     Product? product,
   }) {
@@ -69,10 +71,11 @@ class Subscription {
       dates: dates ?? this.dates,
       dId: dId ?? this.dId,
       returnKitsQt: returnKitsQt,
-      diff: diff ?? this.diff,
+      type: type ?? this.type,
       quantity: quantity ?? this.quantity,
       product: product ?? this.product,
       key: key,
+      // version: version
     );
   }
 
@@ -89,7 +92,7 @@ class Subscription {
       'dates': dates,
       'dId': dId,
       'returnKitsQt': returnKitsQt,
-      'diff': diff,
+      'type': type,
       'quantity': quantity,
       'key':key,
     };
@@ -114,7 +117,7 @@ class Subscription {
       dates: List<String>.from(map['dates'].map((e) => e as String)),
       dId: map['dId'],
       returnKitsQt: map['returnKitsQt'],
-      diff: map['diff'],
+      type: map['type']??DeliveryType.getName(map['diff']),
       quantity: map['quantity'],
       key: map['key'],
     );

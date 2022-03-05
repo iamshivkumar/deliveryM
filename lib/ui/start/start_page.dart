@@ -1,4 +1,5 @@
 import 'package:delivery_m/ui/components/launch.dart';
+import 'package:delivery_m/ui/start/widgets/account_dialog.dart';
 import 'package:delivery_m/ui/tc/tc_page.dart';
 import 'package:delivery_m/utils/labels.dart';
 
@@ -23,7 +24,12 @@ class StartPage extends ConsumerWidget {
         title: const Text('Delyman'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => const AccountDialog(),
+              );
+            },
             icon: const CircleAvatar(
               child: Icon(Icons.person_outline_rounded),
             ),

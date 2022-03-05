@@ -25,6 +25,7 @@ class AuthPage extends HookConsumerWidget {
         data: dark.copyWith(
           colorScheme: dark.colorScheme.copyWith(
             primary: Palette.secondary,
+
             // secondary: Palette.secondary,
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
@@ -119,7 +120,10 @@ class AuthPage extends HookConsumerWidget {
                               : null,
                       child: Text(
                         'VERIFY',
-                        style: style.button,
+                        style: model.verificationId != null &&
+                                model.code.length == 6
+                            ? style.button
+                            : null,
                       ),
                     )
             ],

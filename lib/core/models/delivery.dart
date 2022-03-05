@@ -55,11 +55,20 @@ class DeliveryType {
   DeliveryType(this.name, this.diff);
 
   static List<DeliveryType> values = [
-    DeliveryType('Daily', 1),
-    DeliveryType('Alternate Day', 2),
-    DeliveryType('Weekly', 7),
+    DeliveryType(daily, 1),
+    DeliveryType(mondayToSaturady, 1),
+    DeliveryType(alternateDay, 2),
+    DeliveryType(weekly, 7),
   ];
+
+  static const String daily = 'Daily';
+  static const String mondayToSaturady = 'Monday to Saturday';
+  static const String alternateDay = 'Alternate Day';
+  static const String weekly = 'Weekly';
 
   static String getName(int d) =>
       values.where((element) => element.diff == d).first.name;
+
+  static int getDiff(String type) =>
+      values.where((element) => element.name == type).first.diff;
 }

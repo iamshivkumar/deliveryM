@@ -1,4 +1,5 @@
 import 'package:delivery_m/ui/customers/providers/customers_provider.dart';
+import 'package:delivery_m/utils/dates.dart';
 
 import '../../../core/enums/delivery_status.dart';
 import '../../../core/models/delivery.dart';
@@ -76,17 +77,11 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
     if (startDate == null || endDate == null) {
       return [];
     } else {
-      final List<DateTime> dates = [];
-      var start = startDate!;
-      while (start.isBefore(endDate!)) {
-        dates.add(start);
-        start = start.add(
-          Duration(
-            days: deliveryType.diff,
-          ),
-        );
-      }
-      return dates;
+      return Dates.generate(
+        startDate: startDate!,
+        endDate: endDate!,
+        type: deliveryType.name,
+      );
     }
   }
 
@@ -121,7 +116,7 @@ class CreateSubscriptionViewModel extends ChangeNotifier {
             ),
           )
           .toList(),
-      diff: deliveryType.diff,
+      type: deliveryType.name,
     );
 
     try {
